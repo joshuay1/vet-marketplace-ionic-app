@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8"?>
 <widget id="io.cordova.myapp661fea" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" defaultLocale="en-US">
   <name>frontend</name>
   <description>An Ionic Framework and Cordova project for Visual Studio</description>
@@ -21,8 +21,8 @@
   <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.3" />
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-  <preference name="windows-target-version" value="8.1" />
- <platform name="android">
+  <preference name="windows-target-version" value="10.0" />
+  <platform name="android">
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi" />
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi" />
     <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi" />
@@ -81,4 +81,8 @@
     <icon src="resources/windows/icon/logo71x71.scale-100.png" width="71" height="71" />
     <icon src="resources/windows/icon/wide310x150.scale-100.png" width="310" height="150" />
   </platform>
+  <vs:toolsetVersion xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">6.3.1</vs:toolsetVersion>
+  <engine name="android" spec="5.2.1" />
+  <engine name="ios" spec="4.2.0" />
+  <engine name="windows" spec="4.4.2" />
 </widget>
