@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController} from 'ionic-angular';
 import { User } from "../../model/user";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from "../home/home";
@@ -20,7 +20,9 @@ export class LoginPage {
   user = {} as User;
   
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController,
+     public navParams: NavParams,
+    private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -28,15 +30,18 @@ export class LoginPage {
   }
 
   async login(user: User) {
-    try {
-      const result = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-      if (result) {
+      this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then(auth => {
         this.navCtrl.setRoot(HomePage);
-      }  
-    }
-    catch (e) {
-      console.error(e);
-    }
+      })
+      .catch(err =>{
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          message: err.message,
+          buttons: ['OK']
+        });
+          alert.present();
+        })
   }
 
   register() {

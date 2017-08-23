@@ -11,6 +11,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule }from 'angularfire2/auth'; 
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { RegisterPage }from "../pages/register/register";
+import { BookingsPage } from "../pages/bookings/bookings";
+import { SettingsPage } from "../pages/settings/settings";
+import { ProfilePage } from "../pages/profile/profile";
 
 var config = {
   apiKey: "AIzaSyD16Z_p-S5LgSceHoL3ob7gRNSqqFaPbWQ",
@@ -25,7 +28,10 @@ var config = {
   declarations: [
     MyApp,
     LoginPage,
-    HomePage
+    HomePage,
+    ProfilePage,
+    SettingsPage,
+    BookingsPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,10 @@ var config = {
   entryComponents: [
     MyApp,
     LoginPage,
-    HomePage
+    HomePage,
+    ProfilePage,
+    SettingsPage,
+    BookingsPage
   ],
   providers: [
     AngularFireDatabase,
