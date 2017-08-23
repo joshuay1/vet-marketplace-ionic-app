@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
-import { User } from "../../model/user";
-import { LoginPage } from "../login/login";
+import { AngularFireDatabase} from 'angularfire2/database';
+import { User, UserInfo } from "../../model/user";
+import { HomePage } from "../home/home";
 /**
  * Generated class for the RegisterPage page.
  *
@@ -18,9 +19,18 @@ import { LoginPage } from "../login/login";
 export class RegisterPage {
 
   user = {} as User;
+  userInfo = {} as UserInfo;
+  dobOptions;
+  yearOptions;
+  loading;
 
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private alertCtrl: AlertController,
+    private db :AngularFireDatabase) {
+      this.setDobOptions();
+      this.setYearOptions();
   }
 
   ionViewDidLoad() {
@@ -28,16 +38,45 @@ export class RegisterPage {
   }
 
   async register(user: User) {
-    try {
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-      console.log(result);
-      if(result){
-        this.navCtrl.push(LoginPage);
-      }
-    }
-    catch (e) {
-      console.error(e);
+      this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
+      .then(auth =>{
+        if(this.userInfo.authkey!= null){
+          this.userInfo.userType = "Vet";
+          this.userInfo.authkey = null;
+        }else{
+          this.userInfo.userType = "User";
+        }
+        this.db.object(`users/${auth.uid}`).set(this.userInfo);
+        this.navCtrl.setRoot(HomePage);
+
+      })
+      .catch(err =>{
+        // Handle error
+        let alert = this.alertCtrl.create({
+        title: 'Error',
+        message: err.message,
+        buttons: ['OK']
+      });
+        alert.present();
+      })
+  
+  }
+
+  setDobOptions(){
+    this.dobOptions = [
+      '01','02','03','04','05','06','07','08','09','10','11','12'
+    ]
+  }
+
+  setYearOptions(){
+    var initialYear = 1945;
+    this.yearOptions= [];
+    for(var i = initialYear; i< 2017 ; i++){
+      this.yearOptions.push(i);
     }
   }
+
+
+  
 
 }

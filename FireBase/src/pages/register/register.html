@@ -16,14 +16,51 @@
 <ion-content padding>
     <ion-item>
         <ion-label floating>Email Address</ion-label>
-        <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+        <ion-input type="email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
     
       <ion-item>
         <ion-label floating>Password</ion-label>
         <ion-input type="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
-    
+
+      <ion-item>
+        <ion-label floating>Authentication Key (* Vet only)</ion-label>
+        <ion-input type="text" [(ngModel)]="userInfo.authkey"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <ion-input type="text" [(ngModel)]="userInfo.firstname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input type="text" [(ngModel)]="userInfo.lastname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Date</ion-label>
+          <ion-input type="number" max = 31 min = 0 [(ngModel)]="userInfo.dob"></ion-input>
+      </ion-item>
+        
+      <ion-item>
+        
+        <ion-label>Month</ion-label>
+          <ion-select [(ngModel)]="userInfo.month">
+              <ion-option *ngFor = "let dob of dobOptions" value = {{dob}} >{{dob}}</ion-option>
+          </ion-select>  
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Year</ion-label>
+          <ion-select [(ngModel)]="userInfo.year">
+              <ion-option *ngFor = "let year of yearOptions" value = {{year}} >{{year}}</ion-option>
+          </ion-select>  
+      </ion-item>
+
+
+
       <button ion-button (click)="register(user)">Register</button>
 
 </ion-content>
