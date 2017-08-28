@@ -189,6 +189,10 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+hooks/
+platforms/
+resources/
+www/
 orleans.codegen.cs
 
 # RIA/Silverlight projects
