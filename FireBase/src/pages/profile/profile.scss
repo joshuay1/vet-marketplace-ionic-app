@@ -1,3 +1,30 @@
 page-profile {
+    .background{
+        background-image: url('../assets/img/background.jpg');
+    }
+
+
+.scroll-content {
+    overflow: hidden;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+ion-card {
+    height: 80%; 
+} 
+
+ion-card.card {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 5px;
+    position: relative;
+
+}
 
 }

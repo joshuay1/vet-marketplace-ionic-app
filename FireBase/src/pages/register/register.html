@@ -4,56 +4,67 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-content class="background">
+
+  <ion-card>
+
+    <!--
+<ion-card-header>
 
   <ion-navbar>
     <ion-title>Register</ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-card-header>
+-->
+
+<ion-card-content >
 
 
-<ion-content padding>
-    <ion-item>
-        <ion-label floating>Email Address</ion-label>
+   <ion-list>
+      <ion-item>
+        <ion-label floating color="text" >Email Address</ion-label>
         <ion-input type="email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
     
       <ion-item>
-        <ion-label floating>Password</ion-label>
+        <ion-label floating color="text" >Password</ion-label>
         <ion-input type="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Authentication Key (* Vet only)</ion-label>
+        <ion-label floating color="text" >Authentication Key (* Vet only)</ion-label>
         <ion-input type="text" [(ngModel)]="userInfo.authkey"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>First Name</ion-label>
+        <ion-label floating color="text" >First Name</ion-label>
         <ion-input type="text" [(ngModel)]="userInfo.firstname"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Last Name</ion-label>
+        <ion-label floating color="text" >Last Name</ion-label>
         <ion-input type="text" [(ngModel)]="userInfo.lastname"></ion-input>
       </ion-item>
 
+
+
+      
       <ion-item>
-          <ion-label floating>Date</ion-label>
+          <ion-label floating color="text" >Date</ion-label>
           <ion-input type="number" max = 31 min = 0 [(ngModel)]="userInfo.dob"></ion-input>
       </ion-item>
         
       <ion-item>
         
-        <ion-label>Month</ion-label>
-          <ion-select [(ngModel)]="userInfo.month">
-              <ion-option *ngFor = "let dob of dobOptions" value = {{dob}} >{{dob}}</ion-option>
-          </ion-select>  
+        <ion-label color="text">Month</ion-label>
+        <ion-select [(ngModel)]="userInfo.month">
+          <ion-option *ngFor = "let dob of dobOptions" value = {{dob}} >{{dob}}</ion-option>
+        </ion-select>  
       </ion-item>
 
       <ion-item>
-          <ion-label floating>Year</ion-label>
+          <ion-label floating color="text">Year</ion-label>
           <ion-select [(ngModel)]="userInfo.year">
               <ion-option *ngFor = "let year of yearOptions" value = {{year}} >{{year}}</ion-option>
           </ion-select>  
@@ -63,4 +74,13 @@
 
       <button ion-button (click)="register(user)">Register</button>
 
+    </ion-list> 
+
+
+</ion-card-content>
+
+</ion-card>
+
+
 </ion-content>
+

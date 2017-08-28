@@ -1,3 +1,46 @@
 page-register {
+    .background{
+           background-image: url('../assets/img/background.jpg');
+    }
+
+    .scroll-content {
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+
+    
+    ion-card {
+        position: relative; 
+    }
+
+
+    .item {
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border: medium none;
+
+    .text-input, {
+        color: "primary";
+    }
+}
+
+.button {
+    align-content: center;
+    position: relative
+}
 
 }
+
+
+
+/*
+ion-card.card {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 5px;
+
+}
+*/
+
