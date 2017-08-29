@@ -5,14 +5,26 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>bookings</ion-title>
-  </ion-navbar>
-
+  <ion-card>
+    <ion-segment [(ngModel)]="bookings">
+      <ion-segment-button value="currentBookings">Current Bookings</ion-segment-button>
+      <ion-segment-button value="pastBookings">Booking History</ion-segment-button>
+    </ion-segment>
+  </ion-card>
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content class="background">
+  <ion-card [ngSwitch]="bookings">
+    <ion-list *ngSwitchCase="'currentBookings'">
+      <ion-item>
+        <ion-label>current bookings</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'pastBookings'">
+      <ion-item>
+        <ion-label>past bookings</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>
