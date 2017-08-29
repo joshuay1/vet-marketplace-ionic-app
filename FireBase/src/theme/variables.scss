@@ -47,7 +47,10 @@ $colors: (
 // iOS only Sass variables can go here
 
 
-
+blue {
+  background-color: "primary";
+  background-image: url('../assets/img/blueBackground.jpg');
+}
 
 // App Material Design Variables
 // --------------------------------------------------

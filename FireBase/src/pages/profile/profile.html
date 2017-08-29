@@ -4,19 +4,36 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-content class="background">
-<ion-card>
-<ion-card-content>
-  <ion-img width ="120" height = "120" src = "assets/img/empty.png"></ion-img>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
-  <p> Welcome</p>
-  <p> User Type : {{(profileData|async)?.userType}} </p>
-  <p> First Name :{{(profileData|async)?.firstname}} </p>
-  <p> Last Name : {{(profileData|async)?.lastname}} </p>
-  <p> DoB : {{(profileData|async)?.dob}} / {{(profileData|async)?.month}} /{{(profileData|async)?.year}}</p>
+    <ion-grid>
+
+        <ion-row row-40 style="background-image: url('../assets/img/blueBackground.jpg')">
+          <ion-col>
+                <img class="circle-pic"  src = "../assets/img/dog.jpg"/> 
+                <p> {{(profileData|async)?.userType}} 
+                <br> 
+                {{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
+          </ion-col>
+        </ion-row>
+
+        <ion-row row-50 style="background-color: #ffffff;">
+          <ion-col>
+
+            <ion-card>
+              <ion-card-content>
+                  Snuffles
+              </ion-card-content>
+            </ion-card>
+            <ion-card>
+              <ion-card-content>
+                Snowball
+              </ion-card-content>
+            </ion-card>
+
+         </ion-col>
+        </ion-row>
+      </ion-grid>
 
 
 
-</ion-card-content>
-</ion-card>
-</ion-content>
