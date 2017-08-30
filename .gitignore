@@ -194,6 +194,7 @@ platforms/
 resources/
 www/
 orleans.codegen.cs
+FireBase/plugins/
 
 # RIA/Silverlight projects
 Generated_Code/
