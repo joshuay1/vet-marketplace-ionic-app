@@ -192,7 +192,6 @@ ClientBin/
 node_modules/
 hooks/
 platforms/
-resources/
 www/
 orleans.codegen.cs
 FireBase/plugins/
