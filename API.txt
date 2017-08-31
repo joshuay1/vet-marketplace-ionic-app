@@ -1,0 +1,21 @@
+------------------------------------------------
+
+API (for front end people)
+
+
+User / Vet Profile Management
+
+
+Profile Query Example
+
+    http://ServerIP:Port/profile?userid=[USERID]
+
+    Return -> {"response":"success","id":"Tester1","jsonstring":"{\"firstname\":\"Stanley\",\"dob\":\"20/11/1932\",\"userType\":\"User\",\"lastname\":\"Sim\"}"}
+
+Profile Post Example
+    URL: http://ServerIP:Port/postProfile
+    Param: userid=Tester1&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=300&streetName=King St&suburb=Melbourne&state=Victoria&postcode=3000
+    return : {response: success, id : USERID}
+    or
+    return : {response: error, id : USERID}
+
