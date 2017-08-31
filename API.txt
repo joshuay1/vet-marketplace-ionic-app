@@ -10,7 +10,7 @@ Profile Query Example
 
     http://ServerIP:Port/profile?userid=[USERID]
 
-    Return -> {"response":"success","id":"Tester1","jsonstring":"{\"firstname\":\"Stanley\",\"dob\":\"20/11/1932\",\"userType\":\"User\",\"lastname\":\"Sim\"}"}
+    Return -> {"response":"success","id":"Tester1","profile":"{\"firstname\":\"Stanley\",\"dob\":\"20/11/1932\",\"userType\":\"User\",\"lastname\":\"Sim\"}"}
 
 Profile Post Example
     URL: http://ServerIP:Port/postProfile

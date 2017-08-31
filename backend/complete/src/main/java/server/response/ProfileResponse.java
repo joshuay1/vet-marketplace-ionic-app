@@ -23,7 +23,7 @@ public class ProfileResponse {
         return this.response;
     }
 
-    public String getJSONString(){
+    public String getProfile(){
         JSONObject obj = new JSONObject();
         try{
             obj.put("firstname",this.profileData.getFirstname());
