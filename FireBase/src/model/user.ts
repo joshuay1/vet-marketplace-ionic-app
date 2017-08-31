@@ -8,6 +8,7 @@ export interface UserInfo{
     userType: string;
     firstname: string;
     lastname: string;
+    address: string;
     dob: Date;
     authkey: string;
     streetnumber: string;

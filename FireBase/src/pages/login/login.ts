@@ -44,8 +44,11 @@ export class LoginPage {
         })
   }
 
-  register() {
-    this.navCtrl.push('RegisterPage');
+  registerVet() {
+    this.navCtrl.push('RegisterVetPage');
+  }
+  registerOwner() {
+      this.navCtrl.push('RegisterOwnerPage');
   }
 
 }
