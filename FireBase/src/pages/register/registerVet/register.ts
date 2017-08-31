@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase} from 'angularfire2/database';
-import { User, UserInfo } from "../../model/user";
-import { HomePage } from "../home/home";
+import { User, UserInfo } from "../../../model/user";
+import { HomePage } from "../../home/home";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 /**
  * Generated class for the RegisterPage page.
@@ -17,7 +17,7 @@ import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
   selector: 'page-register',
   templateUrl: 'register.html',
 })
-export class RegisterPage {
+export class RegisterVetPage {
   [x: string]: any;
 
   user = {} as User;
