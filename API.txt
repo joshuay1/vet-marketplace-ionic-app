@@ -2,20 +2,55 @@
 
 API (for front end people)
 
+-----------------------------------SPRINT 2--------------------------------------------------------------
 
-User / Vet Profile Management
+------------User / Vet Profile Management-------------------------
 
 
-Profile Query Example
+1. Profile Query
 
-    http://ServerIP:Port/profile?userid=[USERID]
+    Input :http://ServerIP:Port/profile?userid=[USERID]
+    Current Output: {"response":"success","id":"Tester1","profile":"{\"firstname\":\"Stanley\",\"dob\":\"20/11/1932\",\"userType\":\"User\",\"lastname\":\"Sim\"}"}
 
-    Return -> {"response":"success","id":"Tester1","profile":"{\"firstname\":\"Stanley\",\"dob\":\"20/11/1932\",\"userType\":\"User\",\"lastname\":\"Sim\"}"}
+2. Profile Post Example
 
-Profile Post Example
-    URL: http://ServerIP:Port/postProfile
-    Param: userid=Tester1&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=300&streetName=King St&suburb=Melbourne&state=Victoria&postcode=3000
+    Input:
+            URL: http://ServerIP:Port/postProfile
+            Param: userid=Tester1&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=300&streetName=King St&suburb=Melbourne&state=Victoria&postcode=3000
+    
+    Output:
     return : {response: success, id : USERID}
     or
     return : {response: error, id : USERID}
+
+3. Profile Update 
+
+4. Image Upload
+
+5. Insert Pet
+
+
+
+-----------User Auth-----------------
+
+
+1. Login Auth -> give token
+2. Register
+3. GetUserID -> from token return userid
+4. Check email Verified
+5. Send verification email
+
+----------------Booking---------------
+
+1. Get nearest Vet
+2. Payment
+3. Make a booking
+4. Check current Booking
+5. Cancel Booking
+
+
+----------------------------------------------SPRINT 3-------------------------------------------------------------
+
+
+-----------------Store-----------------
 
