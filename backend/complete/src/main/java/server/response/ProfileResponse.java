@@ -30,6 +30,12 @@ public class ProfileResponse {
             obj.put("lastname",this.profileData.getLastname());
             obj.put("userType",this.profileData.getUserType());
             obj.put("dob",this.profileData.getDob());
+            obj.put("streetnumber",this.profileData.getStreetnumber());
+            obj.put("streetname",this.profileData.getStreetname());
+            obj.put("suburb",this.profileData.getSuburb());
+            obj.put("state",this.profileData.getState());
+            obj.put("postcode",this.profileData.getPostcode());
+            obj.put("pictureURL",this.profileData.getPictureURL());
         }catch(JSONException e){
             e.printStackTrace();
         }

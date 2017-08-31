@@ -11,13 +11,8 @@ public class ProfileData {
     private String postcode;
     private String state;
     private String suburb;
+    private String pictureURL;
 
-    public ProfileData(String firstname, String lastname, String userType, String date){
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.userType = userType;
-        this.dob = date;
-    }
 
     public ProfileData(String firstname,String lastname,String userType,String date,
             String streetnumber,String streetname,String suburb,String state,String postcode){
@@ -31,6 +26,22 @@ public class ProfileData {
                 this.state = state;
                 this.postcode = postcode;
             }
+    public ProfileData(String firstname,String lastname,String userType,String date,
+            String streetnumber,String streetname,String suburb,String state,String postcode,
+            String pictureURL){
+                this.firstname = firstname;
+                this.lastname = lastname;
+                this.dob = date;
+                this.streetnumber = streetnumber;
+                this.userType = userType;
+                this.streetname = streetname;
+                this.suburb = suburb;
+                this.state = state;
+                this.postcode = postcode;
+                this.pictureURL = pictureURL;
+            }
+            
+    
     
     //GETTERS 
     public String getFirstname(){
@@ -67,6 +78,14 @@ public class ProfileData {
 
     public String getPostcode(){
         return this.postcode;
+    }
+
+    public String getPictureURL(){
+        return this.pictureURL;
+    }
+
+    public void setPictureURL(String picture){
+        this.pictureURL = picture;
     }
 
 
