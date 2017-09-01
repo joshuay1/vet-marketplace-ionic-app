@@ -9,6 +9,7 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+.vscode/
 
 # Build results
 [Dd]ebug/
@@ -191,11 +192,12 @@ ClientBin/
 node_modules/
 hooks/
 platforms/
-resources/
 www/
 orleans.codegen.cs
 FireBase/plugins/
 target/
+.classpath
+.settings/
 
 # RIA/Silverlight projects
 Generated_Code/
