@@ -11,24 +11,12 @@ public class ProfileData {
     private String postcode;
     private String state;
     private String suburb;
+    private String country;
     private String pictureURL;
 
-
-    public ProfileData(String firstname,String lastname,String userType,String date,
-            String streetnumber,String streetname,String suburb,String state,String postcode){
-                this.firstname = firstname;
-                this.lastname = lastname;
-                this.dob = date;
-                this.streetnumber = streetnumber;
-                this.userType = userType;
-                this.streetname = streetname;
-                this.suburb = suburb;
-                this.state = state;
-                this.postcode = postcode;
-            }
     public ProfileData(String firstname,String lastname,String userType,String date,
             String streetnumber,String streetname,String suburb,String state,String postcode,
-            String pictureURL){
+            String country,String pictureURL){
                 this.firstname = firstname;
                 this.lastname = lastname;
                 this.dob = date;
@@ -38,6 +26,7 @@ public class ProfileData {
                 this.suburb = suburb;
                 this.state = state;
                 this.postcode = postcode;
+                this.country = country;
                 this.pictureURL = pictureURL;
             }
             
@@ -80,12 +69,12 @@ public class ProfileData {
         return this.postcode;
     }
 
-    public String getPictureURL(){
-        return this.pictureURL;
+    public String getCountry(){
+        return this.country;
     }
 
-    public void setPictureURL(String picture){
-        this.pictureURL = picture;
+    public String getPictureURL(){
+        return this.pictureURL;
     }
 
 
