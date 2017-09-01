@@ -7,12 +7,7 @@ API (for front end people)
 ------------User / Vet Profile Management-------------------------
 
 
-1. Profile Query
-
-    Input :http://ServerIP:Port/profile?userid=[USERID]
-    Current Output: {"response":"success","id":"Tester1","profile":"{\"firstname\":\"Stanley\",\"dob\":\"20/11/1932\",\"userType\":\"User\",\"lastname\":\"Sim\"}"}
-
-2. Profile Post Example
+1. Profile Post Example
 
     Input:
             URL: http://ServerIP:Port/postProfile
@@ -29,24 +24,25 @@ API (for front end people)
 
 5. Insert Pet
 
+6. Update Pet
+
+7. Delete Pet
+
 
 
 -----------User Auth-----------------
 
 
-1. Login Auth -> give token
-2. Register
-3. GetUserID -> from token return userid
-4. Check email Verified
-5. Send verification email
+1. Get Custom Auth (Admin auth)
 
 ----------------Booking---------------
 
 1. Get nearest Vet
 2. Payment
 3. Make a booking
-4. Check current Booking
-5. Cancel Booking
+4. Cancel Booking
+5. Insert availability
+6. Delete availability
 
 
 ----------------------------------------------SPRINT 3-------------------------------------------------------------
