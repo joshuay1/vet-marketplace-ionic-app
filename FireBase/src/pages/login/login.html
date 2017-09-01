@@ -7,7 +7,7 @@
 <ion-content class="background">
   <ion-card>
     <ion-card-content>
-      <img src="../assets/img/logo.png" alt="">
+      <img width="%60" height="%60" src="../assets/img/logo.png" alt="">
     </ion-card-content>
 
 
@@ -28,8 +28,10 @@
       </ion-card-content>
       <ion-card-content>
         <button ion-button (click)="login(user)">Login</button>
-        <button ion-button color="secondary" (click)="registerVet()">Register as \n vet</button>
-        <button ion-button color="secondary" (click)="registerOwner()">Register as \n owner</button>
+        <br>
+        <p>Or register as</p>
+        <button ion-button color="secondary" (click)="registerVet()">Vet</button>
+        <button ion-button color="secondary" (click)="registerOwner()">Owner</button>
       
     </ion-card-content>
     
