@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;
+import server.HelperFunction;
 import server.response.BasicResponse;
 import server.response.ProfileResponse;
 import com.firebase.geofire.GeoFire;
@@ -24,13 +25,15 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
+
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
 public class ProfileController {
    
-    private Semaphore semaphore = new Semaphore(0);
+    //private Semaphore semaphore = new Semaphore(0);
     private final Logger logger = LoggerFactory.getLogger(Application.class);
     private final String DEFAULTPICTURE= "https://firebasestorage.googleapis.com/v0/b/vetquoll-c22f9.appspot.com/o/Basic%2Fempty.png?alt=media&token=9463fdee-6966-4d87-9928-d4e62e834a9d";
     //GOOGLE API
@@ -42,55 +45,11 @@ public class ProfileController {
     //FOR TESTING PURPOSES ONLY
     @RequestMapping(value = "/profile",method = RequestMethod.GET)
     public ProfileResponse profile(@RequestParam(value="userid") String id) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/"+id);
-        logger.info("GET Profile Request from " + id);
-        if(ref == null){
-            logger.error("ref is null");
-        }
-
-        ArrayList<ProfileData> datas = new ArrayList<ProfileData>();
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String firstname =(String) dataSnapshot.child("firstname").getValue();
-                String lastname =(String) dataSnapshot.child("lastname").getValue();
-                String userType =(String) dataSnapshot.child("userType").getValue();
-                String date = (String) dataSnapshot.child("dob").getValue();
-                String streetNumber = (String) dataSnapshot.child("streetnumber").getValue();
-                String streetName = (String)dataSnapshot.child("streetname").getValue();
-                String suburb = (String)dataSnapshot.child("suburb").getValue();
-                String state = (String)dataSnapshot.child("state").getValue();
-                String postcode = (String) dataSnapshot.child("postcode").getValue();
-                String pictureURL = (String)dataSnapshot.child("pictureURL").getValue();
-                String country = (String)dataSnapshot.child("country").getValue();
 
 
-                ProfileData data = new ProfileData(firstname, lastname, userType,date,
-                            streetNumber,streetName,suburb,state,postcode,country,pictureURL);
-                logger.info("obtain value from database:"+firstname+","+lastname+","+userType+","+date
-                                + streetNumber+","+streetName+","+suburb+","+state+","+postcode+","+ pictureURL);
-                datas.add(data);
-                semaphore.release();
-            }
-    
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-    
-            }
-        });
-        try{
-            semaphore.acquire();
-        }catch(InterruptedException e){
-            logger.error("Semaphore is interrupted during the retreival of data");
-        }
-
-
-        if(datas.size()>0){
-            return new ProfileResponse("success", id,datas.get(0));  
-        }else{
-            logger.info("data not found");
-            return new ProfileResponse("error",id,datas.get(0));
-        }
+        JSONObject result = HelperFunction.getData("users/"+id, logger);
+        return new ProfileResponse("success", id, result.toJSONString());
+        
     }
 
 
