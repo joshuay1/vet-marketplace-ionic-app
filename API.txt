@@ -1,0 +1,99 @@
+------------------------------------------------
+
+API (for front end people)
+
+-----------------------------------SPRINT 2--------------------------------------------------------------
+
+------------User / Vet Profile Management-------------------------
+
+
+1. Profile Post Example
+
+
+    This is an api for during REGISTER ONLY!
+    Initialization of the user in the database
+
+    Input:
+            URL: http://ServerIP:Port/postProfile
+
+            Parameters (Case-sensitive)
+
+            ALL REQUIRED ( WILL RETURN ERROR IF NOT)
+
+              1. token (NOT YET IMPLEMENTED. Ignore for now.)
+              2. userid
+              3. firstname
+              4. lastname
+              5. dob
+              6. userType
+              7. streetnumber
+              8. streetname
+              9. suburb
+              10.state
+              11.postcode
+              12.country
+            Example Parameters :
+            userid=Tester2&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=199&streetName=Lygon St&suburb=Carlton&state=Victoria&postcode=3053&country=Australia
+    
+    Output:
+    return : {"response":"success","id":"Tester2","errorMessage":null}
+    or
+    return : {"response": "error", "id" :"Tester2","errorMessage":"Potato Server"}
+
+3. Profile Update 
+
+    Input:
+            URL: http://ServerIP:Port/profileUpdate
+            Parameters(case-sensitive)
+
+            ALL Parameters IS OPTIONAL EXCEPT FOR userid token and userType (when it is implemented).
+            UserType is for identification only and is not part of the update
+            Exception: When 1 of the data field regarding the address is changed (streetnumber,....,country) send all the data regarding user address(all of streetnumber,...,country) to the Server
+            or you will get an error
+
+    
+    Output: 
+            return : {"response":"success","id":"Tester2","errorMessage":null}
+            return : {"response": "error", "id" :"Tester2","errorMessage":"Potato Server"}
+
+    
+    Example IO,
+        Input 1: userid=Tester2&firstname=John&lastname=Snow&userType=Vet
+        Output1: {"response":"success","id":"Tester2","errorMessage":null}
+
+        Input 2: userid=Tester2&firstname=Jamie&lastname=Snow&userType=Vet&country=India
+        Output2: {"response":"error","id":"Tester2","errorMessage":"Some of the address field is null"}
+
+        Input 3: userid=Tester2&lastname=Targaryen&dob=30/11/2010&userType=Vet&streetnumber=1341&streetname=Dandenong Rd&suburb=Chadstone&state=Victoria&postcode=3148&country=Australia
+        Output3: {"response":"success","id":"Tester2","errorMessage":null}
+
+4. Image Upload
+
+5. Insert Pet
+
+6. Update Pet
+
+7. Delete Pet
+
+
+
+-----------User Auth-----------------
+
+
+1. Get Custom Auth (Admin auth)
+
+----------------Booking---------------
+
+1. Get nearest Vet
+2. Payment
+3. Make a booking
+4. Cancel Booking
+5. Insert availability
+6. Delete availability
+
+
+----------------------------------------------SPRINT 3-------------------------------------------------------------
+
+
+-----------------Store-----------------
+
