@@ -70,6 +70,29 @@ API (for front end people)
 4. Image Upload
 
 5. Insert Pet
+    
+    This is an api for adding a new pet!
+    Initialization of the pet in the database to a particular user
+
+    Input:
+            URL: http://ServerIP:Port/postPetProfile
+
+            Parameters (Case-sensitive)
+
+            ALL REQUIRED ( WILL RETURN ERROR IF NOT)
+
+              1. token (NOT YET IMPLEMENTED. Ignore for now.)
+              2. petId
+              3. userId
+              4. petname
+              5. dob
+              6. animalType
+              7. breed
+            Example Parameters :
+            petId=Pet1&userId=FdsZPv4cydYUN9CVFb3WZbJb3Rr1&petname=Fluffy&dob=10/11/2010&animalType=Dog&breed=Dalmation
+    
+    Output:
+    {"response":"success","id":"Pet1","errorMessage":null}
 
 6. Update Pet
 
