@@ -98,18 +98,32 @@ API (for front end people)
         Input:
             URL: http://ServerIP:Port/petProfileUpdate
             Parameters(case-sensitive)
-
+            1. token (NOT YET IMPLEMENTED. Ignore for now.)
+            2. petId
+            3. petname
+            4. dob
+            5. animalType
+            6. breed
             ALL Parameters are OPTIONAL EXCEPT FOR petId, token (when it is implemented).
             petId is for identification only and is not part of the update
             Example Parameters :
             petId=Pet1&petname=Snoopy&dob=&animalType=&breed=
 
-    Output: 
+        Output: 
             return : {"response":"success","id":"Tester2","errorMessage":null}
             
 7. Delete Pet
-
-
+        Input:
+            URL: http://ServerIP:Port/petProfileDelete
+            Parameters(case-sensitive)
+            1. token (NOT YET IMPLEMENTED. Ignore for now.)
+            2. petId
+            
+            None of the Parameters are OPTIONAL. They must both be sent.
+            Example Parameters :
+            petId=Pet2
+        Output:
+            {"response":"success","id":"Pet2","errorMessage":null}
 
 -----------User Auth-----------------
 
