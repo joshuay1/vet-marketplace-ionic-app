@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ion
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase} from 'angularfire2/database';
 import { User, UserInfo } from "../../../model/user";
-import { HomePage } from "../../home/home";
+import { VetHomePage } from "../../home/vetHome/vetHome";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 /**
  * Generated class for the RegisterPage page.
@@ -61,7 +61,7 @@ export class RegisterVetPage {
         console.log(this.userInfo.authkey);
         console.log(this.userInfo.userType);
         this.db.object(`users/${auth.uid}`).set(this.userInfo);
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(VetHomePage);
 
       })
       .catch(err =>{

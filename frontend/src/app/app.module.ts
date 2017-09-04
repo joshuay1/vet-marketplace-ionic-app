@@ -5,7 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { OwnerHomePage } from '../pages/home/ownerHome/ownerHome';
+import { VetHomePage } from '../pages/home/vetHome/vetHome';
 import { LoginPage } from "../pages/login/login";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule }from 'angularfire2/auth'; 
@@ -14,6 +15,7 @@ import { RegisterVetPage } from "../pages/register/registerVet/register";
 import { RegisterOwnerPage } from "../pages/register/registerOwner/register";
 import { BookingsPage } from "../pages/bookings/bookings";
 import { SettingsPage } from "../pages/settings/settings";
+import { CalendarPage } from "../pages/calendar/calendar";
 import { ProfilePage } from "../pages/profile/profile";
 
 var config = {
@@ -29,9 +31,11 @@ var config = {
   declarations: [
     MyApp,
     LoginPage,
-    HomePage,
+    OwnerHomePage,
+    VetHomePage,
     ProfilePage,
     SettingsPage,
+    CalendarPage,
     BookingsPage
   ],
   imports: [
@@ -45,9 +49,11 @@ var config = {
   entryComponents: [
     MyApp,
     LoginPage,
-    HomePage,
+    OwnerHomePage,
+    VetHomePage,
     ProfilePage,
     SettingsPage,
+    CalendarPage,
     BookingsPage
   ],
   providers: [
