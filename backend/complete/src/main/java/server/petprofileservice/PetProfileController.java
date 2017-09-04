@@ -19,7 +19,8 @@ import java.util.HashMap;
 
 @RestController
 public class PetProfileController {
-    private int flag;
+    private BasicResponse response = null;
+    private int flag = -1;
 
     @RequestMapping(value = "/postPetProfile", method = RequestMethod.POST)
     public BasicResponse postPetProfile(
@@ -55,10 +56,12 @@ public class PetProfileController {
             }
         });
 
-        if (flag == 1) {
+        if (flag == 0) {
             return new BasicResponse("success", id, null);
-        } else
+        } else if(flag == 1)
             return new BasicResponse("failure", id, "No such user exists");
+
+        return null;
     }
 
     @RequestMapping(value = "/petProfileUpdate", method = RequestMethod.POST)
@@ -94,7 +97,27 @@ public class PetProfileController {
 
         ref.updateChildren(update);
         return new BasicResponse("success", id, null);
+    }
 
 
+    @RequestMapping(value = "/deletePetProfile", method = RequestMethod.POST)
+    public BasicResponse petProfileDelete(
+            @RequestParam(value = "petId") String id)
+        {
+        //check token id = user id
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(id)) {
+                    DatabaseReference child = FirebaseDatabase.getInstance().getReference("pets/"+id);
+                    child.getRef().setValue(null);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) { }
+        });
+        return new BasicResponse("success", id, null);
     }
 }
