@@ -47,7 +47,7 @@ export class LoginPage {
                   console.log("FOUND USER");
                   this.navCtrl.setRoot(OwnerHomePage);
               }              
-              else{
+              else if(element.userType == "Vet"){
                 console.log("Found Vet");
                 this.navCtrl.setRoot(VetHomePage);
               }
