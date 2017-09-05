@@ -114,17 +114,13 @@ API (for front end people)
             
 7. Delete Pet
         Input:
-            URL: http://ServerIP:Port/petProfileDelete
+            URL: http://ServerIP:Port/petProfileDelete/petId
             Parameters(case-sensitive)
-            1. token (NOT YET IMPLEMENTED. Ignore for now.)
-            2. petId
+            No parameters as Deleting can only take ID
             
-            None of the Parameters are OPTIONAL. They must both be sent.
-            Example Parameters :
-            petId=Pet2
         Output:
             {"response":"success","id":"Pet2","errorMessage":null}
-
+        If the petID entered, does not exist then the same response is sent but no Pet is Deleted
 -----------User Auth-----------------
 
 

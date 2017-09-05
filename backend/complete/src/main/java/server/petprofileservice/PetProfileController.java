@@ -8,10 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import server.response.BasicResponse;
 
 import java.io.IOException;
@@ -100,9 +97,9 @@ public class PetProfileController {
     }
 
 
-    @RequestMapping(value = "/deletePetProfile", method = RequestMethod.POST)
+    @RequestMapping(value = "/deletePetProfile/{id}", method = RequestMethod.DELETE)
     public BasicResponse petProfileDelete(
-            @RequestParam(value = "petId") String id)
+            @PathVariable("id") String id)
         {
         //check token id = user id
 
@@ -118,6 +115,6 @@ public class PetProfileController {
             @Override
             public void onCancelled(DatabaseError error) { }
         });
-        return new BasicResponse("success", id, null);
+        return new BasicResponse("success", id, ID);
     }
 }
