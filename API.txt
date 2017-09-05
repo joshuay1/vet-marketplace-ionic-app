@@ -70,12 +70,60 @@ API (for front end people)
 4. Image Upload
 
 5. Insert Pet
+    
+    This is an api for adding a new pet!
+    Initialization of the pet in the database to a particular user
+
+    Input:
+            URL: http://ServerIP:Port/postPetProfile
+
+            Parameters (Case-sensitive)
+
+            ALL REQUIRED ( WILL RETURN ERROR IF NOT)
+
+              1. token (NOT YET IMPLEMENTED. Ignore for now.)
+              2. petId
+              3. userId
+              4. petname
+              5. dob
+              6. animalType
+              7. breed
+            Example Parameters :
+            petId=Pet1&userId=FdsZPv4cydYUN9CVFb3WZbJb3Rr1&petname=Fluffy&dob=10/11/2010&animalType=Dog&breed=Dalmation
+    
+    Output:
+    {"response":"success","id":"Pet1","errorMessage":null}
 
 6. Update Pet
+        Input:
+            URL: http://ServerIP:Port/petProfileUpdate
+            Parameters(case-sensitive)
+            1. token (NOT YET IMPLEMENTED. Ignore for now.)
+            2. petId
+            3. petname
+            4. dob
+            5. animalType
+            6. breed
+            ALL Parameters are OPTIONAL EXCEPT FOR petId, token (when it is implemented).
+            petId is for identification only and is not part of the update
+            Example Parameters :
+            petId=Pet1&petname=Snoopy&dob=&animalType=&breed=
 
+        Output: 
+            return : {"response":"success","id":"Tester2","errorMessage":null}
+            
 7. Delete Pet
-
-
+        Input:
+            URL: http://ServerIP:Port/petProfileDelete
+            Parameters(case-sensitive)
+            1. token (NOT YET IMPLEMENTED. Ignore for now.)
+            2. petId
+            
+            None of the Parameters are OPTIONAL. They must both be sent.
+            Example Parameters :
+            petId=Pet2
+        Output:
+            {"response":"success","id":"Pet2","errorMessage":null}
 
 -----------User Auth-----------------
 
