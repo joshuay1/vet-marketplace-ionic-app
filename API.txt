@@ -7,6 +7,8 @@ API (for front end people)
 ------------User / Vet Profile Management-------------------------
 
 
+IP:PORT = http://115.146.86.193:8080
+
 1. Profile Post Example
 
 
