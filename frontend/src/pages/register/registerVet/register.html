@@ -7,42 +7,38 @@
 <ion-content class="background">
 
   <ion-card>
-
-
-<ion-card-header>
-  <!-- this is temp title-->
-    <ion-title>Register as a Vet</ion-title>
-
-</ion-card-header>
-
+      <p class="logo">
+          <img src="../assets/img/logo_white.png" style="width:235px;height:166px">
+        </p>
+        <p floating color="light">Sign up as an vet!</p>
 
 <ion-card-content >
 
   <form [formGroup]= "registerForm">
    <ion-list>
       <ion-item>
-        <ion-label floating color="text" >Email Address</ion-label>
+        <ion-label floating color="light" >Email Address</ion-label>
         <ion-input type="email" formControlName = "email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
     
       <ion-item>
-        <ion-label floating color="text" >Password</ion-label>
+        <ion-label floating color="light" >Password</ion-label>
         <ion-input type="password" formControlName = "password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
 
 
       <ion-item>
-        <ion-label floating color="text" >Authentication Key (* Vet only)</ion-label>
+        <ion-label floating color="light" >Authentication Key (* Vet only)</ion-label>
         <ion-input type="text" formControlName = "auth" [(ngModel)]="userInfo.authkey"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating color="text" >First Name</ion-label>
+        <ion-label floating color="light" >First Name</ion-label>
         <ion-input type="text" formControlName = "first-name" [(ngModel)]="userInfo.firstname"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating color="text" >Last Name</ion-label>
+        <ion-label floating color="light" >Last Name</ion-label>
         <ion-input type="text" formControlName = "last-name" [(ngModel)]="userInfo.lastname"></ion-input>
       </ion-item>
 
@@ -50,14 +46,11 @@
 
       
       <ion-item>
-          <ion-label floating color="text" >Date of Birth</ion-label>
+          <ion-label floating color="light">Date of Birth</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" formControlName = "dob" [(ngModel)]="userInfo.dob"></ion-datetime>
       </ion-item>
-        
-
-
-
-      <button ion-button (click)="register(user)">Register</button>
+      <br>
+      <button color="secondary" ion-button (click)="register(user)">Register</button>
 
     </ion-list> 
   </form>

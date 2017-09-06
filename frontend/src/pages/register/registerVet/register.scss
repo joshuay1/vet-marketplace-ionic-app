@@ -1,34 +1,56 @@
 page-register {
     .background{
-           background-image: url('../assets/img/background.jpg');
+           background-image: url('../assets/img/blueBackground2.jpg');
     }
 
     .scroll-content {
         align-content: center;
         justify-content: center;
         text-align: center;
+        overflow-y: auto;
+
+    }
+    a, p,
+	{
+		color: "light";
+	}
+
+    
+    .logo img {
+        position: center;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-bottom: 0;
+        padding: 0
     }
 
-    .circle-pic{
-        height: 5vw; 
-        width: 5vw; 
-       border: 2px solid #fff;
-       border-radius: 50%;
-       box-shadow: 0 0 5px gray;
-       display: inline-block;
-       margin-left: auto;
-       margin-right: auto;
-    }
-    
+    ::-webkit-scrollbar{
+        display:none;
+        }
+
     ion-card {
         position: relative; 
     }
+    
+    $toolbar-ios-title-text-color:white;
+    $toolbar-md-title-text-color: white;
 
-
+    ion-card.card {
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.00);
+        border-radius: 5px;
+        position: absolute;
+        padding: none;
+        margin: none;
+        
+    }
     .item {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     background: rgba(255, 255, 255, 0.5);
     border: medium none;
+    
+ 
 
     .text-input, {
         color: "primary";
@@ -44,12 +66,4 @@ page-register {
 
 
 
-/*
-ion-card.card {
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.50);
-    border-radius: 5px;
-
-}
-*/
 

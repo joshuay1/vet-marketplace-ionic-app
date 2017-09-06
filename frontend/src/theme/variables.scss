@@ -35,7 +35,7 @@ $app-direction: ltr;
 
 $colors: (
   primary:    #0b4d6b,
-  secondary:  #F9BE02,
+  secondary:  #FFB100,
   text:       #7e7e7e,
   light:      #f4f4f4,
   dark:       #282828
@@ -56,7 +56,9 @@ blue {
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
+::-webkit-scrollbar{
+  display:none;
+  }
 
 
 // App Windows Variables

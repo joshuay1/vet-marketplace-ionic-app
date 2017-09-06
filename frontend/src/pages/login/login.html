@@ -6,32 +6,45 @@
 -->
 <ion-content class="background">
   <ion-card>
-    <ion-card-content>
-      <img width="%60" height="%60" src="../assets/img/logo.png" alt="">
-    </ion-card-content>
+    <ion-card-content >
+        <p class="logo">
+        <img src="../assets/img/logo.png" style="width:235px;height:166px">
+        </p>
+
+        <ion-grid no-margin>
+          <ion-row>
+              <ion-col>
+              <ion-item>
+                  <ion-label floating color="text" >Email</ion-label>
+                  <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+                </ion-item>
+              <ion-item>
+                    <ion-label floating color="text" >Password</ion-label>
+                    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <br>
 
 
-    <ion-card-content>
-      
-      <ion-list no-line>
 
-        <ion-item>
-          <ion-label floating color="text" >Email</ion-label>
-          <ion-input type="text" [(ngModel)]="user.email"></ion-input>
-        </ion-item>
+          <ion-row>
+              <ion-col>
+            <button class = "button button-block" ion-button (click)="login(user)">Login</button>
+              </ion-col>
+          </ion-row>
+            <p>Or register as</p>
+        <ion-row>
+            <ion-col>
+                  <button class = "button button-block" ion-button color="secondary" (click)="registerVet()">Vet</button>
+              </ion-col>
+              <ion-col>
+                  <button class = "button button-block" ion-button color="secondary" (click)="registerOwner()">Owner</button>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+        
 
-        <ion-item>
-          <ion-label floating color="text" >Password</ion-label>
-          <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-        </ion-item>
-      </ion-list>
-      </ion-card-content>
-      <ion-card-content>
-        <button ion-button (click)="login(user)">Login</button>
-        <br>
-        <p>Or register as</p>
-        <button ion-button color="secondary" (click)="registerVet()">Vet</button>
-        <button ion-button color="secondary" (click)="registerOwner()">Owner</button>
       
     </ion-card-content>
     

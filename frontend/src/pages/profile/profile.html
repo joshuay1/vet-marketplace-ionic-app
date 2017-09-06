@@ -4,36 +4,41 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<ion-content  scroll="false" >
 
+    <div style="height: 40%" class="background">
+  <ion-card>
+    <ion-card-content>
     <ion-grid>
+      <ion-row>
+        <ion-col>
+      <div class="circle-pic">
+        <img src="assets/img/dog.jpg" />
+      </div>
+    </ion-col>
+    <ion-col>
+      <br><br><br>      
+      <p class="a"> {{(profileData|async)?.userType}} </p>
+ 
+      <p class="p">{{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+    
+    </ion-card-content>
+  </ion-card>
+</div>
 
-        <ion-row row-40 style="background-image: url('assets/img/blueBackground.jpg')">
-          <ion-col>
-                <img class="circle-pic"  src = "assets/img/dog.jpg"/> 
-                <p> {{(profileData|async)?.userType}} 
-                <br> 
-                {{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
-          </ion-col>
-        </ion-row>
-
-        <ion-row row-50 style="background-color: #ffffff;">
-          <ion-col>
-
-            <ion-card>
-              <ion-card-content>
-                  Snuffles
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-content>
-                Snowball
-              </ion-card-content>
-            </ion-card>
-
-         </ion-col>
-        </ion-row>
-      </ion-grid>
-
-
-
+<div class="whitebackground">
+    <p class="a">My pets</p>
+  <ion-card >
+    <ion-card-content>
+      <button class="button button-block" ion-button color="secondary">Snuffle</button>
+      <br>
+      <button class="button button-block" ion-button color="secondary">Snowball</button>
+      <br>
+      <button class="addbutton" ion-button color="primary">Add</button>
+    </ion-card-content>
+  </ion-card>
+</div>
+</ion-content>

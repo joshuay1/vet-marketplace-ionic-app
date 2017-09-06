@@ -1,84 +1,94 @@
 page-profile {
-    .background1{
-        background-image: url('../assets/img/background.jpg');
+    .background{
+        display: block;
+        top: 0; 
+        margin-top: -5%;
+        background-image: url('../assets/img/blueBackground2.jpg');
     }
 
-    .background2{
-        background-color: "light";
+    .whitebackground{
+        background-color: white;
+
     }
 
+    .addbutton{
+        position: relative;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        margin-top:0px;
+        margin-bottom:0px;
+    }
 
     scroll-content {
         display: flex;
         flex-direction: column;
     }
 
-    a{
-        position:absolute;
-        width:100%;
-        bottom:0;
-        text-align:center;
+    .a{
         color: #919191;
         font-family: 'Open Sans', sans-serif;
         font-weight: bold;
-
-    }
-
-    p{
-        text-transform: uppercase;
-        position:absolute;
         width:100%;
         bottom:0;
-        text-align:center;
-        color: #ffffff;
-        font-family: 'Open Sans', sans-serif;
-        font-weight: bold;
+        padding:10px;
+        margin-left:10px;
+        text-align:left;
+        vertical-align: bottom;
 
     }
- 
-    ion-grid {
-        border: none;
-        padding: none;
-        width:100%;
-        height: 100%;
-        text-align:center;
 
+    
+
+    .item {
+        margin-bottom: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        border: medium none;      
+        .text-input, {
+            color: "primary";
+        }
+    }
+
+    .p{
+        text-transform: uppercase;
+        position:relative;
+        width:100%;
+
+        padding:10px;
+        margin-left:10px;
+        text-align:left;
+        
+        color: #FFFFFF;
+        font-size: 1.3em;
+        font-weight: bold;
     }
 
     ion-card.card {
         box-shadow: none;
-        background: #F9BE02;
+        background: rgba(255, 255, 255, 0.00);
         border-radius: 5px;
-        padding: 5px;
         position: relative;
-        font-family: 'Open Sans', sans-serif;
-        color: #ffffff;
-        
+        padding: none;
+        margin: none;
     }
- 
-    ion-row {
-        flex: 1;
-        vertical-align: bottom;
 
-    }
  
-    .circle-pic{
-        position: absolute;
+    .circle-pic img{
+        position: center;
         left: 0;
         right: 0;
-        margin:0 auto;
-        top:20%;;
-        align-items: center;
-        height: 50vw; 
-        width: 50vw; 
-       border: 2px solid #F9BE02;
+        bottom: 5;
+        margin: 0 auto;
+        margin-top:30px;
+        margin-bottom:70px;
+        padding: 0;
+        top:10vw;
+        
+        height: 35vw; 
+        width: 35vw; 
+       border: 2px solid white;
        border-radius: 50%;
        box-shadow: 0 0 5px gray;
-       display: inline-block;
-
     }
-
-
-
 
 }
