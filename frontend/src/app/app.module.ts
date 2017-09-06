@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
+import { AuthService } from '../providers/auth-service';
 import { MyApp } from './app.component';
 import { OwnerHomePage } from '../pages/home/ownerHome/ownerHome';
 import { VetHomePage } from '../pages/home/vetHome/vetHome';
@@ -17,6 +17,7 @@ import { BookingsPage } from "../pages/bookings/bookings";
 import { SettingsPage } from "../pages/settings/settings";
 import { CalendarPage } from "../pages/calendar/calendar";
 import { ProfilePage } from "../pages/profile/profile";
+
 
 var config = {
   apiKey: "AIzaSyD16Z_p-S5LgSceHoL3ob7gRNSqqFaPbWQ",
@@ -60,7 +61,8 @@ var config = {
     AngularFireDatabase,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthService
   ]
 })
 export class AppModule {}
