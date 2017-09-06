@@ -35,7 +35,7 @@ public class ProfileController {
    
     //private Semaphore semaphore = new Semaphore(0);
     private final Logger logger = LoggerFactory.getLogger(Application.class);
-    private final String DEFAULTPICTURE= "https://firebasestorage.googleapis.com/v0/b/vetquoll-c22f9.appspot.com/o/Basic%2Fempty.png?alt=media&token=9463fdee-6966-4d87-9928-d4e62e834a9d";
+    private final String DEFAULTPICTURE= "gs://vetquoll-c22f9.appspot.com/Basic/empty.png";
     //GOOGLE API
     private GeoApiContext geocode = new GeoApiContext.Builder()
     .apiKey("AIzaSyAASyK4NcL0JFu9p3Vm3_alRZNEEv1btyE")
