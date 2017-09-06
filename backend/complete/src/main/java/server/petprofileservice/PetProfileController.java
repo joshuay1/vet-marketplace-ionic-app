@@ -1,23 +1,23 @@
 package server.petprofileservice;
 
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.maps.GeocodingApi;
-import com.google.maps.errors.ApiException;
-import com.google.maps.model.GeocodingResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import server.Application;
 import server.response.BasicResponse;
-
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import server.HelperFunction;
+import org.json.simple.*;
 
 @RestController
 public class PetProfileController {
     private BasicResponse response = null;
     private int flag = -1;
+    private final Logger logger = LoggerFactory.getLogger(Application.class);
+
 
     @RequestMapping(value = "/postPetProfile", method = RequestMethod.POST)
     public BasicResponse postPetProfile(
@@ -28,20 +28,49 @@ public class PetProfileController {
             @RequestParam(value = "animalType") String animalType,
             @RequestParam(value = "breed") String animalBreed) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/" + id);
         //TODO: check token.id = id
-
+        //DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/");
 
         //TODO: String checking for input
         //String checking for each input
-        PetProfileData data = new PetProfileData(petname, animalType, dob, animalBreed, uid);
+        //PetProfileData data = new PetProfileData(petname, animalType, dob, animalBreed, uid);
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.hasChild(uid)) {
-                    ref.setValue(data);
-                    flag = 0;
+                    if(!snapshot.hasChild(uid+"/petIds")) {
+                        logger.info("PET ID's DONT EXIST IN USER");
+                        DatabaseReference id = userRef.child(uid).push();
+                        PetProfileData data = new PetProfileData(petname, animalType, dob, animalBreed, uid);
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/"+id.getKey());
+                        ref.setValue(data);
+                        List petIds = new ArrayList<String>();
+                        petIds.add(id.getKey());
+                        DatabaseReference petRef = FirebaseDatabase.getInstance().getReference("users/"+uid);
+                        petRef.child("petIds").setValue(petIds);
+                    }
+                    else {
+                        logger.info("PET ID's EXIST IN USER");
+                        DatabaseReference id = userRef.child(uid).push();
+                        PetProfileData data = new PetProfileData(petname, animalType, dob, animalBreed, uid);
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/"+id.getKey());
+                        ref.setValue(data);
+                        DatabaseReference petRef = FirebaseDatabase.getInstance().getReference("users/"+uid+"/petIds");
+                        petRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {};
+                                ArrayList<String> petIds = snapshot.getValue(t);
+                                logger.debug("PET ID's EXIST IN USER and PET ID is as follows" + petIds);
+                                petIds.add(id.getKey());
+                                petRef.setValue(petIds);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError error) {}
+                        });
+                    }
+
                 } else {
                     flag = 1;
                 }
@@ -91,7 +120,6 @@ public class PetProfileController {
             //logger.info("Animal Type of "+id+" changed to " + animalType);
             update.put("animalType",animalType);
         }
-
         ref.updateChildren(update);
         return new BasicResponse("success", id, null);
     }
@@ -102,19 +130,24 @@ public class PetProfileController {
             @PathVariable("id") String id)
         {
         //check token id = user id
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(id)) {
-                    DatabaseReference child = FirebaseDatabase.getInstance().getReference("pets/"+id);
-                    child.getRef().setValue(null);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) { }
-        });
-        return new BasicResponse("success", id, null);
+        String petUserUrl = "pets/"+id;
+        try {
+            JSONObject petInfo = HelperFunction.getData(petUserUrl, logger);
+            String userId = petInfo.get("userId").toString();
+            String userPetsUrl = "users/" + userId;
+            JSONObject userPetInfo = HelperFunction.getData(userPetsUrl, logger);
+            JSONArray petIds = (JSONArray) userPetInfo.get("petIds");
+            JSONArray newPetIds = new JSONArray();
+            petIds.remove(null);
+            petIds.remove(id);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/" + userId);
+            userRef.child("petIds").setValue((ArrayList<String>) petIds);
+            DatabaseReference petRef = FirebaseDatabase.getInstance().getReference(petUserUrl);
+            petRef.setValue(null);
+            return new BasicResponse("success", id, null);
+        }
+        catch (NullPointerException e){
+            return new BasicResponse("failure", id, "ID doesn't exist");
+        }
     }
 }
