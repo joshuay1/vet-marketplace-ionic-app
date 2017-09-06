@@ -1,6 +1,5 @@
 package server;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseCredentials;
