@@ -66,8 +66,16 @@ public class ProfileController {
             //TODO: check token.id = id
 
 
-            //TODO: String checking for input
+
             //String checking for each input
+            if(!userType.equals("User") && !userType.equals("Vet")){
+                return new BasicResponse("error",id,"userType must User or Vet");
+            }
+
+            if(!HelperFunction.testDob(dob)){
+                return new BasicResponse("error",id,"wrong dob format");
+            }
+
             
             String address =  streetnumber + " " +streetname + " , "+ suburb + " , "+state + " "+ postcode+ ","+ country;
 
@@ -126,7 +134,6 @@ public class ProfileController {
         @RequestParam(value="firstname",required = false) String firstname,
         @RequestParam(value="lastname",required = false)String lastname,
         @RequestParam(value="dob",required = false)String dob,
-        @RequestParam(value="userType") String userType,
         @RequestParam(value="streetnumber",required = false)String streetnumber,
         @RequestParam(value="streetname",required = false)String streetname,
         @RequestParam(value="postcode",required = false)String postcode,
@@ -136,7 +143,17 @@ public class ProfileController {
         {
             //check token id = user id
 
+
+            String userType = HelperFunction.getUserType(id, logger);
             boolean changeaddress = false;
+
+            //String testing
+
+            if(!HelperFunction.testDob(dob)){
+                logger.info("wrong format in dob");
+                return new BasicResponse("error",id,"wrong dob format");
+            }
+            
             //check if one of address related stuff is changed
             if(streetnumber != null || streetname != null || suburb!=null || state!=null || postcode != null ||country!=null ){
                 logger.info("There is an address change");

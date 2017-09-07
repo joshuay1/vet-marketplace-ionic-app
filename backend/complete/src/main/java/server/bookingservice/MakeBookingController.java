@@ -38,13 +38,10 @@ public class MakeBookingController{
         //TODO check token = id
 
         //get UserType
-        String url = "users/"+id;
-        logger.info("sent request to url = "+ url);
-        JSONObject user = HelperFunction.getData(url, logger);
-        String userType = (String) user.get("userType");
+        String userType = HelperFunction.getUserType(id, logger);
         
         //Get info of the location of the user
-        url = "geofire/"+ userType+"/"+id;
+        String url = "geofire/"+ userType+"/"+id;
         logger.info("sent request to url =" + url);
         JSONObject location = HelperFunction.getData(url, logger);
         JSONArray geoloc = (JSONArray) location.get("l");

@@ -99,4 +99,13 @@ public class HelperFunction {
 
 	}
 
+	public static String getUserType(String id, Logger logger){
+		JSONObject data = getData("users/"+id, logger);
+		return (String) data.get("userType");
+	}
+
+	public static boolean testDob(String dob){
+		return dob.matches("[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}");
+	}
+
 }
