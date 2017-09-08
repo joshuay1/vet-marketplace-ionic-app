@@ -35,7 +35,7 @@ $app-direction: ltr;
 
 $colors: (
   primary:    #0b4d6b,
-  secondary:  #FFB100,
+  secondary:  #00C9A1,
   text:       #7e7e7e,
   light:      #f4f4f4,
   dark:       #282828
@@ -91,3 +91,22 @@ blue {
 
 @import "roboto";
 @import "noto-sans";
+
+
+@font-face{
+  font-family: Montserrat-Light, sans-serif;
+  src: url('../assets/fonts/Montserrat/Montserrat-Light.ttf') format('ttf');
+  }
+
+@font-face{
+  font-family: 'Open Sans', sans-serif;
+  src: url('../assets/fonts/Open_Sans/OpenSans-Light.ttf') format('ttf');
+  }
+   
+* {
+  font-family: 'Montserrat';
+  }
+
+os {
+  font-family: 'Open Sans';
+}

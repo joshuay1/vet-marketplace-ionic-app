@@ -3,6 +3,30 @@ page-bookings {
     background-image: url('../assets/img/background.jpg');
   }
 
+  
+  .whitebackground{
+    background-color: white;
+
+  }
+  .img_container{
+    text-align: center;
+    position: center;
+  }
+  
+
+  
+  .toolbar-background {
+    background-color: #0b4d6b;
+  }
+
+  .toolbar-title-md{
+    color: white;
+    font-family: roboto;
+  }
+  .toolbar-title-ios{
+    color: white;
+    font-family: roboto;  
+  }  
 
   .scroll-content {
     overflow: hidden;
@@ -14,14 +38,3 @@ page-bookings {
   }
 }
 
-
-ion-card.card {
-  box-shadow: none;
-  background: rgba(255, 255, 255, 0.50);
-  border-radius: 5px;
-}
-
-.button {
-  align-content: center;
-  position: relative
-}

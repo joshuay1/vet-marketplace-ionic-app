@@ -1,10 +1,9 @@
 <!--
-  Generated template for the ProfilePage page.
+  Generated template for the PetPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-
 <ion-header>
     
       <ion-navbar>
@@ -14,7 +13,7 @@
         </button>
     
         <ion-title>
-            <span text-color="light"> Profile </span>
+            <span text-color="light"> Your Pet </span>
         </ion-title>
     
         <ion-buttons end>
@@ -35,13 +34,13 @@
       <ion-row>
         <ion-col>
       <div class="circle-pic">
-        <img src="assets/img/owner.jpg" />
+        <img src="assets/img/dog.jpg" />
       </div>
     </ion-col>
     <ion-col>
       <br><br><br>      
-      <p class="a"> {{(profileData|async)?.userType}} </p>
-      <p class="p">{{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
+      <p class="a"> Dog </p>
+      <p class="p">Snuffle </p>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -51,20 +50,21 @@
 
 <div class="whitebackground">
 
-  <ion-card class="profilecard">
+  <ion-card class="petCard">
     <ion-card-content>
 
-      <p class="a">My pets</p>
-      <button class="button button-block" ion-button color="secondary" 
-      (click)="accessPet()">Snuffle</button>
-      <button class="button button-block" ion-button color="secondary"
-      (click)="accessPet()">Snowball</button>
-
-      <div class="img_container">
-      <button class= "addbutton" ion-button icon-only>
-        <ion-icon name="ios-add-circle-outline"></ion-icon>
-      </button>
+      <p class="a">My records</p>
+    <ion-list>
+      Sick <br>
+      Heart Attack <br>
+      Nose Surgury <br>
+    </ion-list>
+    <div class="img_container">
+        <button class= "addbutton" ion-button icon-only>
+          <ion-icon name="ios-add-circle-outline"></ion-icon>
+        </button>
     </div>
+
     </ion-card-content>
   </ion-card>
 </div>

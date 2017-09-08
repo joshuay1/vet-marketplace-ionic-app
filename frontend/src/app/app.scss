@@ -14,12 +14,48 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-@font-face{
-    font-family: Montserrat, sans-serif;
-    src: url('../assets/fonts/Montserrat-Light.tff') format('tff');
-    }
-     
-    *{
-    font-family: Montserrat;
-    }
 
+
+ion-card.card {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 5px;
+  }
+  
+  .button {
+    align-content: center;
+    position: relative
+  }
+  
+  .addbutton{
+    background-color: rgba(255, 255, 255, 0.00);
+    color: gray;
+    height: 15vw; 
+    width: 15vw;
+    position: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: none;
+  }
+
+  
+  .img_container{
+    text-align: center;
+    position: center;
+}
+
+.toolbar-background {
+    background-color: #0b4d6b;
+  }
+
+.toolbar-title-md{
+    color: white;
+    font-family: roboto;
+}
+
+.toolbar-title-ios{
+    color: white;
+    font-family: roboto;
+}  

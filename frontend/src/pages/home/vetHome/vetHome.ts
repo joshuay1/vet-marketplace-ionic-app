@@ -10,8 +10,8 @@ import { CalendarPage } from "../../calendar/calendar";
   export class VetHomePage {
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    tab1Root = ProfilePage;
-    tab2Root = BookingsPage;
+    tab1Root = BookingsPage;
+    tab2Root = ProfilePage;
     tab3Root = SettingsPage;
     tab4Root = CalendarPage;
   

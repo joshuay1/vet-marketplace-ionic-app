@@ -10,8 +10,8 @@ import { BookingsPage } from "../../bookings/bookings";
   export class OwnerHomePage {
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    tab1Root = ProfilePage;
-    tab2Root = BookingsPage;
+    tab1Root = BookingsPage;
+    tab2Root = ProfilePage;
     tab3Root = SettingsPage;
   
     constructor() {

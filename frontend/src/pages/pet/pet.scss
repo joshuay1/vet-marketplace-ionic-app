@@ -1,25 +1,19 @@
-page-profile {
+page-pet {
     .background{
         top: 0; 
         margin-top: -5%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-image: url('../assets/img/blackBackground.jpg');
-    }
+     }
 
     .whitebackground{
         background-color: white;
 
     }
 
-
     .button.button-block {
         height: 12vw; 
         border-radius: 5px;
         margin-top:0px;
         margin-bottom:15px;
-        
-
     }
 
     scroll-content {
@@ -40,9 +34,6 @@ page-profile {
 
     }
 
-    
-    
-
     .p{
 
         position:relative;
@@ -52,13 +43,10 @@ page-profile {
         margin-left:0px;
         text-align:left;
         
-        color: #FFFFFF;
+        color: #0b4d6b;
         font-size: 1.4em;
     }
 
-
-
- 
     .circle-pic img{
         position: relative;
         left: 5vw;

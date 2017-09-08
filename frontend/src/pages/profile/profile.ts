@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { UserInfo } from "../../model/user";
+import { PetPage} from "../pet/pet";
 
 /**
  * Generated class for the ProfilePage page.
@@ -29,4 +30,10 @@ export class ProfilePage {
       this.profileData = this.db.object(`users/${data.uid}`)
     });
   }
+
+
+  accessPet() {
+    this.navCtrl.push('PetPage');
+  }
+
 }

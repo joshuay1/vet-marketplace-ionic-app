@@ -17,6 +17,7 @@ import { BookingsPage } from "../pages/bookings/bookings";
 import { SettingsPage } from "../pages/settings/settings";
 import { CalendarPage } from "../pages/calendar/calendar";
 import { ProfilePage } from "../pages/profile/profile";
+import { PetPage } from "../pages/pet/pet";
 
 
 var config = {
@@ -37,7 +38,7 @@ var config = {
     ProfilePage,
     SettingsPage,
     CalendarPage,
-    BookingsPage
+    BookingsPage,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,7 @@ var config = {
     ProfilePage,
     SettingsPage,
     CalendarPage,
-    BookingsPage
+    BookingsPage,
   ],
   providers: [
     AngularFireDatabase,

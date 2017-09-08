@@ -10,20 +10,17 @@ page-register {
         overflow-y: auto;
 
     }
-    a, p,
-	{
-		color: "light";
-	}
 
-    
     .logo img {
-        position: center;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin-bottom: 0;
-        padding: 0
-    }
+    position: relative;;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin:0 auto;
+    padding: 0
+}
+
+    $toolbar-ios-title-text-color:white;
 
     ::-webkit-scrollbar{
         display:none;
@@ -33,8 +30,6 @@ page-register {
         position: relative; 
     }
     
-    $toolbar-ios-title-text-color:white;
-    $toolbar-md-title-text-color: white;
 
     ion-card.card {
         box-shadow: none;
@@ -61,6 +56,7 @@ page-register {
     align-content: center;
     position: relative
 }
+
 
 }
 
