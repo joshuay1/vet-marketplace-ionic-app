@@ -259,6 +259,8 @@ public class ProfileController {
                 if(!match){
                     return new BasicResponse("error", id, "token id does not match provided id");
                 }
+            }else{
+                return new BasicResponse("error", null, "no user id found");
             }
 
             if(jsonProfile.containsKey("firstname")){
