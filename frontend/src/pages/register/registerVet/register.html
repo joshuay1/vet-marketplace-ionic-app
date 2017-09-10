@@ -16,22 +16,7 @@
 
   <form [formGroup]= "registerForm">
    <ion-list>
-      <ion-item>
-        <ion-label floating color="light" >Email Address</ion-label>
-        <ion-input type="email" formControlName = "email" [(ngModel)]="user.email"></ion-input>
-      </ion-item>
-    
-      <ion-item>
-        <ion-label floating color="light" >Password</ion-label>
-        <ion-input type="password" formControlName = "password" [(ngModel)]="user.password"></ion-input>
-      </ion-item>
-
-
-      <ion-item>
-        <ion-label floating color="light" >Authentication Key (* Vet only)</ion-label>
-        <ion-input type="text" formControlName = "auth" [(ngModel)]="userInfo.authkey"></ion-input>
-      </ion-item>
-
+     
       <ion-item>
         <ion-label floating color="light" >First Name</ion-label>
         <ion-input type="text" formControlName = "first-name" [(ngModel)]="userInfo.firstname"></ion-input>
@@ -49,6 +34,61 @@
           <ion-label floating color="light">Date of Birth</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" formControlName = "dob" [(ngModel)]="userInfo.dob"></ion-datetime>
       </ion-item>
+
+
+      <ion-item>
+        <ion-label floating color="light">Street Number</ion-label>
+        <ion-input type="text" formControlName="streetnumber" [(ngModel)]="userInfo.streetnumber" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
+      </ion-item>
+ 
+      <ion-item>
+       <ion-label floating color="light">Street Name</ion-label>
+       <ion-input type="text" formControlName="streetname" [(ngModel)]="userInfo.streetname" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
+     </ion-item>
+ 
+      <ion-item>
+        <ion-label floating color="light">Suburb</ion-label>
+        <ion-input type="text" formControlName="suburb" [(ngModel)]="userInfo.suburb" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+      </ion-item>
+ 
+      <ion-item>
+       <ion-label floating color="light">State</ion-label>
+       <ion-input type="text" formControlName="state" [(ngModel)]="userInfo.state" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+     </ion-item>
+ 
+     <ion-item>
+       <ion-label floating color="light">Postcode</ion-label>
+       <ion-input type="text"formControlName="postcode" [(ngModel)]="userInfo.postcode" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+     </ion-item>
+ 
+ 
+     <ion-item>
+       <ion-label floating color="light">Country</ion-label>
+       <ion-input type="text" formControlName="country" [(ngModel)]="userInfo.country" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+     </ion-item>
+ 
+
+     <ion-item>
+      <ion-label floating color="light" >Email Address</ion-label>
+      <ion-input type="email" formControlName = "email" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating color="light" >Password</ion-label>
+      <ion-input type="password" formControlName = "password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="light">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="repassword" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="light" >Authentication Key (* Vet only)</ion-label>
+      <ion-input type="text" formControlName = "auth" [(ngModel)]="userInfo.authkey"></ion-input>
+    </ion-item>
+
+
       <br>
       <button color="secondary" ion-button (click)="register(user)">Register</button>
 
