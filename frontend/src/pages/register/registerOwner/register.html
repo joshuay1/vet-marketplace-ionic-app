@@ -31,14 +31,35 @@
      </ion-item>
 
      <ion-item>
-       <ion-label floating color="light">Physical Address</ion-label>
-       <ion-input type="text" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
+       <ion-label floating color="light">Street Number</ion-label>
+       <ion-input type="text" formControlName="streetnumber" [(ngModel)]="userInfo.streetnumber" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
      </ion-item>
 
      <ion-item>
+      <ion-label floating color="light">Street Name</ion-label>
+      <ion-input type="text" formControlName="streetname" [(ngModel)]="userInfo.streetname" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
+    </ion-item>
+
+     <ion-item>
        <ion-label floating color="light">Suburb</ion-label>
-       <ion-input type="text" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+       <ion-input type="text" formControlName="suburb" [(ngModel)]="userInfo.suburb" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
      </ion-item>
+
+     <ion-item>
+      <ion-label floating color="light">State</ion-label>
+      <ion-input type="text" formControlName="state" [(ngModel)]="userInfo.state" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="light">Postcode</ion-label>
+      <ion-input type="text"formControlName="postcode" [(ngModel)]="userInfo.postcode" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label floating color="light">Country</ion-label>
+      <ion-input type="text" formControlName="country" [(ngModel)]="userInfo.country" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+    </ion-item>
 
       <ion-item>
         <ion-label floating color="light" >Email Address</ion-label>

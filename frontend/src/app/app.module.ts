@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { AuthService } from '../providers/auth-service';
 import { MyApp } from './app.component';
 import { OwnerHomePage } from '../pages/home/ownerHome/ownerHome';
 import { VetHomePage } from '../pages/home/vetHome/vetHome';
@@ -18,6 +17,7 @@ import { SettingsPage } from "../pages/settings/settings";
 import { CalendarPage } from "../pages/calendar/calendar";
 import { ProfilePage } from "../pages/profile/profile";
 import { PetPage } from "../pages/pet/pet";
+import { HttpModule } from "@angular/http";
 
 
 var config = {
@@ -45,7 +45,8 @@ var config = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,8 +63,7 @@ var config = {
     AngularFireDatabase,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

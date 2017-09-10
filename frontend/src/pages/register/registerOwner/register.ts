@@ -5,6 +5,7 @@ import { AngularFireDatabase} from 'angularfire2/database';
 import { User, UserInfo } from "../../../model/user";
 import { OwnerHomePage } from "../../home/ownerHome/ownerHome";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
+import { RequestOptions, Http, Headers } from "@angular/http";
 /**
  * Generated class for the RegisterPage page.
  *
@@ -19,7 +20,7 @@ import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 })
 export class RegisterOwnerPage {
   [x: string]: any;
-
+  private apiUrl = 'http://115.146.86.193:8080/';
   user = {} as User;
   userInfo = {} as UserInfo;
   loading;
@@ -30,7 +31,8 @@ export class RegisterOwnerPage {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private db :AngularFireDatabase,
-    private builder: FormBuilder) {
+    private builder: FormBuilder,
+    private http: Http) {
       this.registerForm = builder.group({
         'email' : ['',Validators.compose([Validators.required,Validators.minLength(5),Validators.email])],
         'password':['',Validators.compose([Validators.required,Validators.minLength(8)])],
@@ -38,7 +40,13 @@ export class RegisterOwnerPage {
         'auth':[],
         'first-name': ['',Validators.required],
         'last-name': ['',Validators.required],
-        'dob': ['',Validators.required]
+        'dob': ['',Validators.required],
+        'streetname':['',Validators.required],
+        'streetnumber':['',Validators.required],
+        'suburb':['',Validators.required],
+        'state':['',Validators.required],
+        'postcode':['',Validators.required],
+        'country': ['',Validators.required]
       })
   }
 
@@ -58,9 +66,12 @@ export class RegisterOwnerPage {
           this.userInfo.userType = "User";
           this.userInfo.authkey = null;
         }
-        console.log(this.userInfo.authkey);
         console.log(this.userInfo.userType);
-        this.db.object(`users/${auth.uid}`).set(this.userInfo);
+
+        //REST Connection to Server
+        this.postRequest(this.userInfo, auth.uid);
+        
+        //this.db.object(`users/${auth.uid}`).set(this.userInfo);
         this.navCtrl.setRoot(OwnerHomePage);
 
       })
@@ -152,6 +163,71 @@ export class RegisterOwnerPage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  postRequest(info : UserInfo, id: string ){
+    var headers = new Headers();
+    headers.append('Content-Type','application/json');
+    
+
+
+    /*OLD PARAM
+    var param = "userid="+id+"&firstname="+info.firstname+"&lastname="+info.lastname+"&dob="+info.dob
+    +"&userType="+info.userType+"&streetnumber="+info.streetnumber+"&streetname="+info.streetname
+    +"&suburb="+info.suburb+"&state="+info.state+"&postcode="+info.postcode+"&country="+info.country;*/
+
+    var body = JSON.stringify({
+      userid: id,
+      firstname : info.firstname,
+      lastname : info.lastname,
+      dob : info.dob,
+      userType: info.userType,
+      streetnumber:info.streetnumber,
+      streetname: info.streetname,
+      suburb : info.suburb,
+      state : info.state,
+      postcode: info.postcode,
+      country : info.country
+    });
+
+    this.afAuth.auth.currentUser.getToken(true)
+    .then(token =>{
+      var param = "token="+ token;
+      let options = new RequestOptions({headers: headers,params:param});
+      var url =  this.apiUrl + "postProfile";
+
+      console.log("//////////API Post///////////////////");
+      console.log("postParams+ = "+param);
+      console.log("body = "+ body);
+      console.log("url = "+ url);
+
+      this.http.post(url ,body , options)
+      .subscribe(result=>{
+        var response = result.json();
+        console.log("success="+ JSON.stringify(response));
+        var val = response.response;
+        if(val === "success"){
+          console.log ("storing data success");
+          console.log ("///////////////API POST end///////////");
+        }else{
+          console.log("storing data failed, error = " + response.errorMessage);
+          console.log ("///////////////API POST end///////////");
+        }
+      }
+      ,error =>{
+      console.log("error="+error);
+  
+    }); 
+    });
+
+    
+
+
+
+    
+    
+    
+    
   }
 
 

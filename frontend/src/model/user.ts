@@ -15,5 +15,6 @@ export interface UserInfo{
     streetname: string;
     suburb : string;
     state: string;
-    postcode : number;
+    postcode : string;
+    country : string;
 }
