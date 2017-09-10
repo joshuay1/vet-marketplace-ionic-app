@@ -56,8 +56,18 @@ IP:PORT = http://115.146.86.193:8080
             URL: http://ServerIP:Port/profileUpdate
             Parameters(case-sensitive)
 
-            ALL Parameters IS OPTIONAL EXCEPT FOR userid and token (when it is implemented).
-            NO userType is required
+            
+
+
+    PARAM : token=ASEAFSDADAWAWCWACAWFWASD
+
+	token is required
+
+
+    Body  : JSON String
+
+	ALL Body Parameters IS OPTIONAL EXCEPT FOR userid (same param as profile registering)
+            Cant change userType !! will throw an error if the optionally given userType is different than the stored userType
             Exception: When 1 of the data field regarding the address is changed (streetnumber,....,country) send all the data regarding user address(all of streetnumber,...,country) to the Server
             or you will get an error
 
@@ -67,15 +77,6 @@ IP:PORT = http://115.146.86.193:8080
             return : {"response": "error", "id" :"Tester2","errorMessage":"Potato Server"}
 
     
-    Example IO,
-        Input 1: userid=Tester2&firstname=John&lastname=Snow
-        Output1: {"response":"success","id":"Tester2","errorMessage":null}
-
-        Input 2: userid=Tester2&firstname=Jamie&lastname=Snow&country=India
-        Output2: {"response":"error","id":"Tester2","errorMessage":"Some of the address field is null"}
-
-        Input 3: userid=Tester2&lastname=Targaryen&dob=30/11/2010&streetnumber=1341&streetname=Dandenong Rd&suburb=Chadstone&state=Victoria&postcode=3148&country=Australia
-        Output3: {"response":"success","id":"Tester2","errorMessage":null}
 
 4. Image Upload
 
