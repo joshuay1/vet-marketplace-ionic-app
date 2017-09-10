@@ -9,12 +9,17 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
+
 import javax.net.ssl.HttpsURLConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.tasks.OnSuccessListener;
 
 /**
  * HelperFunction class that provide useful function
@@ -106,6 +111,38 @@ public class HelperFunction {
 
 	public static boolean testDob(String dob){
 		return dob.matches("[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}");
+	}
+
+	public static boolean matchToken(String id, String tokenString, Logger logger){
+		Semaphore semaphore = new Semaphore(0);
+		String[] tokenid= new String[1];
+		FirebaseAuth.getInstance().verifyIdToken(tokenString)
+		.addOnSuccessListener(new OnSuccessListener<FirebaseToken>(){
+
+			@Override
+			public void onSuccess(FirebaseToken result) {
+				tokenid[0] = result.getUid();
+				semaphore.release();
+			}
+
+		});
+
+		//catch semaphore aka wait for decoding to finish
+		try{
+			semaphore.acquire();
+		}catch(InterruptedException e){
+			e.printStackTrace();
+			logger.info("Interrupted while waiting for id verification token");
+			return false;
+		}
+
+		if(id.equals(tokenid[0])){
+			return true;
+		}else{
+			return false;
+		}
+
+		
 	}
 
 }
