@@ -34,9 +34,17 @@ IP:PORT = http://115.146.86.193:8080
               10.state
               11.postcode
               12.country
+
+//////////////////OLD PARAM////////////////////////////////
             Example Parameters :
             userid=Tester2&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=199&streetName=Lygon St&suburb=Carlton&state=Victoria&postcode=3053&country=Australia
-    
+///////////////NEW PARAM//////////////////////////////////
+
+	New Param : 
+	token=ASREAWUHFKUAWHUAHWKDHAWKU
+	Body:
+	JSON Containing field 2-12 in String. Remember to Stringify the JSON (Server only accept JSON in String) 
+
     Output:
     return : {"response":"success","id":"Tester2","errorMessage":null}
     or

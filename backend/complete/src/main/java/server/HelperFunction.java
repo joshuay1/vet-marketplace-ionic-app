@@ -105,7 +105,7 @@ public class HelperFunction {
 	}
 
 	public static boolean testDob(String dob){
-		return dob.matches("[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}");
+		return dob.matches("[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}");
 	}
 
 }

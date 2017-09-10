@@ -2,6 +2,9 @@ package server.profileservice;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.Semaphore;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +15,11 @@ import server.response.BasicResponse;
 import server.response.ProfileResponse;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
@@ -21,6 +27,8 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +42,8 @@ public class ProfileController {
     private GeoApiContext geocode = new GeoApiContext.Builder()
     .apiKey("AIzaSyAASyK4NcL0JFu9p3Vm3_alRZNEEv1btyE")
     .build();
+    private String tokenid = null;
+    private Semaphore semaphore = new Semaphore(0);
 
 
     //FOR TESTING PURPOSES ONLY
@@ -46,24 +56,133 @@ public class ProfileController {
         
     }
 
-
+    @CrossOrigin
     @RequestMapping(value = "/postProfile",method = RequestMethod.POST)
     public BasicResponse postProfile(
-        @RequestParam(value="userid") String id,
-        @RequestParam(value="firstname") String firstname,
-        @RequestParam(value="lastname")String lastname,
-        @RequestParam(value="dob")String dob,
-        @RequestParam(value="userType") String userType,
-        @RequestParam(value="streetnumber")String streetnumber,
-        @RequestParam(value="streetname")String streetname,
-        @RequestParam(value="postcode")String postcode,
-        @RequestParam(value="suburb") String suburb,
-        @RequestParam(value="state")String state,
-        @RequestParam(value="country")String country)
-        {
-        
+        @RequestParam(value="token") String idToken,
+        @RequestBody String jsonString)
+        {  
+            JSONParser parser = new JSONParser();
+            JSONObject jsonProfile = null;
+            try{
+                jsonProfile = (JSONObject) parser.parse(jsonString);
+            }catch(ParseException e){
+                e.printStackTrace();
+                return new BasicResponse("error",null, "body not JSON Object");
+            }
+
+            //INITIALIZE DATA
+            String id = null;
+            String firstname = null;
+            String lastname = null;
+            String userType = null;
+            String dob = null;
+            String streetname = null;
+            String streetnumber = null;
+            String suburb = null;
+            String state = null;
+            String postcode = null;
+            String country = null;
+
+
+            //READ DATAS
+            if(jsonProfile.containsKey("userid")){
+                id = (String) jsonProfile.get("userid");
+            }else{
+                return new BasicResponse("error", null, "no user id found");
+            }
+
+            if(jsonProfile.containsKey("firstname")){
+                firstname = (String) jsonProfile.get("firstname");
+            }else{
+                return new BasicResponse("error", id, "no first name found");
+            }
+
+            if(jsonProfile.containsKey("lastname")){
+                lastname = (String) jsonProfile.get("lastname");
+            }else{
+                return new BasicResponse("error", id, "no last name found");
+            }
+
+            if(jsonProfile.containsKey("dob")){
+               dob = (String) jsonProfile.get("dob");
+            }else{
+                return new BasicResponse("error", id, "no dob found");
+            }
+
+            if(jsonProfile.containsKey("userType")){
+                userType = (String) jsonProfile.get("userType");
+            }else{
+                return new BasicResponse("error", id, "no user type found");
+            }
+
+            if(jsonProfile.containsKey("streetnumber")){
+                streetnumber = (String) jsonProfile.get("streetnumber");
+            }else{
+                return new BasicResponse("error", id, "no streetnumber found");
+            }
+
+            if(jsonProfile.containsKey("streetname")){
+                streetname = (String) jsonProfile.get("streetname");
+            }else{
+                return new BasicResponse("error", id, "no streetname found");
+            }
+
+            if(jsonProfile.containsKey("suburb")){
+                suburb = (String) jsonProfile.get("suburb");
+            }else{
+                return new BasicResponse("error", id, "no suburb found");
+            }
+
+            if(jsonProfile.containsKey("state")){
+                state = (String) jsonProfile.get("state");
+            }else{
+                return new BasicResponse("error", id, "no state found");
+            }
+
+            if(jsonProfile.containsKey("postcode")){
+                postcode = (String) jsonProfile.get("postcode");
+            }else{
+                return new BasicResponse("error", id, "no postcode found");
+            }
+
+            if(jsonProfile.containsKey("country")){
+                country = (String) jsonProfile.get("country");
+            }else{
+                return new BasicResponse("error", id, "no country found");
+            }
+
+            //check token id = id
+            FirebaseAuth.getInstance().verifyIdToken(idToken)
+                .addOnSuccessListener(new OnSuccessListener<FirebaseToken>(){
+
+					@Override
+					public void onSuccess(FirebaseToken result) {
+                        tokenid = result.getUid();
+                        semaphore.release();
+					}
+
+            });
+
+            //catch semaphore aka wait for decoding to finish
+            try{
+                semaphore.acquire();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+                logger.info("Interrupted while waiting for id verification token");
+                return new BasicResponse("error", id, "Interrupted exception when waiting for token decoding");
+            }
+
+
+            //token checking
+            if(this.tokenid == id){
+                logger.info("id provided matches decoded token id. Continue");
+            }
+
+
+
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/"+id);
-            //TODO: check token.id = id
+            
 
 
 
@@ -127,7 +246,7 @@ public class ProfileController {
         return new BasicResponse("success",id,null);
     }
 
-
+    @CrossOrigin
     @RequestMapping(value = "/profileUpdate",method = RequestMethod.POST)
     public BasicResponse profileUpdate(
         @RequestParam(value="userid") String id,
