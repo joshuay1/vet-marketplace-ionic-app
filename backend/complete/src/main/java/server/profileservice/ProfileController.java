@@ -85,7 +85,7 @@ public class ProfileController {
             String country = null;
 
 
-            //READ DATAS
+            //READ DATAS Any idea how to not repeat these function?
             if(jsonProfile.containsKey("userid")){
                 id = (String) jsonProfile.get("userid");
             }else{
@@ -177,6 +177,9 @@ public class ProfileController {
             //token checking
             if(this.tokenid == id){
                 logger.info("id provided matches decoded token id. Continue");
+            }else{
+                logger.info("id provided does not match decoded token");
+                return new BasicResponse("error", id, "id provided does not match decoded token");
             }
 
 
