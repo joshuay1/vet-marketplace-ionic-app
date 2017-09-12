@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,11 +18,12 @@ import server.Application;
 import server.HelperFunction;
 import server.response.BasicResponse;
 
+
 @RestController
 public class VerificationController {
     private final Logger logger = LoggerFactory.getLogger(Application.class);
 
-
+    @CrossOrigin
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     public BasicResponse verifyVet(
         @RequestParam (value = "token") String tokenString,
