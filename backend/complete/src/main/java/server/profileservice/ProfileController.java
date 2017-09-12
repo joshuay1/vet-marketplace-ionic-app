@@ -77,6 +77,7 @@ public class ProfileController {
             String state = null;
             String postcode = null;
             String country = null;
+            Boolean isVerifiedAuthKey = false;
 
 
             //READ DATAS Any idea how to not repeat these function?
@@ -169,8 +170,8 @@ public class ProfileController {
 
             
             String address =  streetnumber + " " +streetname + " , "+ suburb + " , "+state + " "+ postcode+ ","+ country;
-
-            ProfileData data = new ProfileData(firstname, lastname, userType, dob, streetnumber, streetname, suburb, state, postcode,country,DEFAULTPICTURE);
+            
+            ProfileData data = new ProfileData(firstname, lastname, userType, dob, streetnumber, streetname, suburb, state, postcode,country,DEFAULTPICTURE,isVerifiedAuthKey);
             ref.setValue(data);
 
             
