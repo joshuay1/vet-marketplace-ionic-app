@@ -4,6 +4,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { UserInfo } from "../../model/user";
 import { PetPage} from "../pet/pet";
+import { EditProfilePage} from "../editprofile/editprofile";
 
 /**
  * Generated class for the ProfilePage page.
@@ -35,5 +36,10 @@ export class ProfilePage {
   accessPet() {
     this.navCtrl.push('PetPage');
   }
+
+  editProfile() {
+    this.navCtrl.push('EditProfilePage');
+  }
+
 
 }

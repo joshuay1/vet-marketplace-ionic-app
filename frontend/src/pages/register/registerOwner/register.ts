@@ -23,8 +23,8 @@ export class RegisterOwnerPage {
   private apiUrl = 'http://115.146.86.193:8080/';
   user = {} as User;
   userInfo = {} as UserInfo;
-  loading;
-  registerForm: FormGroup;
+  loading;  registerForm: FormGroup;
+
 
   constructor(private afAuth: AngularFireAuth,
     public navCtrl: NavController, 
