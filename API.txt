@@ -141,7 +141,7 @@ IP:PORT = http://115.146.86.193:8080
     Param: "token=AWEDAWDAWD"
     Body : JSON String with 2 param, "userid" and "authkey"
     
-    authkey = list of available key ( check database for current available key <- generate more if needed)
+    authkey = valid key ( check database for current available key <- generate more if needed)
 
     Output if authkey not found = {"response" : "error", "id":"id1", "errorMessage":"auth key is not found"}
     Output if no authkey given  = {"response" : "error", "id":"id1", "errorMessage":"authkey is not provided"}
