@@ -155,14 +155,63 @@ public class PetProfileController {
         return null;
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/petProfileUpdate", method = RequestMethod.POST)
     public BasicResponse petProfileUpdate(
+            @RequestParam(value = "token")
+            @RequestBody String jsonString){
+        JSONParser parser = new JSONParser();
+        JSONObject jsonProfile = null;
+        try{
+            jsonProfile = (JSONObject) parser.parse(jsonString);
+        }catch(ParseException e) {
+            e.printStackTrace();
+            return new BasicResponse("error", null, "body not JSON Object");
+        }
+        /*
+
             @RequestParam(value = "petId") String id,
             @RequestParam(value = "petname") String petname,
             @RequestParam(value = "dob") String dob,
             @RequestParam(value = "animalType") String animalType,
             @RequestParam(value = "breed") String animalBreed) {
+        */
         //check token id = user id
+        String id = null;
+        String petname = null;
+        String dob = null;
+        String animalType = null;
+        String animalBreed = null;
+
+        if(jsonProfile.containsKey("petId")){
+            id = (String) jsonProfile.get("petId");
+        }else{
+            return new BasicResponse("error", id, "no pet id found");
+        }
+        if(jsonProfile.containsKey("petname")){
+            petname = (String) jsonProfile.get("petname");
+        }
+        else {
+            return new BasicResponse("error",id,"petname not provided");
+        }
+        if (jsonProfile.containsKey("dob")){
+            dob = (String) jsonProfile.get("dob");
+        }
+        else{
+            return new BasicResponse("error",id,"no dob provided");
+        }
+        if(jsonProfile.containsKey("animalType")){
+            animalType = (String) jsonProfile.get("animalType");
+        }
+        else {
+            return new BasicResponse("error", id,"no animalType provided");
+        }
+        if (jsonProfile.containsKey("breed")){
+            animalBreed = (String) jsonProfile.get("breed");
+        }
+        else {
+            return new BasicResponse("error", id, "no breed provided");
+        }
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/"+id);
         HashMap<String, Object> update = new HashMap<String,Object> ();
