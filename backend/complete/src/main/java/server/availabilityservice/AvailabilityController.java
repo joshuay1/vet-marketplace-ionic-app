@@ -3,8 +3,6 @@ package server.availabilityservice;
 import com.google.firebase.database.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -103,7 +101,7 @@ public class AvailabilityController {
         }
         DatabaseReference availRef= FirebaseDatabase.getInstance().getReference("availabilities/");
         DatabaseReference id = availRef.push();
-        DatabaseReference availIdRef = FirebaseDatabase.getInstance().getReference("avilabilities/"+id.getKey());
+        DatabaseReference availIdRef = FirebaseDatabase.getInstance().getReference("availabilities/"+id.getKey());
         AvailabilityData data = new AvailabilityData(yr, month, day, hhs, hhe);
         availIdRef.setValue(data);
 
