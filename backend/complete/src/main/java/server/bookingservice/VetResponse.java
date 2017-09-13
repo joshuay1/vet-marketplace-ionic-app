@@ -1,22 +1,22 @@
 package server.bookingservice;
 
-
+import org.json.simple.JSONObject;
 
 public class VetResponse{
 
-    private String[] VetIds;
+    private JSONObject VetIds;
     private String response;
     private String message;
 
 
-    public VetResponse(String[] vetids, String response, String message){
+    public VetResponse(JSONObject vetids, String response, String message){
         this.VetIds = vetids;
         this.response = response;
         this.message = message;
     }
 
-    public String[] getVetID(){
-        return this.VetIds;
+    public String getVetID(){
+        return this.VetIds.toJSONString();
     }
 
     public String getResponse(){

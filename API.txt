@@ -34,9 +34,17 @@ IP:PORT = http://115.146.86.193:8080
               10.state
               11.postcode
               12.country
+
+//////////////////OLD PARAM////////////////////////////////
             Example Parameters :
             userid=Tester2&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=199&streetName=Lygon St&suburb=Carlton&state=Victoria&postcode=3053&country=Australia
-    
+///////////////NEW PARAM//////////////////////////////////
+
+	New Param : 
+	token=ASREAWUHFKUAWHUAHWKDHAWKU
+	Body:
+	JSON Containing field 2-12 in String. Remember to Stringify the JSON (Server only accept JSON in String) 
+
     Output:
     return : {"response":"success","id":"Tester2","errorMessage":null}
     or
@@ -48,8 +56,18 @@ IP:PORT = http://115.146.86.193:8080
             URL: http://ServerIP:Port/profileUpdate
             Parameters(case-sensitive)
 
-            ALL Parameters IS OPTIONAL EXCEPT FOR userid token and userType (when it is implemented).
-            UserType is for identification only and is not part of the update
+            
+
+
+    PARAM : token=ASEAFSDADAWAWCWACAWFWASD
+
+	token is required
+
+
+    Body  : JSON String
+
+	ALL Body Parameters IS OPTIONAL EXCEPT FOR userid (same param as profile registering)
+            Cant change userType !! will throw an error if the optionally given userType is different than the stored userType
             Exception: When 1 of the data field regarding the address is changed (streetnumber,....,country) send all the data regarding user address(all of streetnumber,...,country) to the Server
             or you will get an error
 
@@ -59,15 +77,6 @@ IP:PORT = http://115.146.86.193:8080
             return : {"response": "error", "id" :"Tester2","errorMessage":"Potato Server"}
 
     
-    Example IO,
-        Input 1: userid=Tester2&firstname=John&lastname=Snow&userType=Vet
-        Output1: {"response":"success","id":"Tester2","errorMessage":null}
-
-        Input 2: userid=Tester2&firstname=Jamie&lastname=Snow&userType=Vet&country=India
-        Output2: {"response":"error","id":"Tester2","errorMessage":"Some of the address field is null"}
-
-        Input 3: userid=Tester2&lastname=Targaryen&dob=30/11/2010&userType=Vet&streetnumber=1341&streetname=Dandenong Rd&suburb=Chadstone&state=Victoria&postcode=3148&country=Australia
-        Output3: {"response":"success","id":"Tester2","errorMessage":null}
 
 4. Image Upload
 
@@ -126,8 +135,22 @@ IP:PORT = http://115.146.86.193:8080
 -----------User Auth-----------------
 
 
-1. Get Custom Auth (Admin auth)
+1. Vet Verification
 
+    URL : http://IP:Port/verify
+    Param: "token=AWEDAWDAWD"
+    Body : JSON String with 2 param, "userid" and "authkey"
+    
+    authkey = valid key ( check database for current available key <- generate more if needed)
+
+    Output if authkey not found = {"response" : "error", "id":"id1", "errorMessage":"auth key is not found"}
+    Output if no authkey given  = {"response" : "error", "id":"id1", "errorMessage":"authkey is not provided"}
+    Output if correct           = {"response" : "success", "id":"id1", "errorMessage": null}
+
+    If output is correct -> please check if the key used is deleted + the userid is idVerifiedVet changed to True
+
+
+    
 ----------------Booking---------------
 
 1. Get nearest Vet

@@ -2,6 +2,8 @@ package server.profileservice;
 
 import java.io.IOException;
 import java.util.HashMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,8 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,32 +50,128 @@ public class ProfileController {
         
     }
 
-
+    @CrossOrigin
     @RequestMapping(value = "/postProfile",method = RequestMethod.POST)
     public BasicResponse postProfile(
-        @RequestParam(value="userid") String id,
-        @RequestParam(value="firstname") String firstname,
-        @RequestParam(value="lastname")String lastname,
-        @RequestParam(value="dob")String dob,
-        @RequestParam(value="userType") String userType,
-        @RequestParam(value="streetnumber")String streetnumber,
-        @RequestParam(value="streetname")String streetname,
-        @RequestParam(value="postcode")String postcode,
-        @RequestParam(value="suburb") String suburb,
-        @RequestParam(value="state")String state,
-        @RequestParam(value="country")String country)
-        {
-        
+        @RequestParam(value="token") String tokenString,
+        @RequestBody String jsonString)
+        {  
+            JSONParser parser = new JSONParser();
+            JSONObject jsonProfile = null;
+            try{
+                jsonProfile = (JSONObject) parser.parse(jsonString);
+            }catch(ParseException e){
+                e.printStackTrace();
+                return new BasicResponse("error",null, "body not JSON Object");
+            }
+
+            //INITIALIZE DATA
+            String id = null;
+            String firstname = null;
+            String lastname = null;
+            String userType = null;
+            String dob = null;
+            String streetname = null;
+            String streetnumber = null;
+            String suburb = null;
+            String state = null;
+            String postcode = null;
+            String country = null;
+            Boolean isVerifiedAuthKey = false;
+
+
+            //READ DATAS Any idea how to not repeat these function?
+            if(jsonProfile.containsKey("userid")){
+                id = (String) jsonProfile.get("userid");
+                //check token id = id
+                boolean match = HelperFunction.matchToken(id, tokenString, logger);
+            
+                if(match){
+                    logger.info("id provided matches decoded token id. Continue");
+                }else{
+                    logger.info("id provided does not match decoded token");
+                    return new BasicResponse("error", id, "id provided does not match decoded token");
+                }
+            }else{
+                return new BasicResponse("error", null, "no user id found");
+            }
+
+            if(jsonProfile.containsKey("firstname")){
+                firstname = (String) jsonProfile.get("firstname");
+            }else{
+                return new BasicResponse("error", id, "no first name found");
+            }
+
+            if(jsonProfile.containsKey("lastname")){
+                lastname = (String) jsonProfile.get("lastname");
+            }else{
+                return new BasicResponse("error", id, "no last name found");
+            }
+
+            if(jsonProfile.containsKey("dob")){
+               dob = (String) jsonProfile.get("dob");
+               if(!HelperFunction.testDob(dob)){
+                return new BasicResponse("error",id,"wrong dob format");
+                }
+            }else{
+                return new BasicResponse("error", id, "no dob found");
+            }
+
+            if(jsonProfile.containsKey("userType")){
+                userType = (String) jsonProfile.get("userType");
+                if(!userType.equals("User") && !userType.equals("Vet")){
+                    return new BasicResponse("error",id,"userType must User or Vet");
+                }
+            }else{
+                return new BasicResponse("error", id, "no user type found");
+            }
+
+            if(jsonProfile.containsKey("streetnumber")){
+                streetnumber = (String) jsonProfile.get("streetnumber");
+            }else{
+                return new BasicResponse("error", id, "no streetnumber found");
+            }
+
+            if(jsonProfile.containsKey("streetname")){
+                streetname = (String) jsonProfile.get("streetname");
+            }else{
+                return new BasicResponse("error", id, "no streetname found");
+            }
+
+            if(jsonProfile.containsKey("suburb")){
+                suburb = (String) jsonProfile.get("suburb");
+            }else{
+                return new BasicResponse("error", id, "no suburb found");
+            }
+
+            if(jsonProfile.containsKey("state")){
+                state = (String) jsonProfile.get("state");
+            }else{
+                return new BasicResponse("error", id, "no state found");
+            }
+
+            if(jsonProfile.containsKey("postcode")){
+                postcode = (String) jsonProfile.get("postcode");
+            }else{
+                return new BasicResponse("error", id, "no postcode found");
+            }
+
+            if(jsonProfile.containsKey("country")){
+                country = (String) jsonProfile.get("country");
+            }else{
+                return new BasicResponse("error", id, "no country found");
+            }
+
+
+            
+
+
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/"+id);
-            //TODO: check token.id = id
 
-
-            //TODO: String checking for input
-            //String checking for each input
             
             String address =  streetnumber + " " +streetname + " , "+ suburb + " , "+state + " "+ postcode+ ","+ country;
-
-            ProfileData data = new ProfileData(firstname, lastname, userType, dob, streetnumber, streetname, suburb, state, postcode,country,DEFAULTPICTURE);
+            
+            ProfileData data = new ProfileData(firstname, lastname, userType, dob, streetnumber, streetname, suburb, state, postcode,country,DEFAULTPICTURE,isVerifiedAuthKey);
             ref.setValue(data);
 
             
@@ -119,24 +219,143 @@ public class ProfileController {
         return new BasicResponse("success",id,null);
     }
 
-
+    @CrossOrigin
     @RequestMapping(value = "/profileUpdate",method = RequestMethod.POST)
     public BasicResponse profileUpdate(
-        @RequestParam(value="userid") String id,
-        @RequestParam(value="firstname",required = false) String firstname,
-        @RequestParam(value="lastname",required = false)String lastname,
-        @RequestParam(value="dob",required = false)String dob,
-        @RequestParam(value="userType") String userType,
-        @RequestParam(value="streetnumber",required = false)String streetnumber,
-        @RequestParam(value="streetname",required = false)String streetname,
-        @RequestParam(value="postcode",required = false)String postcode,
-        @RequestParam(value="suburb",required = false) String suburb,
-        @RequestParam(value="state",required = false)String state,
-        @RequestParam(value="country",required = false)String country)
+        @RequestParam(value="token") String tokenString,
+        @RequestBody String jsonString
+        )
         {
-            //check token id = user id
+            JSONParser parser = new JSONParser();
+            JSONObject jsonProfile = null;
+            try{
+                jsonProfile = (JSONObject) parser.parse(jsonString);
+            }catch(ParseException e){
+                e.printStackTrace();
+                return new BasicResponse("error",null, "body not JSON Object");
+            }
 
+            //INITIALIZE DATA
+            String id = null;
+            String firstname = null;
+            String lastname = null;
+            String userType = null;
+            String dob = null;
+            String streetname = null;
+            String streetnumber = null;
+            String suburb = null;
+            String state = null;
+            String postcode = null;
+            String country = null;
+
+
+            //READ DATAS 
+
+            HashMap<String, Object> update = new HashMap<String,Object> ();
+
+
+            if(jsonProfile.containsKey("userid")){
+                id = (String) jsonProfile.get("userid");
+                boolean match = HelperFunction.matchToken(id, tokenString, logger);
+                if(!match){
+                    return new BasicResponse("error", id, "token id does not match provided id");
+                }
+            }else{
+                return new BasicResponse("error", null, "no user id found");
+            }
+
+            if(jsonProfile.containsKey("firstname")){
+                firstname = (String) jsonProfile.get("firstname");
+                if(firstname!= null){
+                    logger.info("firstname of "+id+" changed to " + firstname);
+                    update.put("firstname", firstname);
+                }
+            }
+
+            if(jsonProfile.containsKey("lastname")){
+                lastname = (String) jsonProfile.get("lastname");
+                if(lastname!= null){
+                    logger.info("lastname of "+id+" changed to " + lastname);
+                    update.put("lastname",lastname);
+                }
+            }
+
+            if(jsonProfile.containsKey("dob")){
+               dob = (String) jsonProfile.get("dob");
+               if(!HelperFunction.testDob(dob)){
+                    logger.info("wrong format in dob");
+                    return new BasicResponse("error",id,"wrong dob format");
+               }
+               if(dob != null){
+                logger.info("dob of "+id+" changed to " + dob);
+                update.put("dob",dob);
+                }
+            }
+
+            if(jsonProfile.containsKey("userType")){
+                userType = (String) jsonProfile.get("userType");
+                String userTypeTest = HelperFunction.getUserType(id, logger);
+                if(userTypeTest == userType){
+    
+                }else{
+                    logger.info("different userType specified");
+                    return new BasicResponse("error", null,"different userType than specified");
+                }
+            }
+
+            if(jsonProfile.containsKey("streetnumber")){
+                streetnumber = (String) jsonProfile.get("streetnumber");
+                if(streetnumber != null){
+                    logger.info("streetnumber of "+id+" changed to " + streetnumber);
+                    update.put("streetnumber",streetnumber);
+                }
+            }
+            
+            if(jsonProfile.containsKey("streetname")){
+                streetname = (String) jsonProfile.get("streetname");
+                if(streetname!= null){
+                    logger.info("streetname of "+id+" changed to " + streetname);
+                    update.put("streetname",streetname);
+                }
+            }
+
+            if(jsonProfile.containsKey("suburb")){
+                suburb = (String) jsonProfile.get("suburb");
+                if(suburb != null){
+                    logger.info("suburb of "+id+" changed to " + suburb);
+                    update.put("suburb",suburb);
+                }
+            }
+
+            if(jsonProfile.containsKey("state")){
+                state = (String) jsonProfile.get("state");
+                if(state != null){
+                    logger.info("state of "+id+" changed to " + state);
+                    update.put("state",state);
+                }
+            }
+
+            if(jsonProfile.containsKey("postcode")){
+                postcode = (String) jsonProfile.get("postcode");
+                if(postcode != null){
+                    logger.info("postcode of "+id+" changed to " + postcode);
+                    update.put("postcode",postcode);
+                }
+            }
+
+            if(jsonProfile.containsKey("country")){
+                country = (String) jsonProfile.get("country");
+                if(country != null){
+                    logger.info("country of "+id+" changed to " + country);
+                    update.put("country",country);
+                }
+            }
+
+            
             boolean changeaddress = false;
+
+            
+            
             //check if one of address related stuff is changed
             if(streetnumber != null || streetname != null || suburb!=null || state!=null || postcode != null ||country!=null ){
                 logger.info("There is an address change");
@@ -151,52 +370,8 @@ public class ProfileController {
             //set database ref
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/"+id);
-            HashMap<String, Object> update = new HashMap<String,Object> ();
-            if(firstname!= null){
-                logger.info("firstname of "+id+" changed to " + firstname);
-                update.put("firstname", firstname);
-            }
-
-            if(lastname!= null){
-                logger.info("lastname of "+id+" changed to " + lastname);
-                update.put("lastname",lastname);
-            }
-
-            if(dob != null){
-                logger.info("dob of "+id+" changed to " + dob);
-                update.put("dob",dob);
-            }
-
-            if(streetnumber != null){
-                logger.info("streetnumber of "+id+" changed to " + streetnumber);
-                update.put("streetnumber",streetnumber);
-            }
-
-            if(streetname!= null){
-                logger.info("streetname of "+id+" changed to " + streetname);
-                update.put("streetname",streetname);
-            }
-
-            if(suburb != null){
-                logger.info("suburb of "+id+" changed to " + suburb);
-                update.put("suburb",suburb);
-            }
-
-            if(state != null){
-                logger.info("state of "+id+" changed to " + state);
-                update.put("state",state);
-            }
-
-            if(postcode != null){
-                logger.info("postcode of "+id+" changed to " + postcode);
-                update.put("postcode",postcode);
-            }
-
-            if(country != null){
-                logger.info("country of "+id+" changed to " + country);
-                update.put("country",country);
-            }
-
+            
+            
             if(changeaddress){
                 try {
                     String address =  streetnumber + " " +streetname + " , "+ suburb + " , "+state + " "+ postcode+ ","+ country;
