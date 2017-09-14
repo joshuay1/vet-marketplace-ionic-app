@@ -17,6 +17,7 @@ import { SettingsPage } from "../pages/settings/settings";
 import { CalendarPage } from "../pages/calendar/calendar";
 import { ProfilePage } from "../pages/profile/profile";
 import { PetPage } from "../pages/pet/pet";
+import { EditProfilePage} from "../pages/editprofile/editprofile";
 import { HttpModule } from "@angular/http";
 
 
