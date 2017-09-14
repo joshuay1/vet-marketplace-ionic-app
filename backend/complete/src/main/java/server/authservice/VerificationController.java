@@ -1,5 +1,7 @@
 package server.authservice;
 
+import java.util.StringTokenizer;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -67,6 +69,30 @@ public class VerificationController {
             ref.setValue(true);
             return new BasicResponse("success", userid, "null");
             
+
+    }
+
+    @RequestMapping(value ="/test", method =RequestMethod.GET)
+    public BasicResponse test(@RequestParam (value = "date") String date,
+                            @RequestParam (value = "id") String id){
+
+        StringTokenizer tokenizer = new StringTokenizer(date, "/");
+        String year = tokenizer.nextToken();
+        String month = tokenizer.nextToken();
+        String day = tokenizer.nextToken();
+        
+        String url = "avail/"+year+"/"+month+"/"+day;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(url);
+        JSONArray array = HelperFunction.getDataInArray(url, logger);
+        if(array != null){
+            array.add(id);
+        }else{
+            array = new JSONArray();
+            array.add(id);
+        }
+        ref.setValue(array);
+
+        return new BasicResponse("success",id,null);
 
     }
 }
