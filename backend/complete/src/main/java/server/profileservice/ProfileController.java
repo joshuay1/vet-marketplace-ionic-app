@@ -301,6 +301,8 @@ public class ProfileController {
                     logger.info("different userType specified");
                     return new BasicResponse("error", null,"different userType than specified");
                 }
+            }else{
+                userType = HelperFunction.getUserType(id, logger);
             }
 
             if(jsonProfile.containsKey("streetnumber")){
