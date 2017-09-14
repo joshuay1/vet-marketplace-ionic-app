@@ -84,11 +84,13 @@ public class VerificationController {
         String url = "avail/"+year+"/"+month+"/"+day;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(url);
         JSONArray array = HelperFunction.getDataInArray(url, logger);
+        JSONObject item = new JSONObject();
+        item.put(id, "N");
         if(array != null){
-            array.add(id);
+            array.add(item);
         }else{
             array = new JSONArray();
-            array.add(id);
+            array.add(item);
         }
         ref.setValue(array);
 
