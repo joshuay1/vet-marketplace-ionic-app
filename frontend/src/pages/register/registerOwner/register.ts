@@ -23,7 +23,7 @@ export class RegisterOwnerPage {
   private apiUrl = 'http://115.146.86.193:8080/';
   user = {} as User;
   userInfo = {} as UserInfo;
-  loading;  registerForm: FormGroup;
+  loading; registerForm: FormGroup;
 
 
   constructor(private afAuth: AngularFireAuth,
@@ -48,6 +48,7 @@ export class RegisterOwnerPage {
         'postcode':['',Validators.required],
         'country': ['',Validators.required]
       })
+      this.userInfo.userType = navParams.get('UserType');
   }
 
   ionViewDidLoad() {
@@ -58,14 +59,15 @@ export class RegisterOwnerPage {
     if(this.validate()){
       this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
       .then(auth =>{
-        console.log(this.userInfo.authkey);
-        if(this.userInfo.authkey){
+          console.log(this.userInfo.authkey);
+
+/*        if(this.userInfo.authkey){
           this.userInfo.userType = "Vet";
           this.userInfo.authkey = null;
         }else{
           this.userInfo.userType = "User";
           this.userInfo.authkey = null;
-        }
+        }*/
         console.log(this.userInfo.userType);
 
         //REST Connection to Server
@@ -187,7 +189,8 @@ export class RegisterOwnerPage {
       suburb : info.suburb,
       state : info.state,
       postcode: info.postcode,
-      country : info.country
+      country: info.country
+      
     });
 
     this.afAuth.auth.currentUser.getToken(true)

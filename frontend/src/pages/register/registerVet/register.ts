@@ -60,6 +60,7 @@ export class RegisterVetPage {
       this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
       .then(auth =>{
         console.log(this.userInfo.authkey);
+        //TODO Callum pass params from login for userType
         if(this.userInfo.authkey){
           this.userInfo.userType = "Vet";
           this.userInfo.authkey = null;
