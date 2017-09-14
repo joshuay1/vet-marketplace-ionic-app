@@ -25,6 +25,7 @@ export class EditProfilePage {
   loading; registerForm: FormGroup;
   uid: String;
   private apiUrl = 'http://115.146.86.193:8080/';
+  result:String;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,15 +59,15 @@ export class EditProfilePage {
 
         this.registerForm = builder.group({
           'auth': [],
-          'first-name': [snapshot.firstname,Validators.required],
-          'last-name': [snapshot.lastname,Validators.required],
-          'dob': [snapshot.dob,Validators.required],
-          'streetname': [snapshot.streetname,Validators.required],
-          'streetnumber': [snapshot.streetnumber,Validators.required],
-          'suburb': [snapshot.suburb,Validators.required],
-          'state': [snapshot.state,Validators.required],
-          'postcode': [snapshot.postcode,Validators.required],
-          'country': [snapshot.country,Validators.required]
+          'first-name': [snapshot.firstname],
+          'last-name': [snapshot.lastname],
+          'dob': [snapshot.dob],
+          'streetname': [snapshot.streetname],
+          'streetnumber': [snapshot.streetnumber],
+          'suburb': [snapshot.suburb],
+          'state': [snapshot.state],
+          'postcode': [snapshot.postcode],
+          'country': [snapshot.country]
           /*console.log ("snapshots=" +snapshots);
           console.log("value = "+ snapshots.values);
           snapshots.forEach(snapshot=>{
@@ -82,9 +83,23 @@ export class EditProfilePage {
   async update(){
   
     if(this.validate()){
-      this.postRequest(this.userInfo,this.uid);
-      console.log("life is hard.");
-      this.navCtrl.pop;
+      this.postRequest(this.userInfo,this.uid)
+      .then(result=>{
+        console.log("get result here");
+        var res = result.response;
+        if(res =="success"){
+          this.navCtrl.pop();
+        }
+      }).catch(err=>{
+        console.log("catching error here");
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          message : err,
+          buttons : ['OK']
+        });
+        alert.present();
+      })
+      
     }
   }
   /*
@@ -205,63 +220,64 @@ export class EditProfilePage {
     alert.present();
   }
 
-  postRequest(info: UserInfo, id: String) {
+
+  //MAKE IT ASYNC
+  async postRequest(info: UserInfo, id: String): Promise<any>{
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
+    //inserting userid to userinfo
+    info.userid = this.afAuth.auth.currentUser.uid;
 
 
-    /*OLD PARAM
-    var param = "userid="+id+"&firstname="+info.firstname+"&lastname="+info.lastname+"&dob="+info.dob
-    +"&userType="+info.userType+"&streetnumber="+info.streetnumber+"&streetname="+info.streetname
-    +"&suburb="+info.suburb+"&state="+info.state+"&postcode="+info.postcode+"&country="+info.country;*/
+    //TODO JOSH -> Can you make it so that if one of the address field is changed,
+    //all the address field will be resend
 
-    var body = JSON.stringify({
-      userid: id,
-      firstname: info.firstname,
-      lastname: info.lastname,
-      dob: info.dob,
-      userType: info.userType,
-      streetnumber: info.streetnumber,
-      streetname: info.streetname,
-      suburb: info.suburb,
-      state: info.state,
-      postcode: info.postcode,
-      country: info.country
-    });
+    //check adress field
 
-    this.afAuth.auth.currentUser.getToken(true)
-      .then(token => {
-        var param = "token=" + token;
-        let options = new RequestOptions({ headers: headers, params: param });
-        var url = this.apiUrl + "profileUpdate";
 
-        console.log("//////////API Post///////////////////");
-        console.log("postParams+ = " + param);
-        console.log("body = " + body);
-        console.log("url = " + url);
 
-        this.http.post(url, body, options)
+
+
+    var body = JSON.stringify(info);
+
+    //
+    return new Promise ((resolve,reject)=>{
+      this.afAuth.auth.currentUser.getIdToken(true)
+        .then(token => {
+          var param = "token=" + token;
+          let options = new RequestOptions({ headers: headers, params: param });
+          var url = this.apiUrl + "profileUpdate";
+
+          console.log("//////////API Post///////////////////");
+          console.log("postParams+ = " + param);
+          console.log("body = " + body);
+          console.log("url = " + url);
+          this.http.post(url, body, options)
           .subscribe(result => {
-            var response = result.json();
+            var response =result.json();
             console.log("success=" + JSON.stringify(response));
             var val = response.response;
+
+            
             if (val === "success") {
               console.log("storing data success");
               console.log("///////////////API POST end///////////");
+              resolve(response);
+              
             } else {
               console.log("storing data failed, error = " + response.errorMessage);
               console.log("///////////////API POST end///////////");
+              reject(response.errorMessage);
+              
             }
           }
           , error => {
             console.log("error=" + error);
-
+            reject(error.message);
           });
+        });
       });
-
-
-
-
-    }
   }
+  
+}

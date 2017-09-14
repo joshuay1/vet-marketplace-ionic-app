@@ -15,9 +15,9 @@ import { PetPage} from "../pet/pet";
 @IonicPage()
 @Component({
   selector: 'page-profile',
-  templateUrl: 'profile.html',
+  templateUrl: 'profile_Vet.html',
 })
-export class ProfilePage {
+export class ProfileVetPage {
   profileData : FirebaseObjectObservable<UserInfo>;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
