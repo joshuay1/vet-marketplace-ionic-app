@@ -36,8 +36,16 @@
   <ion-card [ngSwitch]="bookings">
     <ion-list *ngSwitchCase="'currentBookings'">
       <ion-item>
-        <ion-label>current bookings</ion-label>
+        <ion-label>CurrentBookings:</ion-label>
       </ion-item>
+      <ion-list>
+        <ion-item *ngFor= 'let book of currentBookings | async'>
+          <h2>BookingID: {{stringfy(book)}}</h2>
+          <h2>DATE: {{book.year}}/{{book.month}}/{{book.day}}</h2>
+          <h2>VET : {{generateUserData(book.vetId)}}</h2>
+          <h2>USER: {{generateUserData(book.userId)}}</h2>
+        </ion-item>
+      </ion-list>
     </ion-list>
     <ion-list *ngSwitchCase="'pastBookings'">
       <ion-item>
