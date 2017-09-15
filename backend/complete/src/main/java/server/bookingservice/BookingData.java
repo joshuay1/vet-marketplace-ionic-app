@@ -5,6 +5,7 @@ package server.bookingservice;
 public class BookingData{
     private String uid;
     private String vetid;
+    private String petid;
     private String year;
     private String month;
     private String day;
@@ -13,7 +14,7 @@ public class BookingData{
     
     //ADD PAYMENT
 
-    public BookingData(String uid, String vetid, String year, String month, String day, String time, String status){
+    public BookingData(String uid, String vetid,String petid, String year, String month, String day, String time, String status){
         this.uid = uid;
         this.vetid = vetid;
         this.year = year;
@@ -21,6 +22,7 @@ public class BookingData{
         this.day = day;
         this.time = time;
         this.status = status;
+        this.petid = petid;
     }
 
     public String getUserId(){
@@ -49,5 +51,9 @@ public class BookingData{
 
     public String getStatus(){
         return this.status;
+    }
+
+    public String getPetId(){
+        return this.petid;
     }
 }

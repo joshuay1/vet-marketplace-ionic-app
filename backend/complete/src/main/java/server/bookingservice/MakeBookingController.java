@@ -6,7 +6,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +17,6 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.geofire.util.GeoUtils;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -204,6 +201,7 @@ public class MakeBookingController{
         String mmonth = null;
         String mday = null;
         String mtime = null;
+        String mpetid = null;
         
         //TODO ADD PAYMENT METHOD TO BODY PARAM
 
@@ -226,6 +224,15 @@ public class MakeBookingController{
             mvetid = (String) jsonBody.get("vetid");
         }else{
             logger.info("vetid not present");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"vetid not present in body");
+        }
+
+        if(jsonBody.containsKey("petid")){
+            mpetid = (String) jsonBody.get("petid");
+            //check whether the user have the pet id TODO
+        }else{
+            logger.info("petid not present");
             logger.info("/////////////MAKEBOOKING ENDS////////////////");
             return new BasicResponse("error", null,"vetid not present in body");
         }
@@ -275,7 +282,7 @@ public class MakeBookingController{
         //create new booking field
         DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("bookings");
         String key = bookingRef.push().getKey();
-        BookingData data = new BookingData(muid,mvetid,myear,mmonth,mday,mtime,"confirmed");
+        BookingData data = new BookingData(muid,mvetid,mpetid,myear,mmonth,mday,mtime,"confirmed");
         bookingRef.child(key).setValue(data);
 
         //passBookingField into user (NOT NEEDED)
