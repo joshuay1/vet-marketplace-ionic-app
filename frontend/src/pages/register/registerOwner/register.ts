@@ -79,7 +79,7 @@ export class RegisterOwnerPage {
 
 
         this.navCtrl.setRoot(RedirectPage, { userType: this.userInfo.userType})
-          })
+
        // this.navCtrl.setRoot(OwnerHomePage);
 
       })
