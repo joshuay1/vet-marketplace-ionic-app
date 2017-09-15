@@ -6,6 +6,7 @@ import { UserInfo } from "../../model/user";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RequestOptions, Http, Headers } from "@angular/http";
 import { ProfilePage } from "../profile/profile";
+import { HttpServiceProvider } from "../../providers/http-service/http-service";
 
 /**
  * Generated class for the EditprofilePage page.
@@ -33,7 +34,8 @@ export class EditProfilePage {
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
     private builder: FormBuilder,
-    private http: Http) {
+    private http: Http,
+    private httpProviders : HttpServiceProvider) {
 
     /*this.db.list(`users/${data.uid}`).subscribe(snapshots =>{
        console.log ("snapshots=" +snapshots);
@@ -83,7 +85,8 @@ export class EditProfilePage {
   async update(){
   
     if(this.validate()){
-      this.postRequest(this.userInfo,this.uid)
+      this.userInfo.userid = this.afAuth.auth.currentUser.uid;
+      this.httpProviders.httpPost(this.apiUrl+"profileUpdate",JSON.stringify(this.userInfo))
       .then(result=>{
         console.log("get result here");
         var res = result.response;
@@ -102,46 +105,7 @@ export class EditProfilePage {
       
     }
   }
-  /*
-    catch(err=>{
-      // Handle error
-      let alert = this.alertCtrl.create({
-        title: 'Error',
-        message: err.message,
-        buttons: ['OK']
-      });
-        alert.present();
-      })
-
-    }
-    */
   
-  /*async register(user: User) {
-    if(this.validate()){
-      this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
-      .then(auth =>{
-        console.log(this.userInfo.userType);
-        
-        //REST Connection to Server
-        this.postRequest(this.userInfo, auth.uid);
-        this.navCtrl.setRoot(ProfilePage);
-      })
-      .catch(err =>{
-        // Handle error
-        let alert = this.alertCtrl.create({
-        title: 'Error',
-        message: err.message,
-        buttons: ['OK']
-      });
-        alert.present();
-      })
-      
-      
-    }
-
-  
-  }
-*/
 
   validate(): boolean {
     // figure out the error message
@@ -220,64 +184,5 @@ export class EditProfilePage {
     alert.present();
   }
 
-
-  //MAKE IT ASYNC
-  async postRequest(info: UserInfo, id: String): Promise<any>{
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    //inserting userid to userinfo
-    info.userid = this.afAuth.auth.currentUser.uid;
-
-
-    //TODO JOSH -> Can you make it so that if one of the address field is changed,
-    //all the address field will be resend
-
-    //check adress field
-
-
-
-
-
-    var body = JSON.stringify(info);
-
-    //
-    return new Promise ((resolve,reject)=>{
-      this.afAuth.auth.currentUser.getIdToken(true)
-        .then(token => {
-          var param = "token=" + token;
-          let options = new RequestOptions({ headers: headers, params: param });
-          var url = this.apiUrl + "profileUpdate";
-
-          console.log("//////////API Post///////////////////");
-          console.log("postParams+ = " + param);
-          console.log("body = " + body);
-          console.log("url = " + url);
-          this.http.post(url, body, options)
-          .subscribe(result => {
-            var response =result.json();
-            console.log("success=" + JSON.stringify(response));
-            var val = response.response;
-
-            
-            if (val === "success") {
-              console.log("storing data success");
-              console.log("///////////////API POST end///////////");
-              resolve(response);
-              
-            } else {
-              console.log("storing data failed, error = " + response.errorMessage);
-              console.log("///////////////API POST end///////////");
-              reject(response.errorMessage);
-              
-            }
-          }
-          , error => {
-            console.log("error=" + error);
-            reject(error.message);
-          });
-        });
-      });
-  }
   
 }
