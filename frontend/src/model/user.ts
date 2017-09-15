@@ -18,5 +18,6 @@ export interface UserInfo{
     postcode: string;
     pictureURL: string;
     country : string;
+    userid: string;
     //TO-DO CAllum update this lista against the firebase db
 }

@@ -15,10 +15,10 @@ import { RegisterOwnerPage } from "../pages/register/registerOwner/register";
 import { BookingsPage } from "../pages/bookings/bookings";
 import { SettingsPage } from "../pages/settings/settings";
 import { CalendarPage } from "../pages/calendar/calendar";
-import { ProfilePage } from "../pages/profile/profile";
 import { PetPage } from "../pages/pet/pet";
 import { EditProfilePage} from "../pages/editprofile/editprofile";
 import { HttpModule } from "@angular/http";
+import { ProfilePageModule } from "../pages/profile/profile.module";
 
 
 var config = {
@@ -36,7 +36,6 @@ var config = {
     LoginPage,
     OwnerHomePage,
     VetHomePage,
-    ProfilePage,
     SettingsPage,
     CalendarPage,
     BookingsPage,
@@ -48,7 +47,8 @@ var config = {
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    HttpModule
+    HttpModule,
+    ProfilePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +56,6 @@ var config = {
     LoginPage,
     OwnerHomePage,
     VetHomePage,
-    ProfilePage,
     SettingsPage,
     CalendarPage,
     BookingsPage,

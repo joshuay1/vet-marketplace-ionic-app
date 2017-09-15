@@ -1,0 +1,80 @@
+page-profile {
+    .background{
+        top: 0; 
+        margin-top: -5%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url('../assets/img/blackBackground.jpg');
+    }
+
+    .whitebackground{
+        background-color: white;
+
+    }
+
+
+    .button.button-block {
+        height: 12vw; 
+        border-radius: 5px;
+        margin-top:0px;
+        margin-bottom:15px;
+        
+
+    }
+
+    scroll-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .a{
+        color: #919191;
+        font-weight: bold;
+        width:100%;
+        bottom:0;
+        padding:10px;
+        margin-left:0px;
+        text-align:left;
+        font-size: 1.2em;
+        vertical-align: bottom;
+
+    }
+
+    
+    
+
+    .p{
+
+        position:relative;
+        width:100%;
+        margin-top: -25%;
+        padding:10px;
+        margin-left:0px;
+        text-align:left;
+        
+        color: #FFFFFF;
+        font-size: 1.4em;
+    }
+
+
+
+ 
+    .circle-pic img{
+        position: relative;
+        left: 5vw;
+        right: 0;
+        bottom: 5;
+        margin: 10 auto;
+        padding: 0;
+        top:10vw;
+        
+        height: 35vw; 
+        width: 35vw; 
+       border: 2px solid white;
+       border-radius: 50%;
+       box-shadow: 0 0 5px gray;
+    }
+
+}
+
+
