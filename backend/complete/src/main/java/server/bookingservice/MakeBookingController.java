@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.geofire.util.GeoUtils;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -275,9 +278,9 @@ public class MakeBookingController{
         BookingData data = new BookingData(muid,mvetid,myear,mmonth,mday,mtime,"confirmed");
         bookingRef.child(key).setValue(data);
 
-        //passBookingField into user
+        //passBookingField into user (NOT NEEDED)
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/"+muid);
+        /*DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/"+muid);
         JSONObject userData = HelperFunction.getData("users/"+muid, logger);
         if(userData.containsKey("bookings")){
             JSONArray bookingArray = (JSONArray) userData.get("bookings");
@@ -288,11 +291,16 @@ public class MakeBookingController{
             bookingArray.add(key);
             userRef.child("bookings").setValue(bookingArray);
         }
+        */
+
+        //passBookingField into vet (NOT NEEDED)
+        
 
         return new BasicResponse("success", muid, "null");
         
         
 
-    }   
+    }
+    
 
 }
