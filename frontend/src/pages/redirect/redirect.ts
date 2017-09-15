@@ -27,6 +27,7 @@ export class RedirectPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad RedirectPage');
+      this.redirect();
   }
 
 
