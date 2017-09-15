@@ -19,6 +19,7 @@ import { PetPage } from "../pages/pet/pet";
 import { EditProfilePage} from "../pages/editprofile/editprofile";
 import { HttpModule } from "@angular/http";
 import { ProfilePageModule } from "../pages/profile/profile.module";
+import { HttpServiceProvider } from '../providers/http-service/http-service';
 
 
 var config = {
@@ -63,7 +64,8 @@ var config = {
     AngularFireDatabase,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HttpServiceProvider
   ]
 })
 export class AppModule {}
