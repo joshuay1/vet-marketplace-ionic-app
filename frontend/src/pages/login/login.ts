@@ -5,7 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { OwnerHomePage } from "../home/ownerHome/ownerHome";
 import { VetHomePage} from "../home/vetHome/vetHome";
-import { UserInfo} from "../../model/user";
+import { UserInfo } from "../../model/user";
+import { RedirectPage } from "../redirect/redirect"
 /**
  * Generated class for the LoginPage page.
  *
@@ -43,14 +44,19 @@ export class LoginPage {
             this.profileData = this.db.object(`users/${data.uid}`)
             console.log("data User ID = " + data.uid);
             this.profileData.forEach(element => {
-              if(element.userType == "User"){
+                if (element.userType == "User" || element.userType == "Vet") {
+                    this.navCtrl.setRoot(RedirectPage, {
+                        user: JSON.stringify({ user: element })
+                    })
+                }
+              /*if(element.userType == "User"){
                   console.log("FOUND USER");
                   this.navCtrl.setRoot(OwnerHomePage);
               }              
               else if(element.userType == "Vet"){
                 console.log("Found Vet");
                 this.navCtrl.setRoot(VetHomePage);
-              }
+              }*/
             });
           });
       })

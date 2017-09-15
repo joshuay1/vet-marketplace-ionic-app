@@ -15,7 +15,8 @@ export interface UserInfo{
     streetname: string;
     suburb : string;
     state: string;
-    postcode : string;
+    postcode: string;
+    pictureURL: string;
     country : string;
     //TO-DO CAllum update this lista against the firebase db
 }

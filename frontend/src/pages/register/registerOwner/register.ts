@@ -6,6 +6,7 @@ import { User, UserInfo } from "../../../model/user";
 import { OwnerHomePage } from "../../home/ownerHome/ownerHome";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 import { RequestOptions, Http, Headers } from "@angular/http";
+import { RedirectPage } from "../../redirect/redirect"
 /**
  * Generated class for the RegisterPage page.
  *
@@ -74,7 +75,11 @@ export class RegisterOwnerPage {
         this.postRequest(this.userInfo, auth.uid);
         
         //this.db.object(`users/${auth.uid}`).set(this.userInfo);
-        this.navCtrl.setRoot(OwnerHomePage);
+
+
+
+        this.navCtrl.setRoot(RedirectPage, { user: JSON.stringify({ user: this.userInfo }) })
+       // this.navCtrl.setRoot(OwnerHomePage);
 
       })
       .catch(err =>{

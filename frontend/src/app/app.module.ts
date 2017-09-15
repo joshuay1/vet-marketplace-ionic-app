@@ -7,10 +7,10 @@ import { MyApp } from './app.component';
 import { OwnerHomePage } from '../pages/home/ownerHome/ownerHome';
 import { VetHomePage } from '../pages/home/vetHome/vetHome';
 import { LoginPage } from "../pages/login/login";
+import { RedirectPage } from "../pages/redirect/redirect"
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule }from 'angularfire2/auth'; 
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
-import { RegisterVetPage } from "../pages/register/registerVet/register";
 import { RegisterOwnerPage } from "../pages/register/registerOwner/register";
 import { BookingsPage } from "../pages/bookings/bookings";
 import { SettingsPage } from "../pages/settings/settings";
@@ -40,6 +40,7 @@ var config = {
     SettingsPage,
     CalendarPage,
     BookingsPage,
+    RedirectPage,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +60,7 @@ var config = {
     SettingsPage,
     CalendarPage,
     BookingsPage,
+    RedirectPage,
   ],
   providers: [
     AngularFireDatabase,
