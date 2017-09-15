@@ -46,7 +46,7 @@ export class LoginPage {
             this.profileData.forEach(element => {
                 if (element.userType == "User" || element.userType == "Vet") {
                     this.navCtrl.setRoot(RedirectPage, {
-                        user: JSON.stringify({ user: element })
+                        usertype: element.userType
                     })
                 }
               /*if(element.userType == "User"){

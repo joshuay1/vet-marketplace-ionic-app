@@ -19,7 +19,7 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
   templateUrl: 'redirect.html',
 })
 export class RedirectPage {
-    userInfo: FirebaseObjectObservable<UserInfo>;
+    userType: String;
     constructor(public navCtrl: NavController,
         public navParams: NavParams, private afAuth: AngularFireAuth,
         private db: AngularFireDatabase) {
@@ -27,25 +27,22 @@ export class RedirectPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad RedirectPage');
-      this.afAuth.authState.subscribe(data => {
-          this.userInfo = this.db.object(`users/${data.uid}`)
-      });
   }
 
 
-  /*redirect() {
-      this.userInfo = JSON.parse(this.navParams.get('user'));
-      console.log(this.userInfo.userType);
-      if (this.userInfo.userType == 'User') {
+  redirect() {
+      this.userType = this.navParams.get("userType");
+      console.log(this.userType);
+      if (this.userType == 'User') {
           console.log("redirecting as user");
           this.navCtrl.setRoot(OwnerHomePage);
       }
-      if (this.userInfo.userType == 'Vet') {
+      if (this.userType == 'Vet') {
           //if is validated
           console.log("redirecting as vet");
           this.navCtrl.setRoot(VetHomePage);
       }
 
-  }*/
+  }
 
 }

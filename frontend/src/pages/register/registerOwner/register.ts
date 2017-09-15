@@ -78,7 +78,8 @@ export class RegisterOwnerPage {
 
 
 
-        this.navCtrl.setRoot(RedirectPage, { user: JSON.stringify({ user: this.userInfo }) })
+        this.navCtrl.setRoot(RedirectPage, { userType: this.userInfo.userType})
+          })
        // this.navCtrl.setRoot(OwnerHomePage);
 
       })
