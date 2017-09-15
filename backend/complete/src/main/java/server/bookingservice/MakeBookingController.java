@@ -302,7 +302,8 @@ public class MakeBookingController{
 
         //passBookingField into vet (NOT NEEDED)
         
-
+        logger.info("Make Booking success");
+        logger.info("/////////////MAKEBOOKING ENDS////////////////");
         return new BasicResponse("success", muid, "null");
         
         
