@@ -27,8 +27,10 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+    console.log("hello");
     this.afAuth.authState.subscribe(data=>{
       this.profileData = this.db.object(`users/${data.uid}`)
+      console.log("hello");
     });
   }
 

@@ -23,10 +23,17 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
 export class EditProfilePage {
   userInfo = {} as UserInfo;
   profileData: FirebaseObjectObservable<UserInfo>;
-  loading; registerForm: FormGroup;
-  uid: String;
+  loading; 
+  editForm: FormGroup;
+  uid: string;
   private apiUrl = 'http://115.146.86.193:8080/';
   result:String;
+  streetname: string;
+  streetnumber: string;
+  suburb: string;
+  state: string;
+  postcode: string;
+  country: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -59,7 +66,9 @@ export class EditProfilePage {
       this.profileData = this.db.object(`users/` + this.uid/*,{preserveSnapshot: true}*/);
       this.profileData.forEach(snapshot => {
 
-        this.registerForm = builder.group({
+
+
+        this.editForm = builder.group({
           'auth': [],
           'first-name': [snapshot.firstname],
           'last-name': [snapshot.lastname],
@@ -75,7 +84,13 @@ export class EditProfilePage {
           snapshots.forEach(snapshot=>{
             console.log("snapshot = "+snapshot.key+", values =" + snapshot.val()) ;
           });*/
-        });
+        });        
+        this.streetname = snapshot.streetname;
+        this.streetnumber = snapshot.streetnumber;
+        this.suburb = snapshot.suburb;
+        this.state = snapshot.state;
+        this.postcode = snapshot.postcode;
+        this.country = snapshot.country;
       })
 
       console.log(this.profileData);
@@ -85,16 +100,44 @@ export class EditProfilePage {
   async update(){
   
     if(this.validate()){
-      this.userInfo.userid = this.afAuth.auth.currentUser.uid;
+      this.userInfo.userid = this.uid;
+        if(this.userInfo.streetname!= null || this.userInfo.streetnumber!= null|| 
+          this.userInfo.suburb!= null|| this.userInfo.state!= null
+          || this.userInfo.postcode!= null || this.userInfo.country!= null){
+            console.log(this.userInfo.streetname)
+
+          if(this.userInfo.streetname == null){
+            this.userInfo.streetname = this.streetname;
+            console.log(this.userInfo.streetname);
+          }
+          if(this.userInfo.streetnumber == null){
+            this.userInfo.streetnumber = this.streetnumber;
+          }
+          if(this.userInfo.suburb == null){
+            this.userInfo.suburb = this.suburb;
+            console.log(this.userInfo.suburb);
+          }
+          if(this.userInfo.state == null){
+            this.userInfo.state = this.state;
+          }
+          if(this.userInfo.postcode == null){
+            this.userInfo.postcode = this.postcode;
+          }          
+          if(this.userInfo.country == null){
+            this.userInfo.country = this.country;
+          }
+        }
+         
       this.httpProviders.httpPost(this.apiUrl+"profileUpdate",JSON.stringify(this.userInfo))
       .then(result=>{
         console.log("get result here");
         var res = result.response;
         if(res =="success"){
-          this.navCtrl.pop();
+          console.log("get result here");
+          this.navCtrl.pop();//.catch(() => console.log('view was not poped'));;
         }
       }).catch(err=>{
-        console.log("catching error here");
+        console.log("catchin error here");
         let alert = this.alertCtrl.create({
           title: 'Error',
           message : err,
@@ -109,10 +152,10 @@ export class EditProfilePage {
 
   validate(): boolean {
     // figure out the error message
-    let errorMsg = '';
+    let errorMsg = 'Error';
 /*
     // validate each field
-    let control = this.registerForm.controls['email'];
+    let control = this.editForm.controls['email'];
     if (!control.valid) {
       if (control.errors['required']) {
         errorMsg = 'Email cannot be empty';
@@ -125,7 +168,7 @@ export class EditProfilePage {
       return false;
     }
 
-    control = this.registerForm.controls['password'];
+    control = this.editForm.controls['password'];
     if (!control.valid) {
       if (control.errors['required']) {
         errorMsg = 'Password cannot be empty';
@@ -136,7 +179,7 @@ export class EditProfilePage {
       return false;
     }*/
 
-    let control = this.registerForm.controls['first-name'];
+    let control = this.editForm.controls['first-name'];
     if (!control.valid) {
       if (control.errors['required']) {
         errorMsg = 'First name cannot be empty';
@@ -146,14 +189,14 @@ export class EditProfilePage {
     }
 
 /*
-    control = this.registerForm.controls['auth'];
+    control = this.editForm.controls['auth'];
     if (!control.valid) {
       errorMsg = "auth error";
       this.createAlert(errorMsg);
       return false;
     }
     */
-    control = this.registerForm.controls['last-name'];
+    control = this.editForm.controls['last-name'];
     if (!control.valid) {
       if (control.errors['required']) {
         errorMsg = 'Last name cannot be empty';
@@ -162,7 +205,7 @@ export class EditProfilePage {
       return false;
     }
 
-    control = this.registerForm.controls['dob'];
+    control = this.editForm.controls['dob'];
     if (!control.valid) {
       if (control.errors['required']) {
         errorMsg = 'Date cannot be empty';
