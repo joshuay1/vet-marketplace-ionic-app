@@ -232,4 +232,33 @@ public class HelperFunction {
 		}
 	}
 
+	public static String getIdfromToken(String tokenString, Logger logger){
+
+		Semaphore semaphore = new Semaphore(0);
+		String[] tokenid= new String[1];
+		FirebaseAuth.getInstance().verifyIdToken(tokenString)
+		.addOnSuccessListener(new OnSuccessListener<FirebaseToken>(){
+
+			@Override
+			public void onSuccess(FirebaseToken result) {
+				tokenid[0] = result.getUid();
+				semaphore.release();
+			}
+
+		});
+
+		//catch semaphore aka wait for decoding to finish
+		try{
+			semaphore.acquire();
+		}catch(InterruptedException e){
+			e.printStackTrace();
+			logger.info("Interrupted while waiting for id verification token");
+			return null;
+		}
+
+		return tokenid[0];
+
+
+	}
+
 }

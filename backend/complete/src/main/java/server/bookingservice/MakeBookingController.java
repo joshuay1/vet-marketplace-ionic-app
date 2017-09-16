@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mockito.internal.util.collections.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.Semaphore;
 import server.Application;
@@ -40,13 +43,78 @@ public class MakeBookingController{
     //TODO ADD AVAILABILITY PARAM
     @CrossOrigin
     @RequestMapping(value = "/nearestVet",method = RequestMethod.GET)
-    public VetResponse nearestVet(@RequestParam(value = "userid" ) String id,
-                                  @RequestParam(value = "radius") double radius){
+    public VetResponse nearestVet(@RequestParam(value = "token" ) String tokenString,
+                                  @RequestParam(value = "radius") double radius,
+                                  @RequestParam(value = "date")String date,
+                                  @RequestParam(value = "time")String time){
+        
 
-        //TODO check token = id
-
+        logger.info("//////////////////NEAREST VET BEGINS/////////////");
+        String id = HelperFunction.getIdfromToken(tokenString, logger);
         //get UserType
+        if(id != null){
+            logger.info("id provided = "+ id);
+        }else{
+            logger.info("token provided is not valid");
+            logger.info("//////////////////NEAREST VET ENDS/////////////");
+            return new VetResponse(null, "error", "token provided is not valid");
+        }
+
+        //get Available vet
+        String year = null;
+        String month = null;
+        String day = null;
+
+        if(HelperFunction.testDob(date)){
+            StringTokenizer tokens = new StringTokenizer(date, "-");
+            year = tokens.nextToken();
+            month = tokens.nextToken();
+            day = tokens.nextToken();
+        }else{
+            logger.info("date format is not valid");
+            logger.info("//////////////////NEAREST VET ENDS/////////////");
+            return new VetResponse(null, "error", "date format is not valid");
+
+        }
+        String hour = null;
+        if(HelperFunction.testTime(time)){
+            StringTokenizer tokens = new StringTokenizer(time, ".");
+            hour = tokens.nextToken();
+        }else{
+            logger.info("time format is not valid");
+            logger.info("//////////////////NEAREST VET ENDS/////////////");
+            return new VetResponse(null, "error", "time format is not valid");
+        }
+        String availUrl = "availabilities/"+year+"/"+month+"/"+day+"/"+ hour;
+        JSONArray vets = HelperFunction.getDataInArray(availUrl, logger);
+        if(vets== null || vets.size() == 0){
+            logger.info("cant find available vet");
+            logger.info("//////////////////NEAREST VET ENDS/////////////");
+            return new VetResponse(null, "success", "no available vets");
+        }
+        ArrayList<String> availVets = new ArrayList<String>();
+        for(int i = 0; i<vets.size();i++){
+            JSONObject obj = (JSONObject) vets.get(i);
+            //check size == 1
+            if(obj.size() ==1){
+                //get keyset
+                Set<String> keys = obj.keySet();
+                Iterator<String>iter = keys.iterator();
+                String key = iter.next();
+                if(obj.get(key).equals("N")){
+                    availVets.add(key);
+                }
+            }
+            
+
+        }
+        
+        
+        
         String userType = HelperFunction.getUserType(id, logger);
+
+
+
         
         //Get info of the location of the user
         String url = "geofire/"+ userType+"/"+id;
@@ -56,6 +124,8 @@ public class MakeBookingController{
         double lat = (double) geoloc.get(0);
         double lng = (double) geoloc.get(1);
         logger.info("lat = "+ lat+", lng = "+ lng);
+
+        //String check date and Time
         
         //formatting for the distance
         DecimalFormat df = new DecimalFormat("#.00"); 
@@ -131,17 +201,13 @@ public class MakeBookingController{
             @Override
             public void onGeoQueryError(DatabaseError error) {
                 logger.error("There was an error with nearest vet query with accessing the database");
+                semaphore.release();
             }
 
         };
 
         geoQuery.addGeoQueryEventListener(listener);
 
-
-        //TODO get list of vets from the availibility
-
-
-        //TODO match the key list with the vet availibility list -> remember to remove distance from distances arraylist as well
 
 
 
@@ -157,18 +223,27 @@ public class MakeBookingController{
 
 
         //if size is different, sth wrong in the query
+        
         if(distances.size() != keys.size()){
             logger.error("something wrong with the query, distances size != keys size");
             return new VetResponse(null,"error","error in the query");
         }
+
+        
         
         if(keys.size()== 0){
-            return new VetResponse(null, "error", "no vet found");
+
+            logger.info("//////////////////NEAREST VET ENDS/////////////");
+            return new VetResponse(null, "success", "no vet found in vicinity");
         }else{
             JSONObject item = new JSONObject();
             for(int i = 0 ; i < keys.size();i++){
-                item.put(keys.get(i), distances.get(i));
+                if(availVets.contains(keys.get(i))){
+                    item.put(keys.get(i), distances.get(i));
+                }
+                
             }
+            logger.info("//////////////////NEAREST VET ENDS/////////////");
             return new VetResponse(item, "success",null);
         }
     }
