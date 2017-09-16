@@ -165,8 +165,50 @@ IP:PORT = http://115.146.86.193:8080
 ----------------Booking---------------
 
 1. Get nearest Vet
-2. Payment
+
+	API For getting nearest Vets
+    
+    Input:
+    
+    URL: http://ServerIP:Port/nearestVet
+    
+    This one is using HTTP GET
+    
+    Params: token=tokenString&radius=(Radius)&date={Date}&time={time}
+    
+    radiusFormat = radius in kilometers e.g 0.6
+    dateFormat = YYYY-MM-DD eg. 2017-10-08
+    time = HH.00 eg. 10.00 -> convert 5pm etc to 17.00
+    
+    Result Example:
+    
+    	------------
+        input : token=ASDJCLAIWNzxcawe&radius=0.7&date=2017-10-08&time=12.00
+        output: {"response" : "success", message: "null", "vetID" : { ID1 : 0.4 , ID2, 0.3}
+        
+        
+        
+        
 3. Make a booking
+	This is using HTTP POST
+	Input:
+    URL: http://ServerIP:Port/makeBooking
+    
+    Params: token=ASDAWIukhkFUHCKASUh
+    
+    Body: JSON STRING containing following fields
+    Example:
+    { userid : asdas,
+    vetid : ASDSAD,
+    date : 2017-10-08,
+    time : 12.00
+    petid : Doggie
+    }
+    
+    return : {"response":"success","id":"Tester2","errorMessage":null}
+    or
+	error: {"response":"error","id":"Tester2","errorMessage":"different depending on the error"}
+
 4. Cancel Booking
 5. Insert availability
 
