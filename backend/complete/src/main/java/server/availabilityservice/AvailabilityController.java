@@ -11,7 +11,8 @@ import server.HelperFunction;
 import server.response.BasicResponse;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 @RestController
@@ -82,5 +83,61 @@ public class AvailabilityController {
             vetRef.child("availabilities").setValue(availArr);
         }
         return new BasicResponse("success", null,null);
+    }
+
+    @RequestMapping(value = "/deleteAvailability", method = RequestMethod.POST)
+    public BasicResponse deleteAvailability(
+            @RequestParam(value = "date") String date,
+            @RequestParam(value = "vetId") String vetId )
+    {
+        //check token id = user id
+        String vetUrl = "users/"+vetId;
+        StringTokenizer tokenizer = new StringTokenizer(date, "-");
+        String year = tokenizer.nextToken();
+        String month = tokenizer.nextToken();
+        String day = tokenizer.nextToken();
+
+        String url = "availabilities/"+year+"/"+month+"/"+day+"/";
+
+        try {
+            JSONObject vetInfo = HelperFunction.getData(vetUrl, logger);
+            JSONArray avails = (JSONArray) vetInfo.get("availabilities");
+            for( int i = 0; i <avails.size();i++){
+                JSONObject obj = (JSONObject)avails.get(i);
+                Object[] keyArr = obj.keySet().toArray();
+                for( int j = 0; j < keyArr.length; j++){
+                    //logger.info((String)keyArr[j]);
+                    if (((String)keyArr[j]).equals(date)){
+                        //logger.info("hello");
+                        avails.remove(i);
+                    }
+                }
+            }
+
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(vetUrl);
+            userRef.child("/availabilities").setValue((ArrayList<String>)avails);
+
+            JSONObject availInfo = HelperFunction.getData(url,logger);
+            //Collection availList = availInfo.values();
+            JSONObject item = new JSONObject();
+            item.put(vetId, "N");
+            Object[] keys =availInfo.keySet().toArray();
+            for(int i = 0; i < keys.length; i++){
+                //logger.info((String) keys[i]);
+                JSONArray availArr = (JSONArray) availInfo.get(keys[i]);
+                if (availArr.contains(item)){
+                    availArr.remove(item);
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference(url+keys[i]);
+                    reference.setValue((ArrayList<String>)availArr);
+                    logger.info(url+keys[i]+"/"+availArr.indexOf(item));
+
+                }
+            }
+
+            return new BasicResponse("success", vetId, null);
+        }
+        catch (NullPointerException e){
+            return new BasicResponse("failure", vetId, "ID doesn't exist");
+        }
     }
 }
