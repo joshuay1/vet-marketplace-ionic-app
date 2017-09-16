@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.mockito.internal.util.collections.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -77,15 +76,17 @@ public class MakeBookingController{
 
         }
         String hour = null;
+        int hr = 0;
         if(HelperFunction.testTime(time)){
             StringTokenizer tokens = new StringTokenizer(time, ".");
             hour = tokens.nextToken();
+            hr = Integer.parseInt(hour);
         }else{
             logger.info("time format is not valid");
             logger.info("//////////////////NEAREST VET ENDS/////////////");
             return new VetResponse(null, "error", "time format is not valid");
         }
-        String availUrl = "availabilities/"+year+"/"+month+"/"+day+"/"+ hour;
+        String availUrl = "availabilities/"+year+"/"+month+"/"+day+"/"+ hr;
         JSONArray vets = HelperFunction.getDataInArray(availUrl, logger);
         if(vets== null || vets.size() == 0){
             logger.info("cant find available vet");
@@ -330,6 +331,8 @@ public class MakeBookingController{
             return new BasicResponse("error", null,"date not present in body");
         }
 
+
+        int hr = -1;
         if(jsonBody.containsKey("time")){
             mtime = (String) jsonBody.get("time");
             if(!HelperFunction.testTime(mtime)){
@@ -337,6 +340,10 @@ public class MakeBookingController{
                 logger.info("/////////////MAKEBOOKING ENDS////////////////");
                 return new BasicResponse("error", null,"wrong time format");
             }
+
+            StringTokenizer tokenizer = new StringTokenizer(mtime,".");
+            String hour = tokenizer.nextToken();
+            hr = Integer.parseInt(hour);
         }else{
             logger.info("time not present");
             logger.info("/////////////MAKEBOOKING ENDS////////////////");
@@ -348,6 +355,44 @@ public class MakeBookingController{
 
 
         //CheckAvailability & change them
+        if(hr==-1){
+            logger.info("error in parsing statement");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"parse error");
+        }
+
+        String availUrl = "availabilities/"+myear+"/"+mmonth+"/"+mday+"/"+ hr;
+        JSONArray vets = HelperFunction.getDataInArray(availUrl, logger);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(availUrl);
+        if(vets == null){
+            logger.info("vet not available at specified time and date");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"vet not available at specified time and date");
+        }
+        if(vets.size() == 0 ){
+            logger.info("vet not available at specified time and date");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"vet not available at specified time and date");
+        }else{
+            for(int i = 0 ; i < vets.size(); i++){
+                JSONObject obj = (JSONObject) vets.get(i);
+                if(obj.containsKey(mvetid)){
+                    String val = (String) obj.get(mvetid);
+                    if(val.equals("N")){
+                        
+                        JSONObject newObj = new JSONObject();
+                        newObj.put(mvetid, "Y");
+                        vets.remove(i);
+                        vets.add(newObj);
+                        ref.setValue(vets);
+                        logger.info("change availabilities data");
+                        break;
+                    }
+                }
+            }
+        }
+
+        
 
 
 
