@@ -2,9 +2,12 @@ package server.bookingservice;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.concurrent.Semaphore;
 import server.Application;
 import server.HelperFunction;
+import server.response.BasicResponse;
+import server.response.VetResponse;
 
 @RestController
 
@@ -166,5 +172,143 @@ public class MakeBookingController{
             return new VetResponse(item, "success",null);
         }
     }
+
+
+    @CrossOrigin
+    @RequestMapping(value="/makeBooking", method= RequestMethod.POST)
+    public BasicResponse makeBooking(
+        @RequestParam(value= "token") String tokenString,
+        @RequestBody String jsonString){
+        
+
+        logger.info("///////////MAKEBOOKING START///////////////");
+        JSONParser parser = new JSONParser();
+        JSONObject jsonBody = null;
+        try{
+            jsonBody = (JSONObject) parser.parse(jsonString);
+        }catch(ParseException e){
+            logger.info("parse json object failed");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null, "body not jsonObject");
+            
+        }
+
+
+        String muid = null;
+        String mvetid = null;
+        String mdate = null;
+        String myear = null;
+        String mmonth = null;
+        String mday = null;
+        String mtime = null;
+        String mpetid = null;
+        
+        //TODO ADD PAYMENT METHOD TO BODY PARAM
+
+        if(jsonBody.containsKey("userid")){
+            muid = (String) jsonBody.get("userid");
+            if(HelperFunction.matchToken(muid, tokenString, logger)){
+                logger.info("decoded token id match provided uid, continue");
+            }else{
+                logger.info("decoded token id does not match provided uid");
+                logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            }
+
+        }else{
+            logger.info("userid not present");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"userid not present in body");
+        }
+
+        if(jsonBody.containsKey("vetid")){
+            mvetid = (String) jsonBody.get("vetid");
+        }else{
+            logger.info("vetid not present");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"vetid not present in body");
+        }
+
+        if(jsonBody.containsKey("petid")){
+            mpetid = (String) jsonBody.get("petid");
+            //check whether the user have the pet id TODO
+        }else{
+            logger.info("petid not present");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"vetid not present in body");
+        }
+
+        if(jsonBody.containsKey("date")){
+            mdate = (String) jsonBody.get("date");
+            if(HelperFunction.testDob(mdate)){
+                StringTokenizer tokens = new StringTokenizer(mdate,"-");
+                myear = tokens.nextToken();
+                mmonth = tokens.nextToken();
+                mday = tokens.nextToken();
+            }else{
+                logger.info("date is given in wrong format, date = "+ mdate);
+                logger.info("/////////////MAKEBOOKING ENDS////////////////");
+                return new BasicResponse("error", null,"wrong date format");
+            }
+        }else{
+            logger.info("date not present");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"date not present in body");
+        }
+
+        if(jsonBody.containsKey("time")){
+            mtime = (String) jsonBody.get("time");
+            if(!HelperFunction.testTime(mtime)){
+                logger.info("time is given in wrong format, time = "+ mtime);
+                logger.info("/////////////MAKEBOOKING ENDS////////////////");
+                return new BasicResponse("error", null,"wrong time format");
+            }
+        }else{
+            logger.info("time not present");
+            logger.info("/////////////MAKEBOOKING ENDS////////////////");
+            return new BasicResponse("error", null,"time not present in body");
+        }
+
+
+        //GET PAYMENT INFO FROM BODY
+
+
+        //CheckAvailability & change them
+
+
+
+
+        //MakeBooking
+
+        //create new booking field
+        DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("bookings");
+        String key = bookingRef.push().getKey();
+        BookingData data = new BookingData(muid,mvetid,mpetid,myear,mmonth,mday,mtime,"confirmed");
+        bookingRef.child(key).setValue(data);
+
+        //passBookingField into user (NOT NEEDED)
+
+        /*DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/"+muid);
+        JSONObject userData = HelperFunction.getData("users/"+muid, logger);
+        if(userData.containsKey("bookings")){
+            JSONArray bookingArray = (JSONArray) userData.get("bookings");
+            bookingArray.add(key);
+            userRef.child("bookings").setValue(bookingArray);
+        }else{
+            JSONArray bookingArray = new JSONArray();
+            bookingArray.add(key);
+            userRef.child("bookings").setValue(bookingArray);
+        }
+        */
+
+        //passBookingField into vet (NOT NEEDED)
+        
+        logger.info("Make Booking success");
+        logger.info("/////////////MAKEBOOKING ENDS////////////////");
+        return new BasicResponse("success", muid, "null");
+        
+        
+
+    }
+    
 
 }

@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 import java.util.concurrent.Semaphore;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -213,6 +214,22 @@ public class HelperFunction {
 		}
 
 		
+	}
+
+	public static boolean testTime(String timeString){
+
+		if(timeString.matches("^[0-9]{2}\\.[0]{2}$")){
+			StringTokenizer tokenizer = new StringTokenizer(timeString,".");
+			int hour = Integer.parseInt(tokenizer.nextToken());
+			if( hour>= 0 && hour <= 23){
+				return true;
+			}else{
+				return false;
+			}
+
+		}else{
+			return false;
+		}
 	}
 
 }
