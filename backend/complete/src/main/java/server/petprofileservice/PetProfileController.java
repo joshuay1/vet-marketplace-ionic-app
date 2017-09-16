@@ -42,7 +42,7 @@ public class PetProfileController {
             @RequestParam(value = "breed") String animalBreed) {
         */
         //Initialize Data
-        String mid = null;
+        //String mid = null;
         String muid = null;
         String mpetname = null;
         String mdob = null;
@@ -63,12 +63,12 @@ public class PetProfileController {
         }else{
             return new BasicResponse("error", muid, "no user id found");
         }
-        if(jsonProfile.containsKey("petId")){
+        /*if(jsonProfile.containsKey("petId")){
             mid = (String) jsonProfile.get("petId");
         }
         else{
             return new BasicResponse("error",muid,"no petId found");
-        }
+        }*/
         if(jsonProfile.containsKey("petname")){
             mpetname = (String) jsonProfile.get("petname");
         }
@@ -94,7 +94,7 @@ public class PetProfileController {
             return new BasicResponse("error", muid, "no breed provided");
         }
         final String uid = muid;
-        final String id = mid;
+        //final String id = mid;
         final String petname = mpetname;
         final String dob = mdob;
         final String animalType = manimalType;
@@ -148,9 +148,9 @@ public class PetProfileController {
         });
 
         if (flag == 0) {
-            return new BasicResponse("success", id, null);
+            return new BasicResponse("success",uid, null);
         } else if(flag == 1)
-            return new BasicResponse("failure", id, "No such user exists");
+            return new BasicResponse("failure",uid, "No such user exists");
 
         return null;
     }

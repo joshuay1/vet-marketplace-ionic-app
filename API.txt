@@ -93,12 +93,11 @@ IP:PORT = http://115.146.86.193:8080
             ALL REQUIRED ( WILL RETURN ERROR IF NOT)
 
               1. token
-              2. petId
-              3. userId
-              4. petname
-              5. dob
-              6. animalType
-              7. breed
+              2. userId
+              3. petname
+              4. dob
+              5. animalType
+              6. breed
 //////////////////OLD PARAM////////////////////////////////
             Example Parameters :
             petId=Pet1&userId=FdsZPv4cydYUN9CVFb3WZbJb3Rr1&petname=Fluffy&dob=10/11/2010&animalType=Dog&breed=Dalmation
