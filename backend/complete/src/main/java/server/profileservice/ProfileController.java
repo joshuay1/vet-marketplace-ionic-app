@@ -380,9 +380,13 @@ public class ProfileController {
                     GeocodingResult[] results =  GeocodingApi.geocode(geocode,
                             address).await();
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    if(results == null || results.length == 0){
+                        logger.info("server cant find the location provided");
+                        return new BasicResponse("error", null, "server cant locate the location provided");
+                    }
                     String latitude = gson.toJson(results[0].geometry.location.lat);
                     String longitude = gson.toJson(results[0].geometry.location.lng);
-                    logger.debug("google api result: Lat :"+ latitude + ", Long :" + longitude);
+                    logger.info("google api result: Lat :"+ latitude + ", Long :" + longitude);
     
                     
                         //If theres a lat and long create a geofire file
