@@ -16,7 +16,10 @@ public class VetResponse{
     }
 
     public String getVetID(){
+        if(this.VetIds!= null){
         return this.VetIds.toJSONString();
+        }
+        else return null;
     }
 
     public String getResponse(){
