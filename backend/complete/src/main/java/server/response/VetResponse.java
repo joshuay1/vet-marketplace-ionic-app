@@ -1,4 +1,4 @@
-package server.bookingservice;
+package server.response;
 
 import org.json.simple.JSONObject;
 
