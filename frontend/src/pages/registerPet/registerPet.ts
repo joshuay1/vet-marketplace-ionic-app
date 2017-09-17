@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ion
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase} from 'angularfire2/database';
 import {PetInfo } from "../../model/pet";
+import { OwnerHomePage } from "../home/ownerHome/ownerHome";
 import {ProfilePage} from "../profile/profile";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 import { RequestOptions, Http, Headers } from "@angular/http";
@@ -42,15 +43,16 @@ export class RegisterPetPage {
   private userid = "";
   ionViewDidLoad() {
     this.userid = this.navParams.get("uid");
-    console.log(this.userid+"oioioioioioioi");
   }
 
-  async register(petInfo: PetInfo) {
+  async register() {
     if(this.validate()){
-      console.log("validated on register")
+      console.log("validated on register");
+      console.log(this.userid+": getting user id from pet register page.");
+      this.postRequest(this.petInfo,this.userid)
+      console.log("finished post.")
+      this.navCtrl.push(OwnerHomePage);      
     }
-    console.log("validation problems.")
-  
   }
 
   validate(): boolean{
@@ -69,12 +71,14 @@ export class RegisterPetPage {
       return false;
      }
 
-    //  control = this.registerForm.controls['auth'];
-    //  if (!control.valid) {
-    //    errorMsg = "auth error";
-    //    this.createAlert(errorMsg);
-    //    return false;
-    //   }
+     control = this.registerForm.controls['breed'];
+     if (!control.valid) {
+       if (control.errors['required']) {
+           errorMsg = 'Breed cannot be empty. Enter "No" if not sure.';
+       }
+       this.createAlert(errorMsg);
+       return false;
+      }
 
      control = this.registerForm.controls['animalType'];
      if (!control.valid) {
@@ -111,15 +115,8 @@ export class RegisterPetPage {
     var headers = new Headers();
     headers.append('Content-Type','application/json');
     
-
-
-    /*OLD PARAM
-    var param = "userid="+id+"&firstname="+info.firstname+"&lastname="+info.lastname+"&dob="+info.dob
-    +"&userType="+info.userType+"&streetnumber="+info.streetnumber+"&streetname="+info.streetname
-    +"&suburb="+info.suburb+"&state="+info.state+"&postcode="+info.postcode+"&country="+info.country;*/
-
     var body = JSON.stringify({
-      userid: this.userid,
+      userId: this.userid,
       petname : info.petname,
       animalType: info.animaltype,
       dob : info.dob,
@@ -130,38 +127,15 @@ export class RegisterPetPage {
     .then(token =>{
       var param = "token="+ token;
       let options = new RequestOptions({headers: headers,params:param});
-      var url =  this.apiUrl + "postProfile";
+      var url =  this.apiUrl + "postPetProfile";
 
       console.log("//////////API Post///////////////////");
       console.log("postParams+ = "+param);
       console.log("body = "+ body);
       console.log("url = "+ url);
-
-      this.http.post(url ,body , options)
-      .subscribe(result=>{
-        var response = result.json();
-        console.log("success="+ JSON.stringify(response));
-        var val = response.response;
-        if(val === "success"){
-          console.log ("storing data success");
-          console.log ("///////////////API POST end///////////");
-        }else{
-          console.log("storing data failed, error = " + response.errorMessage);
-          console.log ("///////////////API POST end///////////");
-        }
-      }
-      ,error =>{
-      console.log("error="+error);
-  
-    }); 
-    });
-
-    
-
-
-
-    
-    
+      console.log(this.http.post(url ,body , options));
+      var promise = this.http.post(url ,body , options);
+    });  
     
     
   }
