@@ -7,6 +7,8 @@ API (for front end people)
 ------------User / Vet Profile Management-------------------------
 
 
+IP:PORT = http://115.146.86.193:8080
+
 1. Profile Post Example
 
 
@@ -32,9 +34,17 @@ API (for front end people)
               10.state
               11.postcode
               12.country
+
+//////////////////OLD PARAM////////////////////////////////
             Example Parameters :
             userid=Tester2&firstName=Stanley&lastName=Sim&dob=20/11/1932&userType=User&streetNumber=199&streetName=Lygon St&suburb=Carlton&state=Victoria&postcode=3053&country=Australia
-    
+///////////////NEW PARAM//////////////////////////////////
+
+	New Param : 
+	token=ASREAWUHFKUAWHUAHWKDHAWKU
+	Body:
+	JSON Containing field 2-12 in String. Remember to Stringify the JSON (Server only accept JSON in String) 
+
     Output:
     return : {"response":"success","id":"Tester2","errorMessage":null}
     or
@@ -46,8 +56,18 @@ API (for front end people)
             URL: http://ServerIP:Port/profileUpdate
             Parameters(case-sensitive)
 
-            ALL Parameters IS OPTIONAL EXCEPT FOR userid token and userType (when it is implemented).
-            UserType is for identification only and is not part of the update
+            
+
+
+    PARAM : token=ASEAFSDADAWAWCWACAWFWASD
+
+	token is required
+
+
+    Body  : JSON String
+
+	ALL Body Parameters IS OPTIONAL EXCEPT FOR userid (same param as profile registering)
+            Cant change userType !! will throw an error if the optionally given userType is different than the stored userType
             Exception: When 1 of the data field regarding the address is changed (streetnumber,....,country) send all the data regarding user address(all of streetnumber,...,country) to the Server
             or you will get an error
 
@@ -57,15 +77,6 @@ API (for front end people)
             return : {"response": "error", "id" :"Tester2","errorMessage":"Potato Server"}
 
     
-    Example IO,
-        Input 1: userid=Tester2&firstname=John&lastname=Snow&userType=Vet
-        Output1: {"response":"success","id":"Tester2","errorMessage":null}
-
-        Input 2: userid=Tester2&firstname=Jamie&lastname=Snow&userType=Vet&country=India
-        Output2: {"response":"error","id":"Tester2","errorMessage":"Some of the address field is null"}
-
-        Input 3: userid=Tester2&lastname=Targaryen&dob=30/11/2010&userType=Vet&streetnumber=1341&streetname=Dandenong Rd&suburb=Chadstone&state=Victoria&postcode=3148&country=Australia
-        Output3: {"response":"success","id":"Tester2","errorMessage":null}
 
 4. Image Upload
 
@@ -81,16 +92,22 @@ API (for front end people)
 
             ALL REQUIRED ( WILL RETURN ERROR IF NOT)
 
-              1. token (NOT YET IMPLEMENTED. Ignore for now.)
-              2. petId
-              3. userId
-              4. petname
-              5. dob
-              6. animalType
-              7. breed
+              1. token
+              2. userId
+              3. petname
+              4. dob
+              5. animalType
+              6. breed
+//////////////////OLD PARAM////////////////////////////////
             Example Parameters :
             petId=Pet1&userId=FdsZPv4cydYUN9CVFb3WZbJb3Rr1&petname=Fluffy&dob=10/11/2010&animalType=Dog&breed=Dalmation
-    
+//////////////NEW PARAM//////////////////////////////////
+
+    New Param : 
+	token=ASREAWUHFKUAWHUAHWKDHAWKU
+	Body:
+	JSON Containing field 2-7 in String. Remember to Stringify the JSON (Server only accept JSON in String) 
+
     Output:
     {"response":"success","id":"Pet1","errorMessage":null}
 
@@ -98,7 +115,7 @@ API (for front end people)
         Input:
             URL: http://ServerIP:Port/petProfileUpdate
             Parameters(case-sensitive)
-            1. token (NOT YET IMPLEMENTED. Ignore for now.)
+            1. token 
             2. petId
             3. petname
             4. dob
@@ -106,38 +123,131 @@ API (for front end people)
             6. breed
             ALL Parameters are OPTIONAL EXCEPT FOR petId, token (when it is implemented).
             petId is for identification only and is not part of the update
+//////////////////OLD PARAM////////////////////////////////
             Example Parameters :
             petId=Pet1&petname=Snoopy&dob=&animalType=&breed=
+//////////////NEW PARAM//////////////////////////////////
+    token=ASREAWUHFKUAWHUAHWKDHAWKU
+	Body:
+	JSON Containing field 2-6 in String. Remember to Stringify the JSON (Server only accept JSON in String) 
 
         Output: 
             return : {"response":"success","id":"Tester2","errorMessage":null}
             
 7. Delete Pet
         Input:
-            URL: http://ServerIP:Port/petProfileDelete
+            URL: http://ServerIP:Port/petProfileDelete/petId
             Parameters(case-sensitive)
-            1. token (NOT YET IMPLEMENTED. Ignore for now.)
-            2. petId
+            No parameters as Deleting can only take ID
             
-            None of the Parameters are OPTIONAL. They must both be sent.
-            Example Parameters :
-            petId=Pet2
         Output:
             {"response":"success","id":"Pet2","errorMessage":null}
-
+        If the petID entered, does not exist then the same response is sent but no Pet is Deleted
 -----------User Auth-----------------
 
 
-1. Get Custom Auth (Admin auth)
+1. Vet Verification
 
+    URL : http://IP:Port/verify
+    Param: "token=AWEDAWDAWD"
+    Body : JSON String with 2 param, "userid" and "authkey"
+    
+    authkey = valid key ( check database for current available key <- generate more if needed)
+
+    Output if authkey not found = {"response" : "error", "id":"id1", "errorMessage":"auth key is not found"}
+    Output if no authkey given  = {"response" : "error", "id":"id1", "errorMessage":"authkey is not provided"}
+    Output if correct           = {"response" : "success", "id":"id1", "errorMessage": null}
+
+    If output is correct -> please check if the key used is deleted + the userid is idVerifiedVet changed to True
+
+
+    
 ----------------Booking---------------
 
 1. Get nearest Vet
-2. Payment
+
+	API For getting nearest Vets
+    
+    Input:
+    
+    URL: http://ServerIP:Port/nearestVet
+    
+    This one is using HTTP GET
+    
+    Params: token=tokenString&radius=(Radius)&date={Date}&time={time}
+    
+    radiusFormat = radius in kilometers e.g 0.6
+    dateFormat = YYYY-MM-DD eg. 2017-10-08
+    time = HH.00 eg. 10.00 -> convert 5pm etc to 17.00
+    
+    Result Example:
+    
+    	------------
+        input : token=ASDJCLAIWNzxcawe&radius=0.7&date=2017-10-08&time=12.00
+        output: {"response" : "success", message: "null", "vetID" : { ID1 : 0.4 , ID2, 0.3}
+        
+        
+        
+        
 3. Make a booking
+	This is using HTTP POST
+	Input:
+    URL: http://ServerIP:Port/makeBooking
+    
+    Params: token=ASDAWIukhkFUHCKASUh
+    
+    Body: JSON STRING containing following fields
+    Example:
+    { userid : asdas,
+    vetid : ASDSAD,
+    date : 2017-10-08,
+    time : 12.00
+    petid : Doggie
+    }
+    
+    return : {"response":"success","id":"Tester2","errorMessage":null}
+    or
+	error: {"response":"error","id":"Tester2","errorMessage":"different depending on the error"}
+
 4. Cancel Booking
 5. Insert availability
+
+    This is an api for adding availability for vets
+    Initialization of the availability in the database to a particular vet
+
+    Input:
+            URL: http://ServerIP:Port/postAvailability
+
+            Parameters (Case-sensitive)
+
+            ALL REQUIRED ( WILL RETURN ERROR IF NOT)
+
+              1. date
+              2. hhs
+              3. hhe
+              4. vetId
+           Example Parameters :
+              date=2017-12-3&hhs=10&hhe=14&vetId=FCO1fm2ihCeXQBt7X7NXfA37q002
+    Output:
+        {"response":"success","id":vetId,"errorMessage":null}
+
 6. Delete availability
+    This is an api for deleting a pre-existing availability for vets
+    Removing the availability in the database and its reference to a vet
+
+    Input:
+            URL: http://ServerIP:Port/deleteAvailability
+
+            Parameters (Case-sensitive)
+
+            ALL REQUIRED ( WILL RETURN ERROR IF NOT)
+
+              1. date
+              2. vetId
+           Example Parameters :
+              date=2017-12-3&vetId=FCO1fm2ihCeXQBt7X7NXfA37q002
+    Output:
+        {"response":"success","id":"FCO1fm2ihCeXQBt7X7NXfA37q002","errorMessage":null}
 
 
 ----------------------------------------------SPRINT 3-------------------------------------------------------------

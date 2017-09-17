@@ -1,15 +1,11 @@
 package server.response;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import server.profileservice.ProfileData;
-
 public class ProfileResponse {
     private String response;
     private String id;
-    private ProfileData profileData;
+    private String profileData;
 
-    public ProfileResponse(String response, String id, ProfileData profileData){
+    public ProfileResponse(String response, String id, String profileData){
         this.id = id;
         this.response = response;
         this.profileData = profileData;
@@ -23,7 +19,7 @@ public class ProfileResponse {
         return this.response;
     }
 
-    public String getProfile(){
+    /*public String getProfile(){
         JSONObject obj = new JSONObject();
         try{
             obj.put("firstname",this.profileData.getFirstname());
@@ -40,6 +36,11 @@ public class ProfileResponse {
             e.printStackTrace();
         }
         return obj.toString();
+    }
+    */
+
+    public String getData(){
+        return this.profileData;
     }
 
 }

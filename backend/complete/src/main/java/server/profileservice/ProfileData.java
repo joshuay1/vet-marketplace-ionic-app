@@ -13,10 +13,11 @@ public class ProfileData {
     private String suburb;
     private String country;
     private String pictureURL;
+    private boolean isVerifiedAuthKey;
 
     public ProfileData(String firstname,String lastname,String userType,String date,
             String streetnumber,String streetname,String suburb,String state,String postcode,
-            String country,String pictureURL){
+            String country,String pictureURL,boolean isVerifiedAuthKey){
                 this.firstname = firstname;
                 this.lastname = lastname;
                 this.dob = date;
@@ -28,6 +29,7 @@ public class ProfileData {
                 this.postcode = postcode;
                 this.country = country;
                 this.pictureURL = pictureURL;
+                this.isVerifiedAuthKey = isVerifiedAuthKey;
             }
             
     
@@ -77,6 +79,9 @@ public class ProfileData {
         return this.pictureURL;
     }
 
+    public boolean getIsVerifiedVet(){
+        return this.isVerifiedAuthKey;
+    }
 
 
 
