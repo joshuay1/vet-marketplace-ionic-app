@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ion
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase} from 'angularfire2/database';
 import {PetInfo } from "../../model/pet";
+import {ProfilePage} from "../profile/profile";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 import { RequestOptions, Http, Headers } from "@angular/http";
 /**
@@ -37,13 +38,16 @@ export class RegisterPetPage {
         'dob': ['',Validators.required],
         'breed':['',Validators.required],
       })
- 
   }
-
+  private userid = "";
+  ionViewDidLoad() {
+    this.userid = this.navParams.get("uid");
+    console.log(this.userid+"oioioioioioioi");
+  }
 
   async register(petInfo: PetInfo) {
     if(this.validate()){
-      
+      this.userid = this.navParams.get("UserID")
     }
 
   
@@ -54,34 +58,12 @@ export class RegisterPetPage {
     let errorMsg = '';
     
         // validate each field
-    let control = this.registerForm.controls['email'];
-    if (!control.valid) {
-      if (control.errors['required']) {
-          errorMsg = 'Email cannot be empty';
-      } else if (control.errors['minlength']) {
-          errorMsg = 'Email must at least be 5 characters';
-     } else if (control.errors['email']){
-       errorMsg = "Not a valid email format";
-     }
-     this.createAlert(errorMsg);
-     return false;
-    }
+    let control = this.registerForm.controls['petname'];
 
-    control = this.registerForm.controls['password'];
+    control = this.registerForm.controls['petname'];
     if (!control.valid) {
       if (control.errors['required']) {
-          errorMsg = 'Password cannot be empty';
-      } else if (control.errors['minlength']) {
-          errorMsg = 'Password must have at least 8 characters';
-     }
-     this.createAlert(errorMsg);
-     return false;
-    }
-
-    control = this.registerForm.controls['first-name'];
-    if (!control.valid) {
-      if (control.errors['required']) {
-          errorMsg = 'First name cannot be empty';
+          errorMsg = 'Pet name cannot be empty';
       }
       this.createAlert(errorMsg);
       return false;
@@ -94,10 +76,10 @@ export class RegisterPetPage {
        return false;
       }
 
-     control = this.registerForm.controls['last-name'];
+     control = this.registerForm.controls['animalType'];
      if (!control.valid) {
        if (control.errors['required']) {
-           errorMsg = 'Last name cannot be empty';
+           errorMsg = 'Animal cannot be empty';
        }
        this.createAlert(errorMsg);
        return false;
@@ -106,7 +88,7 @@ export class RegisterPetPage {
       control = this.registerForm.controls['dob'];
       if (!control.valid) {
         if (control.errors['required']) {
-            errorMsg = 'Date cannot be empty';
+            errorMsg = 'Date of birth cannot be empty';
         }
         this.createAlert(errorMsg);
         return false;
@@ -137,7 +119,7 @@ export class RegisterPetPage {
     +"&suburb="+info.suburb+"&state="+info.state+"&postcode="+info.postcode+"&country="+info.country;*/
 
     var body = JSON.stringify({
-      userid: id,
+      userid: this.userid,
       petname : info.petname,
       animalType: info.animaltype,
       dob : info.dob,

@@ -27,17 +27,22 @@ export class ProfilePage {
             private afAuth: AngularFireAuth,
             private db : AngularFireDatabase) {
   }
+  private userData = {
+    uid:""
+  };
 
   ionViewDidLoad() {
     this.afAuth.authState.subscribe(data=>{
-      this.profileData = this.db.object(`users/${data.uid}`)
+      this.profileData = this.db.object(`users/${data.uid}`);
+      this.userData.uid = `${data.uid}`;
+      console.log(this.userData.uid);
     });
   }
 
   registerNewPet(user: User)
   {
     console.log("In registerNewPet Function");
-    this.navCtrl.push('RegisterPetPage', { UserType: "Vet" });
+    this.navCtrl.push('RegisterPetPage',this.userData);
   }
 
   accessPet() {
