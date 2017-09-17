@@ -47,9 +47,9 @@ export class RegisterPetPage {
 
   async register(petInfo: PetInfo) {
     if(this.validate()){
-      this.userid = this.navParams.get("UserID")
+      console.log("validated on register")
     }
-
+    console.log("validation problems.")
   
   }
 
@@ -69,12 +69,12 @@ export class RegisterPetPage {
       return false;
      }
 
-     control = this.registerForm.controls['auth'];
-     if (!control.valid) {
-       errorMsg = "auth error";
-       this.createAlert(errorMsg);
-       return false;
-      }
+    //  control = this.registerForm.controls['auth'];
+    //  if (!control.valid) {
+    //    errorMsg = "auth error";
+    //    this.createAlert(errorMsg);
+    //    return false;
+    //   }
 
      control = this.registerForm.controls['animalType'];
      if (!control.valid) {
