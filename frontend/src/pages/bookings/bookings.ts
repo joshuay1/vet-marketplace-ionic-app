@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserInfo } from '../../model/user';
-
-
+import {FindNearestVet} from "./FindNearestVet";
 
 @IonicPage()
 @Component({
@@ -16,10 +15,11 @@ export class BookingsPage {
     public pastBookings : FirebaseListObservable<any[]>;
     private userid: string;
 
-    constructor(public navCtrl: NavController, 
+    constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 public db : AngularFireDatabase,
-                private af: AngularFireAuth) {
+                private af: AngularFireAuth,
+                private modalCtrl : ModalController) {
 
 
         this.userid = this.af.auth.currentUser.uid;
@@ -62,10 +62,14 @@ export class BookingsPage {
                      " " + snapshot.lastname
                      /*"\n Address = " +snapshot.streetnumber +" " + snapshot.streetname+
                      " , " + snapshot.suburb +" , "+ snapshot.state +" "+  snapshot.country*/;
-      
+
     });
     return response;
-    
+
+  }
+  makeBooking(){
+    let findNearestVet = this.modalCtrl.create(FindNearestVet,{userId : this.userid});
+    findNearestVet.present();
   }
 
 }

@@ -6,16 +6,16 @@
 -->
 
 <ion-header>
-    
+
       <ion-navbar>
         <button ion-button icon-only menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    
+
         <ion-title>
             <span text-color="light"> Bookings </span>
         </ion-title>
-    
+
         <ion-buttons end>
           <button ion-button color="light" icon-only (click)="openModal()">
             <ion-icon name="options"></ion-icon>
@@ -53,7 +53,7 @@
       </ion-item>
     </ion-list>
     <div class="img_container">
-        <button class= "addbutton" ion-button icon-only>
+        <button class= "addbutton" ion-button icon-only (click)="makeBooking()">
           <ion-icon name="ios-add-circle-outline"></ion-icon>
         </button>
       </div>
