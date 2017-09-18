@@ -9,11 +9,11 @@ import { VetHomePage } from '../pages/home/vetHome/vetHome';
 import { LoginPage } from "../pages/login/login";
 import { RedirectPage } from "../pages/redirect/redirect"
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule }from 'angularfire2/auth'; 
+import { AngularFireAuthModule }from 'angularfire2/auth';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { RegisterOwnerPage } from "../pages/register/registerOwner/register";
 import { BookingsPage } from "../pages/bookings/bookings";
-import { SettingsPage } from "../pages/settings/settings";
+import { StorePage } from "../pages/store/store";
 import { CalendarPage } from "../pages/calendar/calendar";
 import { PetPage } from "../pages/pet/pet";
 import { EditProfilePage} from "../pages/editprofile/editprofile";
@@ -37,7 +37,7 @@ var config = {
     LoginPage,
     OwnerHomePage,
     VetHomePage,
-    SettingsPage,
+    StorePage,
     CalendarPage,
     BookingsPage,
     RedirectPage
@@ -57,7 +57,7 @@ var config = {
     LoginPage,
     OwnerHomePage,
     VetHomePage,
-    SettingsPage,
+    StorePage,
     CalendarPage,
     BookingsPage,
     RedirectPage
