@@ -58,9 +58,51 @@ export class HttpServiceProvider {
             }
             , error => {
               console.log("error=" + error);
-              reject(error.message);
+              reject(error);
             });
           });
         });
       }
+
+      async httpPostParam(url:string, paramString: String, jsonString: String):Promise<any>{
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+    
+        //
+        return new Promise ((resolve,reject)=>{
+          this.afAuth.auth.currentUser.getIdToken(true)
+            .then(token => {
+              var param = paramString;
+              var body = jsonString;
+              let options = new RequestOptions({ headers: headers, params: param });
+    
+              console.log("//////////API Post///////////////////");
+              console.log("postParams =" + param);
+              console.log("url = " + url);
+              this.http.post(url, body, options)
+              .subscribe(result => {
+                var response =result.json();
+                console.log("success=" + JSON.stringify(response));
+                var val = response.response;
+    
+                
+                if (val === "success") {
+                  console.log("storing data success");
+                  console.log("///////////////API POST end///////////");
+                  resolve(response);
+                  
+                } else {
+                  console.log("storing data failed, error = " + response.errorMessage);
+                  console.log("///////////////API POST end///////////");
+                  reject(response.errorMessage);
+                  
+                }
+              }
+              , error => {
+                console.log("error=" + error);
+                reject(error);
+              });
+            });
+          });
+        }
 }
