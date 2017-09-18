@@ -5,6 +5,8 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 import { UserInfo } from "../../model/user";
 import { PetPage} from "../pet/pet";
 import { EditProfilePage} from "../editprofile/editprofile";
+import { RegisterPetPage} from "../registerPet/registerPet"
+import { User} from "../../model/user";
 
 /**
  * Generated class for the ProfilePage page.
@@ -25,15 +27,24 @@ export class ProfilePage {
             private afAuth: AngularFireAuth,
             private db : AngularFireDatabase) {
   }
+  private userData = {
+    uid:""
+  };
 
   ionViewDidLoad() {
     console.log("hello");
     this.afAuth.authState.subscribe(data=>{
-      this.profileData = this.db.object(`users/${data.uid}`)
-      console.log("hello");
+      this.profileData = this.db.object(`users/${data.uid}`);
+      this.userData.uid = `${data.uid}`;
+      console.log(this.userData.uid);
     });
   }
 
+  registerNewPet(user: User)
+  {
+    console.log("In registerNewPet Function");
+    this.navCtrl.push('RegisterPetPage',this.userData);
+  }
 
   accessPet() {
     this.navCtrl.push('PetPage');
