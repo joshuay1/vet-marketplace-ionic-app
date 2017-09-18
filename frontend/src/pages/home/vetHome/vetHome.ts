@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ProfilePage } from "../../profile/profile";
-import { SettingsPage } from "../../settings/settings";
+import { StorePage} from "../../store/store";
 import { BookingsPage } from "../../bookings/bookings";
 import { CalendarPage } from "../../calendar/calendar";
 
@@ -12,10 +12,10 @@ import { CalendarPage } from "../../calendar/calendar";
     // should be each tab's root Page
     tab1Root = BookingsPage;
     tab2Root = ProfilePage;
-    tab3Root = SettingsPage;
+    tab3Root = StorePage;
     tab4Root = CalendarPage;
-  
+
     constructor() {
-  
+
     }
  }
