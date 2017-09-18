@@ -20,6 +20,7 @@ import { EditProfilePage} from "../pages/editprofile/editprofile";
 import { HttpModule } from "@angular/http";
 import { ProfilePageModule } from "../pages/profile/profile.module";
 import { HttpServiceProvider } from '../providers/http-service/http-service';
+import { AvailModal } from '../pages/calendar/availModal';
 
 
 var config = {
@@ -40,7 +41,8 @@ var config = {
     StorePage,
     CalendarPage,
     BookingsPage,
-    RedirectPage
+    RedirectPage,
+    AvailModal
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ var config = {
     StorePage,
     CalendarPage,
     BookingsPage,
-    RedirectPage
+    RedirectPage,
+    AvailModal
   ],
   providers: [
     AngularFireDatabase,
