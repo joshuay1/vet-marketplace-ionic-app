@@ -8,10 +8,10 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
   })
 
  export class MakeBookingModal{
-    userId: string
+    vetIds: any;
+    userId : string;
     addAvail: FormGroup;
-    hhs: any;
-    hhe: any;
+    time: any;
     date : any;
     apiUrl = "http://115.146.86.193:8080/";
 
@@ -22,19 +22,34 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
                 private alertCtrl: AlertController,
                 private httpProviders : HttpServiceProvider,
                 public loadingCtrl: LoadingController){
-      this.userId = params.get("vetId");
-      console.log("vet id in modal = "+ this.userId);
-      this.addAvail = builder.group({
-        'date':['',Validators.required],
-        'hhs':['',Validators.required],
-        'hhe': ['',Validators.required]
-      })
-    }
+      this.userId = params.get("userId");
+      this.vetIds = new Array();
+      var vets = params.get("vetIds");
+      vets = vets.replace('{','');
+      vets = vets.replace('}','');
+      this.splitVetId(vets.split(','));
+      this.date = params.get("date");
+      this.time = params.get("time");
+      console.log("vet ids in modal = "+ this.vetIds);
+      console.log("userId in modal = "+ this.userId);
+      console.log("date in modal = "+ this.date);
+      console.log("time in modal = "+ this.time);
 
-    async add(){
-      var hrs = this.hhs.split(":")[0];
-      var hre = this.hhe.split(":")[0];
-      var param = "vetId="+this.userId +"&date="+this.date+"&hhs="+hrs+"&hhe="+hre;
+    }
+    splitVetId(v){
+      console.log(v);
+
+      for(var i =0; i < v.length;i++){
+        console.log("vet = " + v[i]);
+        var s = v[i].split(':');
+        console.log("Split = " + s)
+        this.vetIds.push({"VetID":s[0],"Distance":s[1]});
+      }
+    }
+    async add(v){
+      console.log(v);
+      var param = {userid:this.userId, vetid:v,date:this.date,time:this.time+".00",petid:"petA"}
+
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
@@ -42,7 +57,7 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
       loading.present();
 
 
-      this.httpProviders.httpPostParam(this.apiUrl+"postAvailability",param,JSON.stringify({}))
+      this.httpProviders.httpPost(this.apiUrl+"makeBooking",JSON.stringify(param))
       .then(result=>{
         console.log("result="+ JSON.stringify(result));
         var res = result.response;
@@ -72,4 +87,12 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
         alert.present();
       })
     }
+    dismiss(){
+      this.viewCtrl.dismiss();
+    }
+    stringfy(json: any):string{
+
+    return JSON.stringify(json);
   }
+
+}

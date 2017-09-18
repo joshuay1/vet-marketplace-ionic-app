@@ -11,26 +11,13 @@
 </ion-header>
 
 <ion-content padding>
-    <form [formGroup]= "addAvail">
-        <ion-list>
-            <ion-item>
-                <ion-label floating color="light">Date</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
-            </ion-item>
 
-            <ion-item>
-                <ion-label floating color="light">Start Time</ion-label>
-                <ion-datetime displayFormat="HH" formControlName="hhs" [(ngModel)]="hhs"></ion-datetime>
-            </ion-item>
-
-
-            <ion-item>
-                <ion-label floating color="light">End Time</ion-label>
-                <ion-datetime displayFormat="HH" formControlName="hhe" [(ngModel)]="hhe"></ion-datetime>
-            </ion-item>
-
-            <button  color="secondary" ion-button (click)="add()">Add</button>
-        </ion-list>
-    </form>
+  <p>{{vetIds}}</p>
+    <ul>
+      <li *ngFor="let b of vetIds">
+        <p>{{b.VetID}}, {{b.Distance}}</p>
+        <ion-radio (ionSelect)="add(b.VetID)"></ion-radio>
+      </li>
+    </ul>
 
 </ion-content>

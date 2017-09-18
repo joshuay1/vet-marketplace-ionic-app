@@ -1,18 +1,20 @@
 import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ViewController, NavParams, AlertController, LoadingController } from "ionic-angular";
+import {ViewController, NavParams, AlertController, LoadingController, ModalController} from "ionic-angular";
 import { HttpServiceProvider } from "../../providers/http-service/http-service";
+import {MakeBookingModal} from "./MakeBookingModal";
 
 @Component({
     templateUrl: "FindNearestVet.html"
   })
 
  export class FindNearestVet{
-    userId: string
+    userId: string;
     findVet: FormGroup;
     radius: any;
     time: any;
     date : any;
+    vetIds : any;
     apiUrl = "http://115.146.86.193:8080/";
 
 
@@ -21,7 +23,8 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
                 private builder: FormBuilder,
                 private alertCtrl: AlertController,
                 private httpProviders : HttpServiceProvider,
-                public loadingCtrl: LoadingController){
+                public loadingCtrl: LoadingController,
+                private modalCtrl : ModalController){
       this.userId = params.get("userId");
       console.log("user id in find nearest vet = "+ this.userId);
       this.findVet= builder.group({
@@ -31,7 +34,7 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
       })
     }
 
-    async add(){
+    async search(){
       var hrs = this.time.split(":")[0];
       var param = "&radius="+this.radius+"&date="+this.date+"&time="+hrs+".00";
       let loading = this.loadingCtrl.create({
@@ -46,9 +49,16 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
         console.log("result="+ JSON.stringify(result));
         var res = result.response;
         if(res == "success"){
-          console.log("success");
+          console.log("success + " +result.hasOwnProperty("vetID"));
+          for(var key in result){
+            if(key === "vetID"){
+              console.log(result[key]);
+              this.vetIds  = result[key];
+            }
+          };
           loading.dismiss();
           this.viewCtrl.dismiss();
+          this.finalizeBooking();
         }else{
             loading.dismiss();
           let alert = this.alertCtrl.create({
@@ -75,4 +85,9 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
     dismiss(){
       this.viewCtrl.dismiss();
     }
+
+    finalizeBooking(){
+    let finalBooking = this.modalCtrl.create(MakeBookingModal,{vetIds : this.vetIds, userId : this.userId , date: "2017-10-08", time : "13"});
+    finalBooking.present();
+  }
   }
