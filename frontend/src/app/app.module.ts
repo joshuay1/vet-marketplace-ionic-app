@@ -45,7 +45,8 @@ var config = {
     RedirectPage,
     AvailModal,
     MakeBookingModal,
-    FindNearestVet
+    FindNearestVet,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +69,8 @@ var config = {
     RedirectPage,
     AvailModal,
     MakeBookingModal,
-    FindNearestVet
+    FindNearestVet,
+    EditProfilePage
   ],
   providers: [
     AngularFireDatabase,

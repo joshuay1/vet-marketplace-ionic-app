@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { UserInfo } from "../../model/user";
@@ -35,7 +35,7 @@ export class EditProfilePage {
   postcode: string;
   country: string;
 
-  constructor(public navCtrl: NavController,
+  constructor(public viewCtrl: ViewController,
     public navParams: NavParams,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
@@ -134,7 +134,7 @@ export class EditProfilePage {
         var res = result.response;
         if(res =="success"){
           console.log("get result here");
-          this.navCtrl.pop();//.catch(() => console.log('view was not poped'));;
+          this.viewCtrl.dismiss();//.catch(() => console.log('view was not poped'));;
         }
       }).catch(err=>{
         console.log("catchin error here");

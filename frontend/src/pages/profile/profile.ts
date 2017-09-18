@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { UserInfo } from "../../model/user";
@@ -25,7 +25,8 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
             private afAuth: AngularFireAuth,
-            private db : AngularFireDatabase) {
+            private db : AngularFireDatabase,
+            private modalCtrl: ModalController) {
   }
   private userData = {
     uid:""
@@ -51,7 +52,8 @@ export class ProfilePage {
   }
 
   editProfile() {
-    this.navCtrl.push('EditProfilePage');
+    var edit = this.modalCtrl.create(EditProfilePage);
+    edit.present();
   }
 
 
