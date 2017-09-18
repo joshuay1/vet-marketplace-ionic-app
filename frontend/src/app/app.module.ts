@@ -40,7 +40,7 @@ var config = {
     SettingsPage,
     CalendarPage,
     BookingsPage,
-    RedirectPage,
+    RedirectPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +60,7 @@ var config = {
     SettingsPage,
     CalendarPage,
     BookingsPage,
-    RedirectPage,
+    RedirectPage
   ],
   providers: [
     AngularFireDatabase,

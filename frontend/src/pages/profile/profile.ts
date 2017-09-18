@@ -32,10 +32,16 @@ export class ProfilePage {
   };
 
   ionViewDidLoad() {
+    console.log("hello");
     this.afAuth.authState.subscribe(data=>{
+<<<<<<< HEAD
       this.profileData = this.db.object(`users/${data.uid}`);
       this.userData.uid = `${data.uid}`;
       console.log(this.userData.uid);
+=======
+      this.profileData = this.db.object(`users/${data.uid}`)
+      console.log("hello");
+>>>>>>> a101f9a461cf166cdc01fdb48cb6a2d25b7e1ced
     });
   }
 
