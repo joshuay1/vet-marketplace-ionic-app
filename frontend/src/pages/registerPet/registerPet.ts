@@ -51,7 +51,7 @@ export class RegisterPetPage {
       console.log(this.userid+": getting user id from pet register page.");
       this.postRequest(this.petInfo,this.userid)
       console.log("finished post.")
-      this.navCtrl.push(OwnerHomePage);      
+      this.navCtrl.push(ProfilePage);      
     }
   }
 
