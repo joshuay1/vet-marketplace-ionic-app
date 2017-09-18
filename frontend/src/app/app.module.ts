@@ -42,7 +42,8 @@ var config = {
     CalendarPage,
     BookingsPage,
     RedirectPage,
-    AvailModal
+    AvailModal,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +64,8 @@ var config = {
     CalendarPage,
     BookingsPage,
     RedirectPage,
-    AvailModal
+    AvailModal,
+    EditProfilePage
   ],
   providers: [
     AngularFireDatabase,
