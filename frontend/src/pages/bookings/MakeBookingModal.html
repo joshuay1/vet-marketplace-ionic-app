@@ -1,0 +1,23 @@
+
+<ion-header>
+
+      <ion-navbar>
+        <ion-buttons start>
+          <button ion-button (click)="dismiss()">Close</button>
+        </ion-buttons>
+        <ion-title>Make Booking</ion-title>
+      </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <p>{{vetIds}}</p>
+    <ul>
+      <li *ngFor="let b of vetIds">
+        <p>{{b.VetID}}, {{b.Distance}}</p>
+        <ion-radio (ionSelect)="add(b.VetID)"></ion-radio>
+      </li>
+    </ul>
+
+</ion-content>

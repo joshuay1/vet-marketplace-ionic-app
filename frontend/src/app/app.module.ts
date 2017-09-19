@@ -7,7 +7,7 @@ import { MyApp } from './app.component';
 import { OwnerHomePage } from '../pages/home/ownerHome/ownerHome';
 import { VetHomePage } from '../pages/home/vetHome/vetHome';
 import { LoginPage } from "../pages/login/login";
-import { RedirectPage } from "../pages/redirect/redirect"
+import { RedirectPage } from "../pages/redirect/redirect";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule }from 'angularfire2/auth';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
@@ -21,7 +21,8 @@ import { HttpModule } from "@angular/http";
 import { ProfilePageModule } from "../pages/profile/profile.module";
 import { HttpServiceProvider } from '../providers/http-service/http-service';
 import { AvailModal } from '../pages/calendar/availModal';
-
+import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
+import { FindNearestVet} from "../pages/bookings/FindNearestVet";
 
 var config = {
   apiKey: "AIzaSyD16Z_p-S5LgSceHoL3ob7gRNSqqFaPbWQ",
@@ -43,6 +44,8 @@ var config = {
     BookingsPage,
     RedirectPage,
     AvailModal,
+    MakeBookingModal,
+    FindNearestVet,
     EditProfilePage
   ],
   imports: [
@@ -65,6 +68,8 @@ var config = {
     BookingsPage,
     RedirectPage,
     AvailModal,
+    MakeBookingModal,
+    FindNearestVet,
     EditProfilePage
   ],
   providers: [
