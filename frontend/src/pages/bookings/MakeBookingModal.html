@@ -13,11 +13,13 @@
 <ion-content padding>
 
   <p>{{vetIds}}</p>
-    <ul>
-      <li *ngFor="let b of vetIds">
-        <p>{{b.VetID}}, {{b.Distance}}</p>
+      <ul>
+
+      <li *ngFor="let b of vetIds" (ionSelect)="add(b.VetID)">
+        {{b.VetID}}, {{b.Distance}}
+        <br>
         <ion-radio (ionSelect)="add(b.VetID)"></ion-radio>
       </li>
-    </ul>
+      </ul>
 
 </ion-content>

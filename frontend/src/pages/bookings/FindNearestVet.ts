@@ -57,8 +57,20 @@ import {MakeBookingModal} from "./MakeBookingModal";
             }
           };
           loading.dismiss();
-          this.viewCtrl.dismiss();
-          this.finalizeBooking();
+
+          if(result["vetID"] == null){
+            console.log("It's null")
+            let alert = this.alertCtrl.create({
+              title: 'There are no vets available at the specified time and date',
+              message : result.errorMessage,
+              buttons : ['OK']
+            });
+            alert.present();
+            this.viewCtrl.dismiss();
+          }else{
+            this.viewCtrl.dismiss();
+            this.finalizeBooking();
+          }
         }else{
             loading.dismiss();
           let alert = this.alertCtrl.create({
