@@ -7,6 +7,7 @@ import { OwnerHomePage } from "../../home/ownerHome/ownerHome";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 import { RequestOptions, Http, Headers } from "@angular/http";
 import { RedirectPage } from "../../redirect/redirect"
+import { HttpServiceProvider } from "../../../providers/http-service/http-service";
 /**
  * Generated class for the RegisterPage page.
  *
@@ -33,7 +34,8 @@ export class RegisterOwnerPage {
     private alertCtrl: AlertController,
     private db :AngularFireDatabase,
     private builder: FormBuilder,
-    private http: Http) {
+    private http: Http,
+    private httpProviders: HttpServiceProvider) {
       this.registerForm = builder.group({
         'email' : ['',Validators.compose([Validators.required,Validators.minLength(5),Validators.email])],
         'password':['',Validators.compose([Validators.required,Validators.minLength(8)])],
@@ -71,14 +73,13 @@ export class RegisterOwnerPage {
         }*/
         console.log(this.userInfo.userType);
 
-        //REST Connection to Server
-        this.postRequest(this.userInfo, auth.uid);
+        this.registerValidation();
         
         //this.db.object(`users/${auth.uid}`).set(this.userInfo);
 
 
 
-        this.navCtrl.setRoot(RedirectPage, { userType: this.userInfo.userType})
+       
 
        // this.navCtrl.setRoot(OwnerHomePage);
 
@@ -173,73 +174,22 @@ export class RegisterOwnerPage {
     alert.present();
   }
 
-  postRequest(info : UserInfo, id: string ){
-    var headers = new Headers();
-    headers.append('Content-Type','application/json');
-    
-
-
-    /*OLD PARAM
-    var param = "userid="+id+"&firstname="+info.firstname+"&lastname="+info.lastname+"&dob="+info.dob
-    +"&userType="+info.userType+"&streetnumber="+info.streetnumber+"&streetname="+info.streetname
-    +"&suburb="+info.suburb+"&state="+info.state+"&postcode="+info.postcode+"&country="+info.country;*/
-
-    var body = JSON.stringify({
-      userid: id,
-      firstname : info.firstname,
-      lastname : info.lastname,
-      dob : info.dob,
-      userType: info.userType,
-      streetnumber:info.streetnumber,
-      streetname: info.streetname,
-      suburb : info.suburb,
-      state : info.state,
-      postcode: info.postcode,
-      country: info.country
-      
-    });
-
-    this.afAuth.auth.currentUser.getToken(true)
-    .then(token =>{
-      var param = "token="+ token;
-      let options = new RequestOptions({headers: headers,params:param});
-      var url =  this.apiUrl + "postProfile";
-
-      console.log("//////////API Post///////////////////");
-      console.log("postParams+ = "+param);
-      console.log("body = "+ body);
-      console.log("url = "+ url);
-
-      this.http.post(url ,body , options)
-      .subscribe(result=>{
-        var response = result.json();
-        console.log("success="+ JSON.stringify(response));
-        var val = response.response;
-        if(val === "success"){
-          console.log ("storing data success");
-          console.log ("///////////////API POST end///////////");
-        }else{
-          console.log("storing data failed, error = " + response.errorMessage);
-          console.log ("///////////////API POST end///////////");
-        }
-      }
-      ,error =>{
-      console.log("error="+error);
-  
-    }); 
-    });
-
-    
-
-
-
-    
-    
-    
-    
+  async registerValidation() {
+          this.userInfo.userid = this.afAuth.auth.currentUser.uid;
+          this.httpProviders.httpPost(this.apiUrl + "postProfile", JSON.stringify(this.userInfo))
+              .then(result => {
+                  console.log("get result here");
+                  var res = result.response;
+                  if (res == "success") {
+                      this.navCtrl.push(RedirectPage, { userType: this.userInfo.userType });
+                  }
+              }).catch(err => {
+                  console.log("catching error here");
+                  let alert = this.alertCtrl.create({
+                      title: 'Error',
+                      message: err,
+                      buttons: ['OK']
+                  });                 alert.present();
+              })
   }
-
-
-  
-
 }

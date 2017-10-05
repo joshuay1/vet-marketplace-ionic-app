@@ -14,5 +14,16 @@
 
 
 <ion-content padding>
+  <ion-item visibility="hidden" id="authKey">
+    <ion-label floating color="text">Vet Authorization Key</ion-label>
+    <ion-input type="text" [(ngModel)]="vetKey"></ion-input>
+  </ion-item>
+  <ion-item>
+      <button class="button button-block" (click)="verifyVet()">Verify</button>
+  </ion-item>
+  <ion-item>
+      <button class="button button-block" ion-button color="secondary" (click)="back()">Return to Login</button>
+  </ion-item>
+
 
 </ion-content>

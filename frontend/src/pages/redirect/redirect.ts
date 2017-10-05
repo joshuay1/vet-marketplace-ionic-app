@@ -20,6 +20,8 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 })
 export class RedirectPage {
     userType: String;
+    vetKey: String;
+    profileData: FirebaseObjectObservable<UserInfo>;
     constructor(public navCtrl: NavController,
         public navParams: NavParams, private afAuth: AngularFireAuth,
         private db: AngularFireDatabase) {
@@ -40,10 +42,30 @@ export class RedirectPage {
       }
       if (this.userType == 'Vet') {
           //if is validated
-          console.log("redirecting as vet");
-          this.navCtrl.setRoot(VetHomePage);
+          var uid = this.afAuth.auth.currentUser.uid;
+          console.log("uid = " + uid);
+          this.profileData = this.db.object(`users/` + uid/*,{preserveSnapshot: true}*/);
+          this.profileData.forEach(snapshot => {
+              if (snapshot.isVerifiedVet) {
+                  console.log("redirecting as vet");
+                  this.navCtrl.setRoot(VetHomePage);
+              }
+              else {
+                  var show = document.getElementById("authKey");
+                  show.style.visibility = "visible"
+                  //make things seen!! ------------------- TODO
+              }
+          }); 
       }
 
+  }
+  verifyVet() {
+      if (true) {
+
+      }
+  }
+  back() {
+      this.navCtrl.pop();
   }
 
 }

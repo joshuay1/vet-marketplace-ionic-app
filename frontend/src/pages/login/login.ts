@@ -45,7 +45,7 @@ export class LoginPage {
             console.log("data User ID = " + data.uid);
             this.profileData.forEach(element => {
                 if (element.userType == "User" || element.userType == "Vet") {
-                    this.navCtrl.setRoot(RedirectPage, {
+                    this.navCtrl.push(RedirectPage, {
                         userType: element.userType
                     })
                 }

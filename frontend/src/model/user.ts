@@ -19,5 +19,6 @@ export interface UserInfo{
     pictureURL: string;
     country : string;
     userid: string;
+    isVerifiedVet: boolean;
     //TO-DO CAllum update this lista against the firebase db
 }
