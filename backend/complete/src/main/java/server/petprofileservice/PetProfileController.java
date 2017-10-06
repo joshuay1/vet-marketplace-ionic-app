@@ -147,12 +147,12 @@ public class PetProfileController {
             }
         });
 
-        if (flag == 0) {
+        //if (flag == 0) {
             return new BasicResponse("success",uid, null);
-        } else if(flag == 1)
-            return new BasicResponse("failure",uid, "No such user exists");
+        //} else if(flag == 1)
+          //  return new BasicResponse("failure",uid, "No such user exists");
 
-        return null;
+        //return null;
     }
 
     @CrossOrigin
@@ -264,4 +264,5 @@ public class PetProfileController {
             return new BasicResponse("failure", id, "ID doesn't exist");
         }
     }
+
 }

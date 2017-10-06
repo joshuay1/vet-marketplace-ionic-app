@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 public class AvailabilityController {
     private final Logger logger = LoggerFactory.getLogger(Application.class);
 
+    @CrossOrigin
     @RequestMapping(value = "/postAvailability", method = RequestMethod.POST)
     public BasicResponse postPetProfile(
             @RequestParam (value = "date") String date,
@@ -85,6 +86,7 @@ public class AvailabilityController {
         return new BasicResponse("success", null,null);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/deleteAvailability", method = RequestMethod.POST)
     public BasicResponse deleteAvailability(
             @RequestParam(value = "date") String date,
