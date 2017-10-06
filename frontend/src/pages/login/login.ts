@@ -22,7 +22,7 @@ import { RedirectPage } from "../redirect/redirect"
 export class LoginPage {
 
   user = {} as User;
-  profileData : FirebaseObjectObservable<UserInfo>;
+  profileData : UserInfo;
 
   constructor(private afAuth: AngularFireAuth,
     public navCtrl: NavController,
@@ -39,26 +39,21 @@ export class LoginPage {
       this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
       .then(
         auth => {
-          this.afAuth.authState.subscribe(data=>{
-            
-            this.profileData = this.db.object(`users/${data.uid}`)
-            console.log("data User ID = " + data.uid);
-            this.profileData.forEach(element => {
-                if (element.userType == "User" || element.userType == "Vet") {
-                    this.navCtrl.push(RedirectPage, {
-                        userType: element.userType
-                    })
-                }
-              /*if(element.userType == "User"){
-                  console.log("FOUND USER");
-                  this.navCtrl.setRoot(OwnerHomePage);
-              }              
-              else if(element.userType == "Vet"){
-                console.log("Found Vet");
-                this.navCtrl.setRoot(VetHomePage);
-              }*/
-            });
-          });
+
+          var uid = this.afAuth.auth.currentUser.uid;
+          console.log(uid);
+          this.db.database.ref('/users/'+uid).once('value',(snapshot)=>{
+            this.profileData = snapshot.val();
+            console.log(JSON.stringify(this.profileData));
+            var userType = this.profileData.userType;
+
+            if(userType == "User"|| userType == "Vet"){
+              this.navCtrl.push(RedirectPage, {
+                userType: userType
+              })
+            }
+          
+          })
       })
       .catch(err =>{
         let alert = this.alertCtrl.create({
@@ -68,6 +63,7 @@ export class LoginPage {
         });
           alert.present();
         })
+    console.log("here");
   }
 
   registerVet() {
