@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { UserInfo } from "../../model/user";
+import { PetPage} from "../pet/pet";
+import { EditProfilePage} from "../editprofile/editprofile";
+import { RegisterPetPage} from "../registerPet/registerPet"
+import { User} from "../../model/user";
 
 /**
  * Generated class for the ProfilePage page.
@@ -21,12 +25,36 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
             private afAuth: AngularFireAuth,
-            private db : AngularFireDatabase) {
+            private db : AngularFireDatabase,
+            private modalCtrl: ModalController) {
   }
+  private userData = {
+    uid:""
+  };
 
   ionViewDidLoad() {
+    console.log("hello");
     this.afAuth.authState.subscribe(data=>{
-      this.profileData = this.db.object(`users/${data.uid}`)
+      this.profileData = this.db.object(`users/${data.uid}`);
+      this.userData.uid = `${data.uid}`;
+      console.log(this.userData.uid);
     });
   }
+
+  registerNewPet(user: User)
+  {
+    console.log("In registerNewPet Function");
+    this.navCtrl.push('RegisterPetPage',this.userData);
+  }
+
+  accessPet() {
+    this.navCtrl.push('PetPage');
+  }
+
+  editProfile() {
+    var edit = this.modalCtrl.create(EditProfilePage);
+    edit.present();
+  }
+
+
 }

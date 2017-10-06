@@ -3,8 +3,11 @@ import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ion
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase} from 'angularfire2/database';
 import { User, UserInfo } from "../../../model/user";
-import { HomePage } from "../../home/home";
+import { OwnerHomePage } from "../../home/ownerHome/ownerHome";
 import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
+import { RequestOptions, Http, Headers } from "@angular/http";
+import { RedirectPage } from "../../redirect/redirect"
+import { HttpServiceProvider } from "../../../providers/http-service/http-service";
 /**
  * Generated class for the RegisterPage page.
  *
@@ -19,18 +22,20 @@ import { FormGroup ,FormBuilder,Validators} from "@angular/forms";
 })
 export class RegisterOwnerPage {
   [x: string]: any;
-
+  private apiUrl = 'http://115.146.86.193:8080/';
   user = {} as User;
   userInfo = {} as UserInfo;
-  loading;
-  registerForm: FormGroup;
+  loading; registerForm: FormGroup;
+
 
   constructor(private afAuth: AngularFireAuth,
     public navCtrl: NavController, 
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private db :AngularFireDatabase,
-    private builder: FormBuilder) {
+    private builder: FormBuilder,
+    private http: Http,
+    private httpProviders: HttpServiceProvider) {
       this.registerForm = builder.group({
         'email' : ['',Validators.compose([Validators.required,Validators.minLength(5),Validators.email])],
         'password':['',Validators.compose([Validators.required,Validators.minLength(8)])],
@@ -38,8 +43,15 @@ export class RegisterOwnerPage {
         'auth':[],
         'first-name': ['',Validators.required],
         'last-name': ['',Validators.required],
-        'dob': ['',Validators.required]
+        'dob': ['',Validators.required],
+        'streetname':['',Validators.required],
+        'streetnumber':['',Validators.required],
+        'suburb':['',Validators.required],
+        'state':['',Validators.required],
+        'postcode':['',Validators.required],
+        'country': ['',Validators.required]
       })
+      this.userInfo.userType = navParams.get('UserType');
   }
 
   ionViewDidLoad() {
@@ -50,18 +62,26 @@ export class RegisterOwnerPage {
     if(this.validate()){
       this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
       .then(auth =>{
-        console.log(this.userInfo.authkey);
-        if(this.userInfo.authkey){
+          console.log(this.userInfo.authkey);
+
+/*        if(this.userInfo.authkey){
           this.userInfo.userType = "Vet";
           this.userInfo.authkey = null;
         }else{
           this.userInfo.userType = "User";
           this.userInfo.authkey = null;
-        }
-        console.log(this.userInfo.authkey);
+        }*/
         console.log(this.userInfo.userType);
-        this.db.object(`users/${auth.uid}`).set(this.userInfo);
-        this.navCtrl.setRoot(HomePage);
+
+        this.registerValidation();
+        
+        //this.db.object(`users/${auth.uid}`).set(this.userInfo);
+
+
+
+       
+
+       // this.navCtrl.setRoot(OwnerHomePage);
 
       })
       .catch(err =>{
@@ -154,7 +174,22 @@ export class RegisterOwnerPage {
     alert.present();
   }
 
-
-  
-
+  async registerValidation() {
+          this.userInfo.userid = this.afAuth.auth.currentUser.uid;
+          this.httpProviders.httpPost(this.apiUrl + "postProfile", JSON.stringify(this.userInfo))
+              .then(result => {
+                  console.log("get result here");
+                  var res = result.response;
+                  if (res == "success") {
+                      this.navCtrl.push(RedirectPage, { userType: this.userInfo.userType });
+                  }
+              }).catch(err => {
+                  console.log("catching error here");
+                  let alert = this.alertCtrl.create({
+                      title: 'Error',
+                      message: err,
+                      buttons: ['OK']
+                  });                 alert.present();
+              })
+  }
 }

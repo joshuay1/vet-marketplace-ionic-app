@@ -7,61 +7,78 @@
 <ion-content class="background">
 
   <ion-card>
-
-<ion-card-header>
-  <!-- this is temp title-->
-    <ion-title>Register as an owner</ion-title>
-
-</ion-card-header>
-
-
-<ion-card-content >
+      <p class="logo">
+          <img src="../assets/img/logo_white.png" style="width:235px;height:166px">
+      </p>
+      <p floating color="light">Sign up as an owner!</p>
+ <ion-card-content >
 
   <form [formGroup]= "registerForm">
    <ion-list>
      <ion-item>
-       <ion-label floating color="text">First Name</ion-label>
+       <ion-label floating color="light">First Name</ion-label>
        <ion-input type="text" formControlName="first-name" [(ngModel)]="userInfo.firstname"></ion-input>
      </ion-item>
 
      <ion-item>
-       <ion-label floating color="text">Surname</ion-label>
+       <ion-label floating color="light">Surname</ion-label>
        <ion-input type="text" formControlName="last-name" [(ngModel)]="userInfo.lastname"></ion-input>
      </ion-item>
 
      <ion-item>
-       <ion-label floating color="text">Date of Birth</ion-label>
+       <ion-label floating color="light">Date of Birth</ion-label>
        <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dob" [(ngModel)]="userInfo.dob"></ion-datetime>
      </ion-item>
 
      <ion-item>
-       <ion-label floating color="text">Physical Address</ion-label>
-       <ion-input type="text" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
+       <ion-label floating color="light">Street Number</ion-label>
+       <ion-input type="text" formControlName="streetnumber" [(ngModel)]="userInfo.streetnumber" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
      </ion-item>
 
      <ion-item>
-       <ion-label floating color="text">Suburb</ion-label>
-       <ion-input type="text" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+      <ion-label floating color="light">Street Name</ion-label>
+      <ion-input type="text" formControlName="streetname" [(ngModel)]="userInfo.streetname" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
+    </ion-item>
+
+     <ion-item>
+       <ion-label floating color="light">Suburb</ion-label>
+       <ion-input type="text" formControlName="suburb" [(ngModel)]="userInfo.suburb" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
      </ion-item>
 
+     <ion-item>
+      <ion-label floating color="light">State</ion-label>
+      <ion-input type="text" formControlName="state" [(ngModel)]="userInfo.state" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="light">Postcode</ion-label>
+      <ion-input type="text"formControlName="postcode" [(ngModel)]="userInfo.postcode" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label floating color="light">Country</ion-label>
+      <ion-input type="text" formControlName="country" [(ngModel)]="userInfo.country" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+    </ion-item>
+
       <ion-item>
-        <ion-label floating color="text" >Email Address</ion-label>
+        <ion-label floating color="light" >Email Address</ion-label>
         <ion-input type="email" formControlName = "email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
 
      <ion-item>
-       <ion-label floating color="text">Password</ion-label>
+       <ion-label floating color="light">Password</ion-label>
        <ion-input type="password" formControlName="password" [(ngModel)]="user.password"></ion-input>
      </ion-item>
 
      <ion-item>
-       <ion-label floating color="text">Confirm Password</ion-label>
+       <ion-label floating color="light">Confirm Password</ion-label>
        <ion-input type="password" formControlName="repassword" [(ngModel)]="user.password"></ion-input>
      </ion-item>
 
+     <br>
 
-
-      <button ion-button (click)="register(user)">Register</button>
+      <button  color="secondary" ion-button (click)="register(user)">Register</button>
 
     </ion-list> 
   </form>

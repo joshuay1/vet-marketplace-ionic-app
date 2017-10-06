@@ -15,5 +15,10 @@ export interface UserInfo{
     streetname: string;
     suburb : string;
     state: string;
-    postcode : number;
+    postcode: string;
+    pictureURL: string;
+    country : string;
+    userid: string;
+    isVerifiedVet: boolean;
+    //TO-DO CAllum update this lista against the firebase db
 }

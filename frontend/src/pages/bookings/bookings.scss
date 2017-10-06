@@ -1,27 +1,49 @@
 page-bookings {
-  .background {
-    background-image: url('../assets/img/background.jpg');
+
+  .background{
+    background: #F0F0F0;
+  }
+  
+  .img_container{
+    text-align: center;
+    position: center;
   }
 
+  .bookingcard{
+    background: white;
+    box-shadow: 2px 2px 2px #A7A7A7;
+    border-radius: 5px;
+
+  }
+
+  .item {
+    background: rgba(255, 255, 255, 0.00);
+
+  }
+
+  h3{
+    color: #717171;
+  }
+  
+  .toolbar-background {
+    background-color: #0b4d6b;
+  }
+
+  .toolbar-title-md{
+    color: white;
+    font-family: roboto;
+  }
+  .toolbar-title-ios{
+    color: white;
+    font-family: roboto;  
+  }  
 
   .scroll-content {
     overflow: hidden;
     align-content: center;
     display: flex;
     flex-direction: column;
-
     text-align: center;
   }
 }
 
-
-ion-card.card {
-  box-shadow: none;
-  background: rgba(255, 255, 255, 0.50);
-  border-radius: 5px;
-}
-
-.button {
-  align-content: center;
-  position: relative
-}

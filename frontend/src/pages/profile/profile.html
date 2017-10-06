@@ -4,36 +4,70 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+<ion-header>
+    
+      <ion-navbar>
+        
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    
+        <ion-title>
+            <span text-color="light"> Profile </span>
+        </ion-title>
+    
+        <ion-buttons end>
+          <button ion-button color="light"icon-only (click)="openModal()">
+            <ion-icon name="options"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+    
+    </ion-header>
+
+
+<ion-content  scroll="false" >
+
+    <div style="height: 40%" class="background">
 
     <ion-grid>
+      <ion-row>
+        <ion-col>
+      <div class="circle-pic">
+        <img src="assets/img/owner.jpg" />
+      </div>
+    </ion-col>
+    <ion-col>
+      <br><br><br>      
+      <p class="a"> {{(profileData|async)?.userType}} </p>
+      <p class="p">{{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <button ion-button class="edit" 
+  (click)="editProfile()">Edit Profile</button>
+    
+   
+</div>
 
-        <ion-row row-40 style="background-image: url('assets/img/blueBackground.jpg')">
-          <ion-col>
-                <img class="circle-pic"  src = "assets/img/dog.jpg"/> 
-                <p> {{(profileData|async)?.userType}} 
-                <br> 
-                {{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
-          </ion-col>
-        </ion-row>
+<div class="whitebackground">
 
-        <ion-row row-50 style="background-color: #ffffff;">
-          <ion-col>
+  <ion-card class="profilecard">
+    <ion-card-content>
 
-            <ion-card>
-              <ion-card-content>
-                  Snuffles
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-content>
-                Snowball
-              </ion-card-content>
-            </ion-card>
+      <p class="a">My pets</p>
+      <button class="button button-block" ion-button color="secondary" 
+      (click)="accessPet()">Snuffle</button>
+      <button class="button button-block" ion-button color="secondary"
+      (click)="accessPet()">Snowball</button>
 
-         </ion-col>
-        </ion-row>
-      </ion-grid>
-
-
-
+      <div class="img_container">
+      <button class= "addbutton" ion-button (click)="registerNewPet(user)" ion-button icon-only>
+        <ion-icon name="ios-add-circle-outline"></ion-icon>
+      </button>
+    </div>
+    </ion-card-content>
+  </ion-card>
+</div>
+</ion-content>
