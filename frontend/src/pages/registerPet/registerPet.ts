@@ -27,7 +27,7 @@ export class RegisterPetPage {
 
 
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private db :AngularFireDatabase,
@@ -51,14 +51,14 @@ export class RegisterPetPage {
       console.log(this.userid+": getting user id from pet register page.");
       this.postRequest(this.petInfo,this.userid)
       console.log("finished post.")
-      this.navCtrl.push(ProfilePage);      
+      this.navCtrl.push(ProfilePage);
     }
   }
 
   validate(): boolean{
     // figure out the error message
     let errorMsg = '';
-    
+
         // validate each field
     let control = this.registerForm.controls['petname'];
 
@@ -114,13 +114,13 @@ export class RegisterPetPage {
   postRequest(info : PetInfo, id: string ){
     var headers = new Headers();
     headers.append('Content-Type','application/json');
-    
+
     var body = JSON.stringify({
       userId: this.userid,
-      petname : info.petname,
+      petname : info.petName,
       animalType: info.animaltype,
       dob : info.dob,
-      breed: info.breed,      
+      breed: info.breed,
     });
 
     this.afAuth.auth.currentUser.getToken(true)
@@ -135,12 +135,12 @@ export class RegisterPetPage {
       console.log("url = "+ url);
       console.log(this.http.post(url ,body , options));
       var promise = this.http.post(url ,body , options);
-    });  
-    
-    
+    });
+
+
   }
 
 
-  
+
 
 }

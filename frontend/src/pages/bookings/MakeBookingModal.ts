@@ -13,6 +13,8 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
     addAvail: FormGroup;
     time: any;
     date : any;
+    selectedVet : any;
+    petId : any;
     apiUrl = "http://115.146.86.193:8080/";
 
 
@@ -24,6 +26,7 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
                 public loadingCtrl: LoadingController){
       this.userId = params.get("userId");
       this.vetIds = new Array();
+      this.petId = params.get("petId");
       var vets = params.get("vetIds");
       vets = vets.replace('{','');
       vets = vets.replace('}','');
@@ -34,6 +37,7 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
       console.log("userId in modal = "+ this.userId);
       console.log("date in modal = "+ this.date);
       console.log("time in modal = "+ this.time);
+      console.log("petID in modal = " +  this.petId);
 
     }
     splitVetId(v){
@@ -46,9 +50,11 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
         this.vetIds.push({"VetID":s[0],"Distance":s[1]});
       }
     }
-    async add(v){
-      console.log(v);
-      var param = {userid:this.userId, vetid:v,date:this.date,time:this.time+".00",petid:"petA"}
+    async add(){
+      console.log(this.selectedVet);
+      this.selectedVet = this.selectedVet.replace('\"','');
+      this.selectedVet = this.selectedVet.replace('\"','');
+      var param = {userid:this.userId, vetid:this.selectedVet,date:this.date,time:this.time.substr(0,2)+".00",petid:this.petId}
 
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'

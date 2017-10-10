@@ -24,6 +24,7 @@ import { AvailModal } from '../pages/calendar/availModal';
 import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
 import { FindNearestVet} from "../pages/bookings/FindNearestVet";
 
+
 var config = {
   apiKey: "AIzaSyD16Z_p-S5LgSceHoL3ob7gRNSqqFaPbWQ",
   authDomain: "vetquoll-c22f9.firebaseapp.com",

@@ -1,5 +1,5 @@
 export interface PetInfo{
-    petname: string;
+    petName: string;
     animaltype: string;
     breed: string;
     dob: Date;
