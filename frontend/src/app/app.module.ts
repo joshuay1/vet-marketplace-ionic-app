@@ -23,6 +23,7 @@ import { HttpServiceProvider } from '../providers/http-service/http-service';
 import { AvailModal } from '../pages/calendar/availModal';
 import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
 import { FindNearestVet} from "../pages/bookings/FindNearestVet";
+import { VetBookingsPage } from '../pages/bookings/vetBookings';
 
 var config = {
   apiKey: "AIzaSyD16Z_p-S5LgSceHoL3ob7gRNSqqFaPbWQ",
@@ -42,6 +43,7 @@ var config = {
     StorePage,
     CalendarPage,
     BookingsPage,
+    VetBookingsPage,
     RedirectPage,
     AvailModal,
     MakeBookingModal,
@@ -70,7 +72,8 @@ var config = {
     AvailModal,
     MakeBookingModal,
     FindNearestVet,
-    EditProfilePage
+    EditProfilePage,
+    VetBookingsPage
   ],
   providers: [
     AngularFireDatabase,
