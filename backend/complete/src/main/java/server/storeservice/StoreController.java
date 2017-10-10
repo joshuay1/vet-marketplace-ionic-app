@@ -14,7 +14,7 @@ public class StoreController {
     private Logger logger = LoggerFactory.getLogger(Application.class);
 
     @CrossOrigin
-    @RequestMapping(value = "/getVetStoreItems/{token}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getVetStoreItems/",method = RequestMethod.GET)
     public StoreResponse getVetStoreItems(
             @RequestParam(value="token") String tokenString)
     {
@@ -30,13 +30,13 @@ public class StoreController {
         logger.info(storeItems.toString());
         if(storeItems== null || storeItems.size() == 0){
             logger.info("cant find storeItems");
-            return new StoreResponse(null, "success", "no available vets");
+            return new StoreResponse(null, "success", "no available items");
         }
-        return new StoreResponse(null, null,null);
+        return new StoreResponse(storeItems, null,null);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/getUserStoreItems/{token}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserStoreItems/",method = RequestMethod.GET)
     public StoreResponse getUserStoreItems(
       @RequestParam(value="token") String tokenString)
     {
@@ -52,9 +52,9 @@ public class StoreController {
         logger.info(storeItems.toString());
         if(storeItems== null || storeItems.size() == 0){
             logger.info("cant find storeItems");
-            return new StoreResponse(null, "success", "no available vets");
+            return new StoreResponse(null, "success", "no available items");
         }
-        return new StoreResponse(null, null,null);
+        return new StoreResponse(storeItems, "success",null);
     }
 
 }
