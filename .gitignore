@@ -200,6 +200,7 @@ FireBase/plugins/
 target/
 .classpath
 .settings/
+.sourcemaps/
 
 # RIA/Silverlight projects
 Generated_Code/

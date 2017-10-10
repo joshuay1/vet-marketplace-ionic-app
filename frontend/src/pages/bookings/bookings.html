@@ -36,7 +36,7 @@
 
 <ion-content class="background">
   <ion-card [ngSwitch]="bookings">
-    <ion-list *ngSwitchCase="'currentBookings'">
+    <!--ion-list *ngSwitchCase="'currentBookings'"-->
 
       <ion-list>
         <div class="bookingcard">
@@ -44,12 +44,11 @@
             <h2>Dr. {{generateUserData(book.vetId)}}</h2>
             <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2><br>
             <h3>User: {{generateUserData(book.userId)}}</h3>
-            <h3>Pet:</h3>
-            <h3>BookingID: {{stringfy(book)}}</h3>
+            <h3>Pet: {{book.petId}}</h3>
           </ion-item>
         </div>
       </ion-list>
-    </ion-list>
+    <!--/ion-list-->
     <ion-list *ngSwitchCase="'pastBookings'">
 
     </ion-list>

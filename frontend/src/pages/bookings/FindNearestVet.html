@@ -1,36 +1,41 @@
-
 <ion-header>
 
-      <ion-navbar>
-        <ion-buttons start>
-          <button ion-button (click)="dismiss()">Close</button>
-        </ion-buttons>
-        <ion-title>Find Nearest Vet</ion-title>
-      </ion-navbar>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Close</button>
+    </ion-buttons>
+    <ion-title>Find Nearest Vet</ion-title>
+  </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-    <form [formGroup]= "findVet">
-        <ion-list>
-            <ion-item>
-                <ion-label floating color="dark">Date</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
-            </ion-item>
+  <ion-item>
+    <ion-label>Pet-Name</ion-label>
+    <ion-select [(ngModel)]="selectedPet">
+      <ion-option *ngFor="let pet of petIds">{{getPetName(pet.$value)}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <form [formGroup]="findVet">
+    <ion-list>
+      <ion-item>
+        <ion-label floating color="dark">Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
+      </ion-item>
 
-            <ion-item>
-                <ion-label floating color="dark">Radius (km)</ion-label>
-                <ion-input type="text" formControlName="radius" [(ngModel)]="radius"></ion-input>
-            </ion-item>
+      <!--ion-item>
+        <ion-label floating color="dark">Radius (km)</ion-label>
+        <ion-input type="text" formControlName="radius" [(ngModel)]="radius"></ion-input>
+      </ion-item-->
 
 
-            <ion-item>
-                <ion-label floating color="dark">Time</ion-label>
-                <ion-datetime displayFormat="HH" formControlName="time" [(ngModel)]="time"></ion-datetime>
-            </ion-item>
+      <ion-item>
+        <ion-label floating color="dark">Time</ion-label>
+        <ion-datetime displayFormat="HH" formControlName="time" [(ngModel)]="time"></ion-datetime>
+      </ion-item>
 
-            <button  color="secondary" ion-button (click)="search()">Search</button>
-        </ion-list>
-    </form>
+      <button color="secondary" ion-button (click)="search()">Search</button>
+    </ion-list>
+  </form>
 
 </ion-content>
