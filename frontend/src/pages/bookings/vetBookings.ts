@@ -1,9 +1,10 @@
-import { NavController, NavParams, ModalController, IonicPage } from "ionic-angular";
+import { NavController, NavParams, ModalController, IonicPage, AlertController } from "ionic-angular";
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Component } from "@angular/core";
 import { UserInfo, BookingInfo } from "../../model/user";
 import { PetInfo } from "../../model/pet";
+import { HttpServiceProvider } from "../../providers/http-service/http-service";
 
 @IonicPage()
 @Component({
@@ -15,11 +16,15 @@ export class VetBookingsPage {
     public Bookings: FirebaseListObservable<any[]>;
     public currentBookings : BookingInfo[] = new Array<BookingInfo>();
     public pastBookings : BookingInfo[] = new Array <BookingInfo>();
+    apiUrl = "http://115.146.86.193:8080/";
+
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public db : AngularFireDatabase,
         private af: AngularFireAuth,
-        private modalCtrl : ModalController) {
+        private modalCtrl : ModalController,
+        private httpProviders : HttpServiceProvider,
+        private alertCtrl: AlertController) {
 
 
         this.userid = this.af.auth.currentUser.uid;
@@ -38,9 +43,10 @@ export class VetBookingsPage {
 
     getBooking(){
         console.log("get Current Booking called");
-        this.currentBookings = new Array<BookingInfo> ();
-        this.pastBookings = new Array<BookingInfo>();
+        
         this.Bookings.forEach(snapshot=>{
+          this.currentBookings = new Array<BookingInfo> ();
+          this.pastBookings = new Array<BookingInfo>();
           console.log(snapshot.keys().next().value);
           console.log(JSON.stringify(snapshot));
           snapshot.forEach(snap =>{
@@ -91,9 +97,28 @@ export class VetBookingsPage {
 
           confirm(bookingId: string ){
             console.log("sending request for booking id " + bookingId);
+            var body = {"userid": this.userid, "bookingId": bookingId};
             //HTTP REQUEST to make booking done;
+            this.httpProviders.httpPost(this.apiUrl + "completeBooking", JSON.stringify(body))
+            .then(result => {
+                console.log("get result here");
+                console.log("result = "+ JSON.stringify(result));
+                var res = result.response;
+                if (res == "success") {
+                  console.log("successful change");
+                  
+                }
+            }).catch(err => {
+                console.log("catching error here");
+                let alert = this.alertCtrl.create({
+                    title: 'Error',
+                    message: err,
+                    buttons: ['OK']
+                });                 alert.present();
+            })
 
-            this.getBooking();
+
+            
           }
       
 }
