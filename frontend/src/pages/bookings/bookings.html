@@ -36,24 +36,35 @@
     
     <ion-content class="background">
       <ion-card [ngSwitch]="bookings">
-        <!--ion-list *ngSwitchCase="'currentBookings'"-->
+        <ion-list *ngSwitchCase="'currentBookings'">
     
-          <ion-list>
-            
-              <ion-item *ngFor='let book of currentBookings | async'>
+            <ion-list>
                 <div class="bookingcard">
-                <h2>Dr. {{generateUserData(book.vetId)}}</h2>
-                <h3>{{book.year}}/{{book.month}}/{{book.day}}</h3>
-                <h3>User: {{generateUserData(book.userId)}}</h3>
-                <h3>Pet: {{book.petId}}</h3>
-              </div>
-               
-
-              </ion-item>
-    
-          </ion-list>
-        <!--/ion-list-->
+                  <ion-item *ngFor='let book of currentBookings'  >
+                    <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                    <h3>User: {{generateUserData(book.userId)}}</h3>
+                    <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                    <h3>Time: {{book.time}}</h3>
+                    <h3>Status : {{book.status}}</h3>
+                    <br>
+                  </ion-item>
+                </div>
+              </ion-list>
+        </ion-list>
         <ion-list *ngSwitchCase="'pastBookings'">
+            <ion-list>
+                <div class="bookingcard">
+                  <ion-item *ngFor='let book of pastBookings'  >
+                    <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                    <h3>User: {{generateUserData(book.userId)}}</h3>
+                    <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                    <h3>Time: {{book.time}}</h3>
+                    <h3>Status : {{book.status}}</h3> 
+                    
+                    <br>
+                  </ion-item>
+                </div>
+              </ion-list>
     
         </ion-list>
         <div class="img_container">
