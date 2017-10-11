@@ -24,6 +24,7 @@ import { AvailModal } from '../pages/calendar/availModal';
 import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
 import { FindNearestVet} from "../pages/bookings/FindNearestVet";
 import { VetBookingsPage } from '../pages/bookings/vetBookings';
+import { VetStorePage} from "../pages/store/vetStore/VetStore";
 
 
 var config = {
@@ -49,7 +50,8 @@ var config = {
     MakeBookingModal,
     FindNearestVet,
     EditProfilePage,
-    VetBookingsPage 
+    VetBookingsPage,
+    VetStorePage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ var config = {
     MakeBookingModal,
     FindNearestVet,
     EditProfilePage,
-    VetBookingsPage
+    VetBookingsPage,
+    VetStorePage
   ],
   providers: [
     AngularFireDatabase,
