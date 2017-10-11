@@ -12,21 +12,28 @@ page-bookings {
   }
 
   .bookingheader{
-    background: white;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0);
   }
 
   .bookingcard{
     background: white;
-    box-shadow: 2px 2px 2px #A7A7A7;
+    box-shadow: 1px 1px 1px #A7A7A7;
     border-radius: 5px;
-    padding:7px;
-    margin:7px;
+    padding:10px;
+    margin:1px;
 
+    
   }
 
   .item {
     background: rgba(255, 255, 255, 0.00);
 
+  }
+
+  
+  h2{
+    color: #0b4d6b;
   }
 
   h3{

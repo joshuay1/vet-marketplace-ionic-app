@@ -24,7 +24,7 @@ ion-card.card {
   
   .button {
     align-content: center;
-    position: relative
+    position: relative;
   }
   
   .addbutton{
@@ -55,7 +55,15 @@ ion-card.card {
     font-family: roboto;
 }
 
+.toolbar-ios-title-text{
+  color:white;
+}
+
 .toolbar-title-ios{
     color: white;
     font-family: roboto;
 }  
+
+.toolbar-ios-button{
+ color: white;
+}

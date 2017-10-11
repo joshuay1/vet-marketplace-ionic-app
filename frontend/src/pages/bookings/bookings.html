@@ -24,13 +24,13 @@
       </ion-navbar>
     
     
-      <ion-card class="white">
+      <ion-card>
         <ion-segment [(ngModel)]="bookings">
           <ion-segment-button value="currentBookings">Current Bookings</ion-segment-button>
           <ion-segment-button value="pastBookings">Booking History</ion-segment-button>
         </ion-segment>
       </ion-card>
-      <br>
+      
     </ion-header>
     
     
@@ -43,7 +43,7 @@
               <ion-item *ngFor='let book of currentBookings | async'>
                 <div class="bookingcard">
                 <h2>Dr. {{generateUserData(book.vetId)}}</h2>
-                <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2><br>
+                <h3>{{book.year}}/{{book.month}}/{{book.day}}</h3>
                 <h3>User: {{generateUserData(book.userId)}}</h3>
                 <h3>Pet: {{book.petId}}</h3>
               </div>

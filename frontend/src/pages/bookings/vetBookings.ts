@@ -89,8 +89,8 @@ export class VetBookingsPage {
               return response;
           }
 
-          confirm(userId: string,  vetId:string, petId: string ){
-            console.log(userId +"," + vetId+","+petId);
+          confirm(bookingId: string ){
+            console.log("sending request for booking id " + bookingId);
             //HTTP REQUEST to make booking done;
 
             this.getBooking();

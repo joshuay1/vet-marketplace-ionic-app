@@ -38,7 +38,7 @@
               <h3>User: {{generateUserData(book.userId)}}</h3>
               <h3>Pet: {{generatePetData(book.petId)}}</h3>
               <h3>Status : {{book.status}}</h3>
-              <button  color="secondary" ion-button (click)="confirm(book.userId, book.vetId, book.petId)">Complete</button>
+              <button  color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
               <br>
             </ion-item>
           </div>

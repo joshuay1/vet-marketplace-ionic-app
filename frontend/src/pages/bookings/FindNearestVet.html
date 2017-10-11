@@ -33,9 +33,16 @@
         <ion-label floating color="dark">Time</ion-label>
         <ion-datetime displayFormat="HH" formControlName="time" [(ngModel)]="time"></ion-datetime>
       </ion-item>
+      <br>
 
-      <button color="secondary" ion-button (click)="search()">Search</button>
+      
     </ion-list>
   </form>
 
+
 </ion-content>
+<ion-footer>
+    <ion-card>
+      <button class = "button button-block"color="secondary" ion-button (click)="search()">Search</button>
+     </ion-card>
+  </ion-footer>
