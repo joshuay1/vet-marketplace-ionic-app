@@ -33,16 +33,30 @@
   
         <ion-list>
           <div class="bookingcard">
-            <ion-item *ngFor='let book of currentBookings | async'>
+            <ion-item *ngFor='let book of currentBookings'  >
               <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
               <h3>User: {{generateUserData(book.userId)}}</h3>
-              <h3>Pet: {{generatePetData(book.petId)}}</h3><br>
+              <h3>Pet: {{generatePetData(book.petId)}}</h3>
               <h3>Status : {{book.status}}</h3>
+              <button  color="secondary" ion-button (click)="confirm(book.userId, book.vetId, book.petId)">Complete</button>
+              <br>
             </ion-item>
           </div>
         </ion-list>
       </ion-list>
       <ion-list *ngSwitchCase="'pastAppointments'">
+          <ion-list>
+              <div class="bookingcard">
+                <ion-item *ngFor='let book of pastBookings'  >
+                  <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                  <h3>User: {{generateUserData(book.userId)}}</h3>
+                  <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                  <h3>Status : {{book.status}}</h3> 
+                  <br>
+                </ion-item>
+              </div>
+            </ion-list>
+        
   
       </ion-list>
     </ion-card>

@@ -1,7 +1,6 @@
 import { NavController, NavParams, ModalController, IonicPage } from "ionic-angular";
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
-import * as Querybase  from 'querybase';
 import { Component } from "@angular/core";
 import { UserInfo, BookingInfo } from "../../model/user";
 import { PetInfo } from "../../model/pet";
@@ -13,9 +12,9 @@ import { PetInfo } from "../../model/pet";
 })
 export class VetBookingsPage {
     userid : string;
-    public currentBookings: FirebaseListObservable<any[]>;
-    public pastBookings : FirebaseListObservable<any[]>;
-
+    public Bookings: FirebaseListObservable<any[]>;
+    public currentBookings : BookingInfo[] = new Array<BookingInfo>();
+    public pastBookings : BookingInfo[] = new Array <BookingInfo>();
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public db : AngularFireDatabase,
@@ -24,23 +23,38 @@ export class VetBookingsPage {
 
 
         this.userid = this.af.auth.currentUser.uid;
-        this.getCurrentBooking();
-        this.getPastBooking();
-        
+        this.Bookings = this.db.list("bookings",{
+          query:{
+            orderByChild: 'vetId',
+            equalTo: this.userid
+          }
+        });
+        this.getBooking();
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad VetBookingsPage');
       }
 
-    getCurrentBooking(){
+    getBooking(){
         console.log("get Current Booking called");
-        this.currentBookings = this.db.list("bookings",{
-          query:{
-            orderByChild: 'vetId',
-            equalTo: this.userid
-          }
-        });
+        this.currentBookings = new Array<BookingInfo> ();
+        this.pastBookings = new Array<BookingInfo>();
+        this.Bookings.forEach(snapshot=>{
+          console.log(snapshot.keys().next().value);
+          console.log(JSON.stringify(snapshot));
+          snapshot.forEach(snap =>{
+            var booking : BookingInfo = snap;
+            if(booking.status == "confirmed"){
+              this.currentBookings.push(snap);
+            }else if (booking.status == "done"){
+              this.pastBookings.push(snap);
+            }
+            return false;
+            
+          });
+
+        })
 
     }
 
@@ -74,9 +88,13 @@ export class VetBookingsPage {
 
               return response;
           }
+
+          confirm(userId: string,  vetId:string, petId: string ){
+            console.log(userId +"," + vetId+","+petId);
+            //HTTP REQUEST to make booking done;
+
+            this.getBooking();
+          }
       
 
-    getPastBooking(){
-          
-    }
 }
