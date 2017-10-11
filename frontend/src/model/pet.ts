@@ -1,7 +1,7 @@
 export interface PetInfo{
     petName: string;
-    animaltype: string;
-    breed: string;
+    animalType: string;
+    animalBreed: string;
     dob: Date;
-    userid: string;
+    userId: string;
 }

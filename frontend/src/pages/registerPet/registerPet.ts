@@ -118,9 +118,9 @@ export class RegisterPetPage {
     var body = JSON.stringify({
       userId: this.userid,
       petname : info.petName,
-      animalType: info.animaltype,
+      animalType: info.animalType,
       dob : info.dob,
-      breed: info.breed,
+      breed: info.animalBreed,
     });
 
     this.afAuth.auth.currentUser.getToken(true)

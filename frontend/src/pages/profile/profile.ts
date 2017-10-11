@@ -7,6 +7,7 @@ import { PetPage} from "../pet/pet";
 import { EditProfilePage} from "../editprofile/editprofile";
 import { RegisterPetPage} from "../registerPet/registerPet"
 import { User} from "../../model/user";
+import {PetInfo} from "../../model/pet";
 
 /**
  * Generated class for the ProfilePage page.
@@ -22,33 +23,35 @@ import { User} from "../../model/user";
 })
 export class ProfilePage {
   profileData : FirebaseObjectObservable<UserInfo>;
+  selectedPet : any;  
+  petIds : Array<any>;
+  userId: any;
+  
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
             private afAuth: AngularFireAuth,
             private db : AngularFireDatabase,
             private modalCtrl: ModalController) {
-  }
-  private userData = {
-    uid:""
-  };
+              this.afAuth.authState.subscribe(data=>{
+                this.profileData = this.db.object(`users/${data.uid}`);
+                this.userId = `${data.uid}`;
+              });          
+               
+            }
 
   ionViewDidLoad() {
     console.log("hello");
-    this.afAuth.authState.subscribe(data=>{
-      this.profileData = this.db.object(`users/${data.uid}`);
-      this.userData.uid = `${data.uid}`;
-      console.log(this.userData.uid);
-    });
+    this.getPetIds();             
   }
 
   registerNewPet(user: User)
   {
     console.log("In registerNewPet Function");
-    this.navCtrl.push('RegisterPetPage',this.userData);
+    this.navCtrl.push('RegisterPetPage',this.userId);
   }
 
-  accessPet() {
-    this.navCtrl.push('PetPage');
+  accessPet(pet: any) {
+    this.navCtrl.push('PetPage',{petId: pet});
   }
 
   editProfile() {
@@ -56,5 +59,24 @@ export class ProfilePage {
     edit.present();
   }
 
+  getPetIds(){
+    console.log("get called" + "users/"+this.userId+"/petIds");
+    var pets = this.db.list("users/"+this.userId+"/petIds",{
+    });
+    pets.forEach(snapshot=>{
+      console.log("snaphot is " + snapshot);
+      this.petIds = snapshot;
+    });
+  }
 
+  getPetName(petId:any):string {
+    console.log(petId);
+    var petData: FirebaseObjectObservable<PetInfo>;
+    petData = this.db.object(`pets/` + petId);
+    var response = '';
+    petData.forEach(snapshot => {
+      response = snapshot.petName;
+    });
+    return response;
+  }
 }
