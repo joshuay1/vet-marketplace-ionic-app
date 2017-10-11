@@ -96,5 +96,4 @@ export class VetBookingsPage {
             this.getBooking();
           }
       
-
 }

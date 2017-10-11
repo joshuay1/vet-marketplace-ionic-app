@@ -14,26 +14,28 @@ import { PetPage} from "../pet/pet";
 
 @IonicPage()
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile_Vet.html',
+    selector: 'page-profile',
+    templateUrl: 'profile_Vet.html',
 })
 export class ProfileVetPage {
-  profileData : FirebaseObjectObservable<UserInfo>;
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-            private afAuth: AngularFireAuth,
-            private db : AngularFireDatabase) {
-  }
+    profileData: FirebaseObjectObservable<UserInfo>;
+    constructor(public navCtrl: NavController,
+        public navParams: NavParams,
+        private afAuth: AngularFireAuth,
+        private db: AngularFireDatabase) {
+    }
 
-  ionViewDidLoad() {
-    this.afAuth.authState.subscribe(data=>{
-      this.profileData = this.db.object(`users/${data.uid}`)
-    });
-  }
+    private userData = {
+        uid: ""
+    };
 
+    ionViewDidLoad() {
+        console.log("hello");
+        this.afAuth.authState.subscribe(data => {
+            this.profileData = this.db.object(`users/${data.uid}`);
+            this.userData.uid = `${data.uid}`;
+            console.log(this.userData.uid);
+        });
 
-  accessPet() {
-    this.navCtrl.push('PetPage');
-  }
-
+    }
 }
