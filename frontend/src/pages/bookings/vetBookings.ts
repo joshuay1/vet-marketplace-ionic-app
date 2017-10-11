@@ -1,7 +1,6 @@
 import { NavController, NavParams, ModalController, IonicPage } from "ionic-angular";
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
-import * as Querybase  from 'querybase';
 import { Component } from "@angular/core";
 import { UserInfo, BookingInfo } from "../../model/user";
 import { PetInfo } from "../../model/pet";
