@@ -1,7 +1,16 @@
-import { NavController, NavParams, ModalController } from "ionic-angular";
-import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
+import { NavController, NavParams, ModalController, IonicPage } from "ionic-angular";
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
+import * as Querybase  from 'querybase';
+import { Component } from "@angular/core";
+import { UserInfo, BookingInfo } from "../../model/user";
+import { PetInfo } from "../../model/pet";
 
+@IonicPage()
+@Component({
+  selector: 'page-vetBookings',
+  templateUrl: 'vetBookings.html',
+})
 export class VetBookingsPage {
     userid : string;
     public currentBookings: FirebaseListObservable<any[]>;
@@ -28,12 +37,44 @@ export class VetBookingsPage {
         console.log("get Current Booking called");
         this.currentBookings = this.db.list("bookings",{
           query:{
-            orderByChild: 'userId',
+            orderByChild: 'vetId',
             equalTo: this.userid
           }
         });
-        console.log(this.currentBookings);
-      }
+
+    }
+
+      stringfy(json: any): string {
+        
+            return JSON.stringify(json);
+          }
+        
+        generateUserData(userid: any): string {
+            var profileData: FirebaseObjectObservable<UserInfo>;
+            profileData = this.db.object(`users/` + userid);
+            var response;
+            profileData.forEach(snapshot => {
+              response = snapshot.firstname +
+                " " + snapshot.lastname
+              /*"\n Address = " +snapshot.streetnumber +" " + snapshot.streetname+
+              " , " + snapshot.suburb +" , "+ snapshot.state +" "+  snapshot.country*/;
+        
+            });
+            return response;
+        
+          }
+
+          generatePetData(petid: any): string{
+              var petData : FirebaseObjectObservable<PetInfo>;
+              petData = this.db.object(`pets/`+ petid);
+              var response;
+              petData.forEach(snapshot =>{
+                  response = snapshot.petName;
+              });
+
+              return response;
+          }
+      
 
     getPastBooking(){
           

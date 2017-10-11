@@ -1,0 +1,49 @@
+<ion-header>
+    
+      <ion-navbar>
+        <button ion-button icon-only menuToggle>
+              <ion-icon name="menu"></ion-icon>
+            </button>
+    
+        <ion-title>
+          <span text-color="light"> Appointments </span>
+        </ion-title>
+    
+        <ion-buttons end>
+          <button ion-button color="light" icon-only (click)="openModal()">
+                <ion-icon name="options"></ion-icon>
+              </button>
+        </ion-buttons>
+      </ion-navbar>
+    
+      <br>
+      <ion-card>
+        <ion-segment [(ngModel)]="appointments">
+          <ion-segment-button value="currentAppointments">Current Appointments</ion-segment-button>
+          <ion-segment-button value="pastAppointments">Past Appointments </ion-segment-button>
+        </ion-segment>
+      </ion-card>
+      <br>
+</ion-header>
+
+
+<ion-content class="background">
+    <ion-card [ngSwitch]="appointments">
+      <ion-list *ngSwitchCase="'currentAppointments'">
+  
+        <ion-list>
+          <div class="bookingcard">
+            <ion-item *ngFor='let book of currentBookings | async'>
+              <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+              <h3>User: {{generateUserData(book.userId)}}</h3>
+              <h3>Pet: {{generatePetData(book.petId)}}</h3><br>
+              <h3>Status : {{book.status}}</h3>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-list>
+      <ion-list *ngSwitchCase="'pastAppointments'">
+  
+      </ion-list>
+    </ion-card>
+  </ion-content>

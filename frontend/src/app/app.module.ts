@@ -44,12 +44,12 @@ var config = {
     StorePage,
     CalendarPage,
     BookingsPage,
-    VetBookingsPage,
     RedirectPage,
     AvailModal,
     MakeBookingModal,
     FindNearestVet,
-    EditProfilePage
+    EditProfilePage,
+    VetBookingsPage 
   ],
   imports: [
     BrowserModule,
