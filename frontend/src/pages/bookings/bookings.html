@@ -34,12 +34,14 @@
     </ion-header>
     
     
-    <ion-content class="background">
+    <ion-content class="background" >
       <ion-card [ngSwitch]="bookings">
-        <ion-list *ngSwitchCase="'currentBookings'">
-    
-            <ion-list>
+        
+          <ion-list *ngSwitchDefault>
+              
+              <ion-list>
                 <div class="bookingcard">
+                  
                   <ion-item *ngFor='let book of currentBookings'  >
                     <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
                     <h3>User: {{generateUserData(book.userId)}}</h3>
@@ -50,7 +52,8 @@
                   </ion-item>
                 </div>
               </ion-list>
-        </ion-list>
+          </ion-list>
+        
         <ion-list *ngSwitchCase="'pastBookings'">
             <ion-list>
                 <div class="bookingcard">
