@@ -402,7 +402,7 @@ public class MakeBookingController{
         //create new booking field
         DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("bookings");
         String key = bookingRef.push().getKey();
-        BookingData data = new BookingData(muid,mvetid,mpetid,myear,mmonth,mday,mtime,"confirmed");
+        BookingData data = new BookingData(muid,mvetid,mpetid,myear,mmonth,mday,mtime,"confirmed",key);
         bookingRef.child(key).setValue(data);
 
         //passBookingField into user (NOT NEEDED)
