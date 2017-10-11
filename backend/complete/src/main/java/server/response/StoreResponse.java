@@ -1,14 +1,15 @@
 package server.response;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class StoreResponse {
-    private JSONObject storeItems;
+    private JSONArray storeItems;
     private String response;
     private String message;
 
 
-    public StoreResponse(JSONObject items, String response, String message){
+    public StoreResponse(JSONArray items, String response, String message){
         this.storeItems = items;
         this.response = response;
         this.message = message;

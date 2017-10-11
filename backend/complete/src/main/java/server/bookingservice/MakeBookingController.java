@@ -288,6 +288,7 @@ public class MakeBookingController{
             }else{
                 logger.info("decoded token id does not match provided uid");
                 logger.info("/////////////MAKEBOOKING ENDS////////////////");
+                return new BasicResponse("error",null, "decoded token does not match user id");
             }
 
         }else{
@@ -429,6 +430,59 @@ public class MakeBookingController{
         
 
     }
+
+    @CrossOrigin
+    @RequestMapping(value="/completeBooking", method= RequestMethod.POST)
+    public BasicResponse completeBooking(
+        @RequestParam(value= "token") String tokenString,
+        @RequestBody String jsonString){
+        
+
+        logger.info("///////////completeBOOKING START///////////////");
+        JSONParser parser = new JSONParser();
+        JSONObject jsonBody = null;
+        try{
+            jsonBody = (JSONObject) parser.parse(jsonString);
+        }catch(ParseException e){
+            logger.info("parse json object failed");
+            logger.info("/////////////completeBOOKING ENDS////////////////");
+            return new BasicResponse("error", null, "body not jsonObject");
+            
+        }
+
+        String mbookingid = null;
+        String muid = null;
+
+        if(jsonBody.containsKey("userid")){
+            muid = (String) jsonBody.get("userid");
+            if(HelperFunction.matchToken(muid, tokenString, logger)){
+                logger.info("decoded token id match provided uid, continue");
+            }else{
+                logger.info("decoded token id does not match provided uid");
+                logger.info("/////////////completeBOOKING ENDS////////////////");
+                return new BasicResponse("error",null, "decoded token does not match user id");
+            }
+        }
+
+        if(jsonBody.containsKey("bookingId")){
+            mbookingid = (String) jsonBody.get("bookingId");
+        }else{
+            logger.info("no Booking id provided");
+            logger.info("/////////////completeBOOKING ENDS////////////////");
+            return new BasicResponse("error",null, "decoded token does not match user id");
+        }
+
+        DatabaseReference ref =  FirebaseDatabase.getInstance().getReference("bookings");
+        ref.child(mbookingid).child("status").setValue("done");
+        return new BasicResponse("success", muid, "null");
+
+    }
+
+
+
+
+
+
     
 
 }
