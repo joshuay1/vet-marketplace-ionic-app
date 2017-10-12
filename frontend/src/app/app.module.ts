@@ -24,6 +24,8 @@ import { AvailModal } from '../pages/calendar/availModal';
 import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
 import { FindNearestVet} from "../pages/bookings/FindNearestVet";
 import { VetBookingsPage } from '../pages/bookings/vetBookings';
+import { Camera } from '@ionic-native/camera';
+import { PictureEditPage } from '../pages/profile/pictureEdit';
 
 
 var config = {
@@ -49,7 +51,8 @@ var config = {
     MakeBookingModal,
     FindNearestVet,
     EditProfilePage,
-    VetBookingsPage 
+    VetBookingsPage,
+    PictureEditPage
   ],
   imports: [
     BrowserModule,
@@ -74,12 +77,14 @@ var config = {
     MakeBookingModal,
     FindNearestVet,
     EditProfilePage,
-    VetBookingsPage
+    VetBookingsPage,
+    PictureEditPage
   ],
   providers: [
     AngularFireDatabase,
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpServiceProvider
   ]

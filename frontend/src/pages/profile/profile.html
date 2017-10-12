@@ -35,7 +35,7 @@
       <ion-row>
         <ion-col>
       <div class="circle-pic">
-        <img src="assets/img/owner.jpg" />
+        <img id = "profilePicture" (click) = "changePicture()">
       </div>
     </ion-col>
     <ion-col>
@@ -59,7 +59,7 @@
       <p class="a">My pets</p>
       <ion-list>
         <div class="bookingcard">
-          <ion-item *ngFor="let pet of petIds">
+          <ion-item *ngFor="let pet of petIds | async">
             <button class="button button-block" ion-button color="secondary" 
             (click)="accessPet(pet.$value)">{{getPetName(pet.$value)}}</button>
           </ion-item>
@@ -76,7 +76,7 @@
       <ion-item>
         <ion-label>Pet-Name</ion-label>
         <ion-select [(ngModel)]="selectedPet">
-          <ion-option *ngFor="let pet of petIds">{{getPetName(pet.$value)}}</ion-option>
+          <ion-option *ngFor="let pet of petIds | async"> {{getPetName(pet.$value)}}</ion-option>
         </ion-select>
       </ion-item>
 </ion-content>
