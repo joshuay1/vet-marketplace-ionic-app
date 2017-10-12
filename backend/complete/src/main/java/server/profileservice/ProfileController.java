@@ -428,4 +428,47 @@ public class ProfileController {
             return new BasicResponse("success",id,null);
         }
 
+    @CrossOrigin
+    @RequestMapping(value = "/changeProfilePicture",method = RequestMethod.POST)
+    public BasicResponse pictureUpload(
+        @RequestParam(value="token") String tokenString,
+        @RequestBody String jsonString
+        ){
+
+            JSONParser parser = new JSONParser();
+            JSONObject jsonProfile = null;
+            String id = null;
+            String pictureURL = null;
+            try{
+                jsonProfile = (JSONObject) parser.parse(jsonString);
+            }catch(ParseException e){
+                e.printStackTrace();
+                return new BasicResponse("error",null, "body not JSON Object");
+            }
+
+            if(jsonProfile.containsKey("userid")){
+                id = (String) jsonProfile.get("userid");
+                boolean match = HelperFunction.matchToken(id, tokenString, logger);
+                if(!match){
+                    return new BasicResponse("error", id, "token id does not match provided id");
+                }
+            }else{
+                return new BasicResponse("error", null, "no user id found");
+            }
+
+            if(jsonProfile.containsKey("pictureURL")){
+                pictureURL = (String) jsonProfile.get("pictureURL");
+            }else{
+                return new BasicResponse("error", null, "no pictureURL found");
+            }
+
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/"+id);
+            ref.child("pictureURL").setValue(pictureURL);
+
+            //INITIALIZE DATA
+            
+          
+            
+            return new BasicResponse("success", id,null);
+        }
 }
