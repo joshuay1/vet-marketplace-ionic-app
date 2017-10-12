@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpServiceProvider} from "../../../providers/http-service/http-service";
-import {RedirectPage} from "../../redirect/redirect";
 import {AngularFireDatabase} from "angularfire2/database";
 
 /**
@@ -13,10 +12,10 @@ import {AngularFireDatabase} from "angularfire2/database";
 
 @IonicPage()
 @Component({
-  selector: 'page-VetStore',
-  templateUrl: 'VetStore.html',
+  selector: 'page-UserStore',
+  templateUrl: 'UserStore.html',
 })
-export class VetStorePage {
+export class UserStorePage {
   items : any;
   apiUrl = "http://115.146.86.193:8080/";
   totalCost : any;
@@ -25,26 +24,32 @@ export class VetStorePage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private db: AngularFireDatabase) {
+              private db: AngularFireDatabase,
+              private loadingCtrl :LoadingController) {
     this.totalCost = +0;
     this.getItems();
     this.selectedItems = new Array();
     this.selectedItemsQuan = new Array();
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StorePage');
   }
 
-  getItems(){
+  getItems() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loading.present();
 
     this.db.database.ref('/VetStore').once('value',(snapshot)=>{
       this.items = snapshot.val();
       console.log(this.items);
+      loading.dismissAll();
     });
-
   }
-
   addToTotal(price,quantity){
     console.log("I am in adding to total");
     let pr = +price;
@@ -64,5 +69,4 @@ export class VetStorePage {
     console.log(this.totalCost);
     console.log(this.selectedItems.toString());
   }
-
 }

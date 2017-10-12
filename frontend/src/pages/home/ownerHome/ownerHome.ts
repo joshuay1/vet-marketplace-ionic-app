@@ -1,7 +1,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ProfilePage } from "../../profile/profile";
-import { StorePage} from "../../store/store";
+import { UserStorePage} from "../../store/userStore/UserStore";
 import { BookingsPage } from "../../bookings/bookings";
 
 @Component({
@@ -12,7 +12,7 @@ import { BookingsPage } from "../../bookings/bookings";
     // should be each tab's root Page
     tab1Root = BookingsPage;
     tab2Root = ProfilePage;
-    tab3Root = StorePage;
+    tab3Root = UserStorePage;
 
     constructor() {
 
