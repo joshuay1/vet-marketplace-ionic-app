@@ -158,8 +158,9 @@ public class PetProfileController {
     @CrossOrigin
     @RequestMapping(value = "/petProfileUpdate", method = RequestMethod.POST)
     public BasicResponse petProfileUpdate(
-            @RequestParam(value = "token")
+            @RequestParam(value = "token") String tokenString,
             @RequestBody String jsonString){
+
         JSONParser parser = new JSONParser();
         JSONObject jsonProfile = null;
         try{
