@@ -4,4 +4,5 @@ export interface PetInfo{
     animalBreed: string;
     dob: Date;
     userId: string;
+    petId:string;
 }
