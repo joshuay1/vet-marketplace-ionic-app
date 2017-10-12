@@ -71,7 +71,7 @@ export class HeapModal{
         console.log(this.input3);
         console.log(this.input4);
         var jsonString = {"bookingid": this.book.bookingId, "H": this.input1, "E":this.input2, "A": this.input3,
-        "P": this.input4}
+        "P": this.input4,"userid": this.book.vetId};
         this.httpProviders.httpPost(this.apiUrl+"postHeap",JSON.stringify(jsonString))
         .then(result=>{
             console.log("result="+ JSON.stringify(result));
