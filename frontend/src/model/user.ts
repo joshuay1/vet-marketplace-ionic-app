@@ -27,10 +27,15 @@ export interface BookingInfo{
     userId : string;
     petId : string;
     vetId : string;
+    bookingId: string;
     year: any;
     month : any;
     day : any;
     time: string;
     status : string;
+    H: string;
+    E: string;
+    A: string;
+    P: string;
 
 }

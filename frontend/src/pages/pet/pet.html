@@ -39,9 +39,12 @@
     </ion-col>
     <ion-col>
       <br><br><br>      
-      <p class="a"> Dog </p>
-      <p class="p">Snuffle </p>
-      </ion-col>
+      <p class="a"> {{(petData|async)?.animalType}}:{{(petData|async)?.animalBreed}} </p>
+      <p class="p">{{(petData|async)?.petName}} </p>
+      <p class="a">DoB:{{(petData|async)?.dob}} </p>  
+      <button ion-button class="edit" 
+      (click)="editPet()">Edit Pet</button>
+    </ion-col>
     </ion-row>
   </ion-grid>
     
@@ -52,13 +55,7 @@
 
   <ion-card class="petCard">
     <ion-card-content>
-
-      <p class="a">My records</p>
-    <ion-list>
-      Sick <br>
-      Heart Attack <br>
-      Nose Surgury <br>
-    </ion-list>
+      
     <div class="img_container">
         <button class= "addbutton" ion-button icon-only>
           <ion-icon name="ios-add-circle-outline"></ion-icon>

@@ -2,8 +2,9 @@ import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 import {AngularFireAuth} from 'angularfire2/auth';
-import {UserInfo} from '../../model/user';
+import {UserInfo, BookingInfo} from '../../model/user';
 import {FindNearestVet} from "./FindNearestVet";
+import { PetInfo } from '../../model/pet';
 
 @IonicPage()
 @Component({
@@ -11,9 +12,11 @@ import {FindNearestVet} from "./FindNearestVet";
   templateUrl: 'bookings.html',
 })
 export class BookingsPage {
-  public currentBookings: FirebaseListObservable<any[]>;
-  public pastBookings: FirebaseListObservable<any[]>;
-  private userid: string;
+  userid : string;
+  public Bookings: FirebaseListObservable<any[]>;
+  public currentBookings : BookingInfo[] = new Array<BookingInfo>();
+  public pastBookings : BookingInfo[] = new Array <BookingInfo>();
+  apiUrl = "http://115.146.86.193:8080/";
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -23,28 +26,44 @@ export class BookingsPage {
 
 
     this.userid = this.af.auth.currentUser.uid;
-    this.getCurrentBooking();
-    this.getPastBooking();
+    this.Bookings = this.db.list("bookings", {
+      query: {
+        orderByChild: 'userId',
+        equalTo: this.userid
+      }
+    });
+    this.getBooking();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BookingsPage');
   }
 
-  getCurrentBooking() {
+  getBooking() {
     console.log("get called");
-    this.currentBookings = this.db.list("bookings", {
-      query: {
-        orderByChild: 'userId',
-        equalTo: this.userid
-      }
-    });
-    console.log(this.currentBookings);
+
+    console.log("get Current Booking called");
+    
+    this.Bookings.forEach(snapshot=>{
+      this.currentBookings = new Array<BookingInfo> ();
+      this.pastBookings = new Array<BookingInfo>();
+      console.log(snapshot.keys().next().value);
+      console.log(JSON.stringify(snapshot));
+      snapshot.forEach(snap =>{
+        var booking : BookingInfo = snap;
+        if(booking.status == "confirmed"){
+          this.currentBookings.push(snap);
+        }else if (booking.status == "done"){
+          this.pastBookings.push(snap);
+        }
+        return false;
+        
+      });
+
+    })
+    
   }
 
-  getPastBooking() {
-    //TODO
-  }
 
   stringfy(json: any): string {
 
@@ -65,6 +84,17 @@ export class BookingsPage {
     return response;
 
   }
+
+  generatePetData(petid: any): string{
+    var petData : FirebaseObjectObservable<PetInfo>;
+    petData = this.db.object(`pets/`+ petid);
+    var response;
+    petData.forEach(snapshot =>{
+        response = snapshot.petName;
+    });
+
+    return response;
+}
 
   makeBooking() {
     let findNearestVet = this.modalCtrl.create(FindNearestVet, {userId: this.userid});

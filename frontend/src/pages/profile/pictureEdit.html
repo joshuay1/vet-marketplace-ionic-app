@@ -1,0 +1,26 @@
+<ion-navbar *navbar>
+    <ion-title>
+      Edit Picture
+    </ion-title>
+  </ion-navbar>
+  
+  <ion-content class="home">
+    <ion-card>
+      <ion-card-content>
+  
+        <button (click)="takePicture()">
+            <ion-icon id= "cameraButton" name = "camera"></ion-icon>
+        </button>
+
+        <button (click) = "getFromGallery()">
+            <h2>Get From Gallery</h2>
+        </button><br>
+  
+        
+        <img [src]="base64Image" />
+
+        <button (click) = "back()">Back</button>
+        <button id= "UploadButton" (click) = "upload()">Upload</button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>

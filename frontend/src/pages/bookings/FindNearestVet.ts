@@ -133,6 +133,7 @@ export class FindNearestVet {
     petData = this.db.object(`pets/` + petId);
     var response = '';
     petData.forEach(snapshot => {
+      console.log("snaphot is " + snapshot);      
       response = snapshot.petName;
     });
     return response;

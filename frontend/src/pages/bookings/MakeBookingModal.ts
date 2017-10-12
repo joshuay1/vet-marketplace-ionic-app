@@ -4,7 +4,8 @@ import { ViewController, NavParams, AlertController, LoadingController } from "i
 import { HttpServiceProvider } from "../../providers/http-service/http-service";
 
 @Component({
-    templateUrl: "MakeBookingModal.html"
+    templateUrl: "MakeBookingModal.html",
+    selector: 'page-MakeBookingModal',
   })
 
  export class MakeBookingModal{

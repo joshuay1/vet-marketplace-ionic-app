@@ -36,6 +36,7 @@ export class EditProfilePage {
   country: string;
 
   constructor(public viewCtrl: ViewController,
+    public navCtrl: NavController,
     public navParams: NavParams,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
