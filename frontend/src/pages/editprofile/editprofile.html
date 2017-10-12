@@ -25,6 +25,7 @@
   
 </ion-header>
 
+<div class ="form">
 <ion-content>
 <form [formGroup]= "editForm">
  <ion-list>
@@ -73,13 +74,13 @@
     <ion-label floating color="primary">Country</ion-label>
     <ion-input type="text" formControlName="country" [(ngModel)]="userInfo.country" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
   </ion-item>
-
-  
-
    <br>
-
-    <button  color="secondary" ion-button (click)="update()">Change</button>
-
   </ion-list> 
 </form>
 </ion-content>
+</div>
+<ion-footer>
+    <div class = "footerbutton">
+        <button class = "button button-block"color="secondary" ion-button (click)="update()">Change</button>>
+    </div>   
+  </ion-footer>
