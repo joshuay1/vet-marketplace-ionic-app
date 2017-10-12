@@ -36,6 +36,7 @@ export class EditProfilePage {
   country: string;
 
   constructor(public viewCtrl: ViewController,
+    public navCtrl: NavController,
     public navParams: NavParams,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
@@ -134,7 +135,7 @@ export class EditProfilePage {
         var res = result.response;
         if(res =="success"){
           console.log("get result here");
-          this.viewCtrl.dismiss();//.catch(() => console.log('view was not poped'));;
+          this.navCtrl.pop();//.catch(() => console.log('view was not poped'));;
         }
       }).catch(err=>{
         console.log("catchin error here");
