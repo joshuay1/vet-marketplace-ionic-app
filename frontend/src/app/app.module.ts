@@ -26,6 +26,7 @@ import { FindNearestVet} from "../pages/bookings/FindNearestVet";
 import { VetBookingsPage } from '../pages/bookings/vetBookings';
 import { Camera } from '@ionic-native/camera';
 import { PictureEditPage } from '../pages/profile/pictureEdit';
+import { HeapModal } from '../pages/bookings/HeapModal';
 
 
 var config = {
@@ -52,7 +53,8 @@ var config = {
     FindNearestVet,
     EditProfilePage,
     VetBookingsPage,
-    PictureEditPage
+    PictureEditPage,
+    HeapModal
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,8 @@ var config = {
     FindNearestVet,
     EditProfilePage,
     VetBookingsPage,
-    PictureEditPage
+    PictureEditPage,
+    HeapModal
   ],
   providers: [
     AngularFireDatabase,
