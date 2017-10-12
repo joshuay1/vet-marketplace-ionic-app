@@ -18,14 +18,22 @@
         <ion-option>ENT</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item>
-      <ion-label>Select Vet</ion-label>
-      <ion-select [(ngModel)]="selectedVet">
-        <ion-option *ngFor="let b of vetIds">{{b.VetID}}</ion-option>
-      </ion-select>
-    </ion-item>
   </ion-list>
-  <ion-item>
-    <button color="secondary" ion-button (click)="add()">Book</button>
-  </ion-item>
+
+   
+  <ion-label>Select Vet</ion-label>
+    <ion-slides >
+      <ion-slide *ngFor="let b of vetIds">
+        <ion-card>
+        <ion-card-content>{{b.VetID}}</ion-card-content>
+        </ion-card>
+    </ion-slide>
+    </ion-slides>
+
+
 </ion-content>
+<ion-footer>
+  <div class="footerbutton">
+      <button class = "button button-block"color="secondary" ion-button (click)="add()">Book</button>
+  </div>
+</ion-footer>

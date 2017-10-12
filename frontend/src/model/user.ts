@@ -33,5 +33,9 @@ export interface BookingInfo{
     day : any;
     time: string;
     status : string;
+    H: string;
+    E: string;
+    A: string;
+    P: string;
 
 }

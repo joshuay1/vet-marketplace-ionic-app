@@ -18,8 +18,8 @@
         </ion-title>
     
         <ion-buttons end>
-          <button ion-button color="light"icon-only (click)="openModal()">
-            <ion-icon name="options"></ion-icon>
+          <button ion-button color="light"icon-only (click)="editProfile()">
+            <ion-icon name="more"></ion-icon>
           </button>
         </ion-buttons>
       </ion-navbar>
@@ -27,29 +27,16 @@
     </ion-header>
 
 
-<ion-content  scroll="false" >
-
-    <div style="height: 40%" class="background">
-
-    <ion-grid>
-      <ion-row>
-        <ion-col>
+<ion-content>
       <div class="circle-pic">
-        <img id = "profilePicture" (click) = "changePicture()">
+            <img id = "profilePicture" (click) = "changePicture()">
       </div>
-    </ion-col>
-    <ion-col>
-      <br><br><br>      
-      <p class="a"> {{(profileData|async)?.userType}} </p>
-      <p class="p">{{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <button ion-button class="edit" 
-  (click)="editProfile()">Edit Profile</button>
-    
-   
-</div>
+
+     <span>
+      <h2> {{(profileData|async)?.userType}} </h2>
+      <h3>{{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}}</h3>
+    </span>
+  
 
 <div class="whitebackground">
 

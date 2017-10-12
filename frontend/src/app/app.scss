@@ -16,17 +16,27 @@
 // automatically applied to the <body> element in the app.
 
 
-ion-card.card {
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.00);
-    border-radius: 5px;
-  }
+
   
   .button {
     align-content: center;
     position: relative;
   }
   
+  .footerbutton{
+    margin: 10px;
+    position: center;
+  }
+
+  ion-card.card {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.00);
+    border-radius: 5px;
+  }
+
+
+
+
   .addbutton{
     background-color: rgba(255, 255, 255, 0.00);
     color: gray;

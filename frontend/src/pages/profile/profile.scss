@@ -12,6 +12,9 @@ page-profile {
 
     }
     .edit{
+        position: absolute;
+        right: 30px;
+
         background-color: rgba(160, 160, 160, 0.27)
     } 
 
@@ -29,53 +32,45 @@ page-profile {
         flex-direction: column;
     }
 
-    .a{
-        color: #919191;
+    h2{
+        color: black;
         font-weight: bold;
-        width:100%;
-        bottom:0;
-        padding:10px;
-        margin-left:0px;
-        text-align:left;
+        text-align:center;
+        font-size: 1em;
+
+
+    }
+
+    h3{
+        text-align:center;
+        color: #0b4d6b;
         font-size: 1.2em;
-        vertical-align: bottom;
-
-    }
-
-    
-    
-
-    .p{
-
-        position:relative;
-        width:100%;
-        margin-top: -20%;
-        padding:10px;
-        margin-left:0px;
-        text-align:left;
-        
-        color: #FFFFFF;
-        font-size: 1.4em;
     }
 
 
 
- 
-    .circle-pic img{
-        position: relative;
-        left: 5vw;
+    .circle-pic{
+        text-align:center;
+        vertical-align: middle;
+        left: 0;
         right: 0;
-        bottom: 5;
-        margin: 10 auto;
-        padding: 0;
-        top:10vw;
-        
+        height: 32%;  
+       
+    img{
+        position: absolute;
+        text-align:center;
+        display: block;
+        margin-left: 27.5%;
+        margin-right: auto;
+        margin-top: -12px;
+        margin-bottom: 35px;
         height: 35vw; 
         width: 35vw; 
-       border: 2px solid white;
-       border-radius: 50%;
-       box-shadow: 0 0 5px gray;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 5px gray;
     }
+}
 
 }
 

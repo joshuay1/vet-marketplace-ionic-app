@@ -1,0 +1,60 @@
+<ion-header>
+    
+      <ion-navbar>
+        <ion-buttons start>
+          <button ion-button (click)="dismiss()">Close</button>
+        </ion-buttons>
+        <ion-title>Availability Modal</ion-title>
+      </ion-navbar>
+    
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]= "HeapForm" *ngIf = "NoHeap">
+        <ion-list>
+            <ion-item>
+                <ion-label floating color="black">H</ion-label>
+                <ion-textarea formControlName="1" [(ngModel)]="input1"></ion-textarea>
+            </ion-item>
+    
+            <ion-item>
+                <ion-label floating color="black">E</ion-label>
+                <ion-textarea formControlName="2" [(ngModel)]="input2"></ion-textarea>
+            </ion-item>
+    
+    
+            <ion-item>
+                <ion-label floating color="black">A</ion-label>
+                <ion-textarea formControlName="3" [(ngModel)]="input3"></ion-textarea>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating color="black">P</ion-label>
+                <ion-textarea formControlName="4" [(ngModel)]="input4"></ion-textarea>
+            </ion-item>
+
+            <button  color="secondary" ion-button (click)="pushForm()">Confirm Heap Form</button>
+        </ion-list>
+    </form>
+
+
+    <ion-list *ngIf = "HEAP">
+        <ion-item>
+            <h1>H</h1> <br>
+            <h1>{{book.H}}</h1>
+        </ion-item>
+        <ion-item>
+            <h1>E</h1> <br>
+            <h1>{{book.E}}</h1>
+        </ion-item>
+        <ion-item>
+            <h1>A</h1> <br>
+            <h1>{{book.A}}</h1>
+        </ion-item>
+        <ion-item>
+            <h1>P</h1> <br>
+            <h1>{{book.P}}</h1>
+        </ion-item>
+    </ion-list>
+  
+</ion-content>

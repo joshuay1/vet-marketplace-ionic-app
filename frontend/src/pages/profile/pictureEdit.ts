@@ -57,6 +57,7 @@ export class PictureEditPage {
     let loading = this.loadingCtrl.create({
       content: 'Uploading...'
     });
+    loading.present();
     var storageRef = firebase.storage().ref();
     var userid = this.navParams.get("userId");
     const filename = Math.floor(Date.now()/1000);

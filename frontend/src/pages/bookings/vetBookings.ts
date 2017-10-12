@@ -5,6 +5,7 @@ import { Component } from "@angular/core";
 import { UserInfo, BookingInfo } from "../../model/user";
 import { PetInfo } from "../../model/pet";
 import { HttpServiceProvider } from "../../providers/http-service/http-service";
+import { HeapModal } from "./HeapModal";
 
 @IonicPage()
 @Component({
@@ -62,6 +63,12 @@ export class VetBookingsPage {
 
         })
 
+    }
+
+    goToHeap(book: BookingInfo){
+      console.log("sending to HeapModal = "+ JSON.stringify(book));
+      const modal = this.modalCtrl.create(HeapModal, { "BookingInfo": book});
+      modal.present();
     }
 
       stringfy(json: any): string {
