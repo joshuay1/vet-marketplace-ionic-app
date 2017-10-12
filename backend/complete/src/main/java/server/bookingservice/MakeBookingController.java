@@ -528,21 +528,21 @@ public class MakeBookingController{
         }
 
         if(jsonBody.containsKey("E")){
-            mH = (String) jsonBody.get("E");
+            mE = (String) jsonBody.get("E");
         }else{
             logger.info("no H provide");
             return new BasicResponse("error",null, "no E provided");
         }
 
         if(jsonBody.containsKey("A")){
-            mH = (String) jsonBody.get("A");
+            mA = (String) jsonBody.get("A");
         }else{
             logger.info("no H provide");
             return new BasicResponse("error",null, "no A provided");
         }
 
         if(jsonBody.containsKey("P")){
-            mH = (String) jsonBody.get("P");
+            mP = (String) jsonBody.get("P");
         }else{
             logger.info("no H provide");
             return new BasicResponse("error",null, "no P provided");
