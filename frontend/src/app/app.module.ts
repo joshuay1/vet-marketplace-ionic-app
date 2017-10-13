@@ -28,6 +28,8 @@ import { VetStorePage} from "../pages/store/vetStore/VetStore";
 import { Camera } from '@ionic-native/camera';
 import { PictureEditPage } from '../pages/profile/pictureEdit';
 import { HeapModal } from '../pages/bookings/HeapModal';
+import { IonicStorageModule } from '@ionic/storage';
+import { OfflinePage } from '../pages/login/offline';
 
 
 var config = {
@@ -56,8 +58,9 @@ var config = {
     VetBookingsPage,
     VetStorePage,
     PictureEditPage,
-    HeapModal
-],
+    HeapModal,
+    OfflinePage
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -65,7 +68,8 @@ var config = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     HttpModule,
-    ProfilePageModule
+    ProfilePageModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -84,7 +88,8 @@ var config = {
     VetBookingsPage,
     VetStorePage,
     PictureEditPage,
-    HeapModal
+    HeapModal,
+    OfflinePage
   ],
   providers: [
     AngularFireDatabase,
