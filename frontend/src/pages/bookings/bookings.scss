@@ -60,5 +60,21 @@ page-bookings {
     flex-direction: column;
     text-align: center;
   }
+
+  .vetProfilePicture{
+    width: auto;
+    height: 100%;
+    display: block;
+    margin: auto;
+    align-items: center;
+  }
+  
+  .profilePicContainer{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin:auto;
+  }
+  
 }
 

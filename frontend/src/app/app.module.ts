@@ -29,6 +29,8 @@ import { PictureEditPage } from '../pages/profile/pictureEdit';
 import { HeapModal } from '../pages/bookings/HeapModal';
 import { IonicStorageModule } from '@ionic/storage';
 import { OfflinePage } from '../pages/login/offline';
+import { MapPage } from '../pages/bookings/map';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 
 var config = {
@@ -57,7 +59,8 @@ var config = {
     VetStorePage,
     PictureEditPage,
     HeapModal,
-    OfflinePage
+    OfflinePage,
+    MapPage
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ var config = {
     VetStorePage,
     PictureEditPage,
     HeapModal,
-    OfflinePage
+    OfflinePage,
+    MapPage
   ],
   providers: [
     AngularFireDatabase,
@@ -94,7 +98,8 @@ var config = {
     SplashScreen,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    HttpServiceProvider
+    HttpServiceProvider,
+    GoogleMaps
   ]
 })
 export class AppModule {}

@@ -8,6 +8,8 @@ import { PetInfo } from '../../model/pet';
 import { Storage } from '@ionic/storage';
 import { HeapModal } from './HeapModal';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import * as firebase from 'firebase';
+import { MapPage } from './map';
 
 @IonicPage()
 @Component({
@@ -19,12 +21,13 @@ export class BookingsPage {
   public Bookings: FirebaseListObservable<any[]>;
   public currentBookings : BookingInfo[] = new Array<BookingInfo>();
   public pastBookings : BookingInfo[] = new Array <BookingInfo>();
-  private userData:{[k: string]: any} = {};
-  private petData:{[k: string]: any} = {};
-  private vetData:{[k: string]: any} = {};
+  private userData:{[k: string]: UserInfo} = {};
+  private petData:{[k: string]: PetInfo} = {};
+  private vetData:{[k: string]: UserInfo} = {};
+  private vetIds: Array<String>;
   apiUrl = "http://115.146.86.193:8080/";
-  User : any = null;
-  Vet : any = null;
+  User : any
+  Vet : any
   userType : any;
 
   constructor(public navCtrl: NavController,
@@ -82,6 +85,7 @@ export class BookingsPage {
     console.log("get Current Booking called");
     this.currentBookings = new Array<BookingInfo> ();
     this.pastBookings = new Array<BookingInfo>();
+    this.vetIds = new Array<string>();
     console.log(snapshot.keys().next().value);
     console.log(JSON.stringify(snapshot));
     for(var i = 0; i < snapshot.length; i++){
@@ -90,6 +94,7 @@ export class BookingsPage {
       if(booking.status == "confirmed"){
         console.log("1 confirmed booking");
         this.currentBookings.push(snap);
+        this.vetIds.push(booking.vetId);
       }else if (booking.status == "done"){
         console.log("1 past bookings")
         this.pastBookings.push(snap);
@@ -128,6 +133,7 @@ export class BookingsPage {
       console.log(JSON.stringify(profileData));
       this.vetData[vetid]= profileData;
       console.log(JSON.stringify(this.vetData));
+      this.changeImageUrl(profileData,vetid);
       this.storeVetData();
     });
   }
@@ -187,6 +193,7 @@ export class BookingsPage {
   generateVetData(vetid:any) : string{
     var vetData : UserInfo;
     vetData = this.vetData[vetid];
+    
     if(vetData!= null){
       return vetData.firstname +
       " " + vetData.lastname
@@ -255,6 +262,59 @@ export class BookingsPage {
 
     
   }
+  
+  getImageUrl(vetId: string):string{
+    var vet = this.vetData[vetId];
+    if(vet!= null){
+      var pictureUrl = vet.pictureURL;
+      return pictureUrl;
+    }else{
+      return null;
+    }
+  }
+
+  changeImageUrl(profileData: UserInfo, vetid: string){
+    var pictureURL = profileData.pictureURL;
+    var gsReference = firebase.storage().refFromURL(pictureURL);
+    gsReference.getDownloadURL().then(url =>{
+      console.log("img url = "+ url);
+      profileData.pictureURL = url;
+      this.vetData[vetid] = profileData;
+    }).catch(function(error){
+      console.log("catchin error here");
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        message : error,
+        buttons : ['OK']
+      });
+      alert.present();
+    })
+  }
+
+  generateVetAddress(vetId: string): string{
+    var vet = this.vetData[vetId];
+    if(vet!= null){
+      var streetNum = vet.streetnumber;
+      var streetNam = vet.streetname;
+      var state = vet.state;
+      var postcode = vet.postcode;
+      var suburb = vet.suburb;
+      var country = vet.country;
+      return streetNum + " " + streetNam +" , "+ suburb+" , "+state+" "+postcode+" , "+ country;
+    }else{
+      return null;
+    }
+  }
+
+  goMap(vetid: string){
+    console.log("map button pushed");
+    console.log("vet id = " + vetid);
+    console.log("vetids =" + this.vetIds);
+    console.log("vetdatas = "+ this.vetData);
+    this.navCtrl.push(MapPage, {"vetid": vetid, "vetids": this.vetIds, "vetdatas": this.vetData});
+    
+  }
+
 
 
 
