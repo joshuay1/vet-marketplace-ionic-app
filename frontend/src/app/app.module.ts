@@ -13,7 +13,7 @@ import { AngularFireAuthModule }from 'angularfire2/auth';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { RegisterOwnerPage } from "../pages/register/registerOwner/register";
 import { BookingsPage } from "../pages/bookings/bookings";
-import { StorePage } from "../pages/store/store";
+import { UserStorePage} from "../pages/store/userStore/UserStore";
 import { CalendarPage } from "../pages/calendar/calendar";
 import { PetPage } from "../pages/pet/pet";
 import { EditProfilePage} from "../pages/editprofile/editprofile";
@@ -24,6 +24,7 @@ import { AvailModal } from '../pages/calendar/availModal';
 import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
 import { FindNearestVet} from "../pages/bookings/FindNearestVet";
 import { VetBookingsPage } from '../pages/bookings/vetBookings';
+import { VetStorePage} from "../pages/store/vetStore/VetStore";
 import { Camera } from '@ionic-native/camera';
 import { PictureEditPage } from '../pages/profile/pictureEdit';
 import { HeapModal } from '../pages/bookings/HeapModal';
@@ -46,7 +47,7 @@ var config = {
     LoginPage,
     OwnerHomePage,
     VetHomePage,
-    StorePage,
+    UserStorePage,
     CalendarPage,
     BookingsPage,
     RedirectPage,
@@ -55,6 +56,7 @@ var config = {
     FindNearestVet,
     EditProfilePage,
     VetBookingsPage,
+    VetStorePage,
     PictureEditPage,
     HeapModal,
     OfflinePage
@@ -75,7 +77,7 @@ var config = {
     LoginPage,
     OwnerHomePage,
     VetHomePage,
-    StorePage,
+    UserStorePage,
     CalendarPage,
     BookingsPage,
     RedirectPage,
@@ -84,6 +86,7 @@ var config = {
     FindNearestVet,
     EditProfilePage,
     VetBookingsPage,
+    VetStorePage,
     PictureEditPage,
     HeapModal,
     OfflinePage
