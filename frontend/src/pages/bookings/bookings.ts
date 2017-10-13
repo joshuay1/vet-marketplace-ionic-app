@@ -35,58 +35,36 @@ export class BookingsPage {
         equalTo: this.userid
       }
     });
-    this.getBooking();
+    
+    this.Bookings.forEach(snapshot=>{
+      this.getBooking(snapshot);
+    })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BookingsPage');
   }
 
-  getBooking() {
+  getBooking(snapshot : any[]) {
     console.log("get called");
 
     console.log("get Current Booking called");
-    
-    this.Bookings.forEach(snapshot=>{
-      this.currentBookings = new Array<BookingInfo> ();
-      this.pastBookings = new Array<BookingInfo>();
-      console.log(snapshot.keys().next().value);
-      console.log(JSON.stringify(snapshot));
-      snapshot.forEach(snap =>{
-        var booking : BookingInfo = snap;
-        if(booking.status == "confirmed"){
-          this.currentBookings.push(snap);
-        }else if (booking.status == "done"){
-          this.pastBookings.push(snap);
-        }
+    this.currentBookings = new Array<BookingInfo> ();
+    this.pastBookings = new Array<BookingInfo>();
+    console.log(snapshot.keys().next().value);
+    console.log(JSON.stringify(snapshot));
+    for(var i = 0; i < snapshot.length; i++){
+      var snap = snapshot[i];
+      var booking : BookingInfo = snap;
+      if(booking.status == "confirmed"){
+        this.currentBookings.push(snap);
+      }else if (booking.status == "done"){
+        this.pastBookings.push(snap);
+      }
         return false;
-        
-      });
+    }
 
-      this.storage.set("CurrentBookings",this.currentBookings).then(result=>{
-        console.log("storing currentBookings completed");
-        this.storage.set("PastBookings",this.pastBookings).then(result=>{
-          console.log("storing pastBookings completed");
-        }).catch(error=>{
-          let alert = this.alertCtrl.create({
-            title: 'Error',
-            message: "You have not log in before. No Data Found",
-            buttons: ['OK']
-          });
-            alert.present();
-        })
-      }).catch(error=>{
-        let alert = this.alertCtrl.create({
-          title: 'Error',
-          message: "You have not log in before. No Data Found",
-          buttons: ['OK']
-        });
-          alert.present();
-      })
-      
-
-    })
-    
+      this.storeBookingData();
   }
 
 
@@ -124,6 +102,29 @@ export class BookingsPage {
   makeBooking() {
     let findNearestVet = this.modalCtrl.create(FindNearestVet, {userId: this.userid});
     findNearestVet.present();
+  }
+
+  storeBookingData(){
+    this.storage.set("CurrentBookings",this.currentBookings).then(result=>{
+      console.log("storing currentBookings completed");
+      this.storage.set("PastBookings",this.pastBookings).then(result=>{
+        console.log("storing pastBookings completed");
+      }).catch(error=>{
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          message: "You have not log in before. No Data Found",
+          buttons: ['OK']
+        });
+          alert.present();
+      })
+    }).catch(error=>{
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        message: "You have not log in before. No Data Found",
+        buttons: ['OK']
+      });
+        alert.present();
+    })
   }
 
 }
