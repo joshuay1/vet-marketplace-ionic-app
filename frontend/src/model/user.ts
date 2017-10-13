@@ -20,6 +20,7 @@ export interface UserInfo{
     country : string;
     userid: string;
     isVerifiedVet: boolean;
+    petIds : Array<string>;
     //TO-DO CAllum update this lista against the firebase db
 }
 

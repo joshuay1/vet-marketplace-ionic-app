@@ -1,0 +1,44 @@
+<ion-header>
+    
+      <ion-navbar>
+        <ion-title>Offline Data</ion-title>
+      </ion-navbar>
+    
+</ion-header>
+
+<ion-content class="background" >
+    <ion-card [ngSwitch]="bookings" *ngIf = "User">
+      
+        <ion-list *ngSwitchDefault>
+            
+            <ion-list>
+              <div class="bookingcard">
+                
+                <ion-item *ngFor='let book of currentBookings'  >
+                  <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                  <h3>Time: {{book.time}}</h3>
+                  <h3>Status : {{book.status}}</h3>
+                  <br>
+                </ion-item>
+              </div>
+            </ion-list>
+
+        </ion-list>
+      
+      <ion-list *ngSwitchCase="'pastBookings'">
+          <ion-list>
+              <div class="bookingcard">
+                <ion-item *ngFor='let book of pastBookings'  >
+                  <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                  <h3>Time: {{book.time}}</h3>
+                  <h3>Status : {{book.status}}</h3> 
+                  
+                  <br>
+                </ion-item>
+              </div>
+            </ion-list>
+  
+      </ion-list>
+      
+    </ion-card>
+  </ion-content>
