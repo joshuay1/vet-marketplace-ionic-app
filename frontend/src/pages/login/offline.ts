@@ -1,6 +1,7 @@
 import { IonicPage, AlertController, NavParams, NavController } from "ionic-angular";
 import { Component } from "@angular/core";
 import { Storage } from '@ionic/storage';
+import { PetInfo } from "../../model/pet";
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class OfflinePage {
     private pastAppointments : Array<String>;
     private currentBookings : Array<String>;
     private pastBookings: Array<String>;
+    private currentPets : Array<PetInfo>;
 
     constructor(
         public navCtrl: NavController,
@@ -88,6 +90,17 @@ export class OfflinePage {
                     buttons: ['OK']
                   });
                     alert.present();
+            })
+
+            this.storage.get("PetDatas").then(result=>{
+                this.currentPets = result;
+            }).catch(error=>{
+                let alert = this.alertCtrl.create({
+                    title: 'Error',
+                    message: error,
+                    buttons: ['OK']
+                  });
+                    alert.present();    
             })
         }
     }

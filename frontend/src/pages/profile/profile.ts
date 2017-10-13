@@ -28,11 +28,14 @@ import { Storage } from '@ionic/storage';
 export class ProfilePage {
 
   selectedPet : any;
+  Vet:any;
+  User:any;
   petIds :Array<string>;
   userId: any;
-  petNames : {[k: string]: any} = {};
   imgUrl;
   profileData : UserInfo;
+  count = 0;
+  petStorage : {[k: string]: any} = {};
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -48,8 +51,17 @@ export class ProfilePage {
               profile.forEach(snapshot=>{
                 this.storeUserData(this.userId);
                 this.getImgUrl(snapshot.pictureURL);
-                this.petIds = snapshot.petIds;
-                this.getPetNames();
+                this.Vet = null;
+                this.User = null;
+                if(snapshot.userType == "User"){
+                  this.User = true;
+                  this.petIds = snapshot.petIds;
+                  this.getPetNames();
+                }else if(snapshot.userType == "Vet"){
+                  this.Vet = true;
+                }
+                
+                
               });
               
               
@@ -106,8 +118,8 @@ export class ProfilePage {
     this.navCtrl.push('RegisterPetPage',{uid:this.userId});
   }
 
-  accessPet(pet: any) {
-    this.navCtrl.push('PetPage',{petId: pet});
+  accessPet(petid: any) {
+    this.navCtrl.push('PetPage',{petId: petid});
   }
 
   editProfile() {
@@ -117,47 +129,40 @@ export class ProfilePage {
 
 
   getPetName(petId:any):string {
-    return this.petNames[petId];
+    var petdata : PetInfo = this.petStorage[petId];
+    if(petdata!= null){
+      return petdata["petName"];
+    }else{
+      return "";
+    } 
   }
 
   getPetNames(){
     console.log("accessing database for petNames");
-      var petStorage = new Array<PetInfo>();
-      var tempDatas = new Array<String>();
+      
       var i = 0;
-      var count = 0 ;
+      this.count = 0;
       for( i = 0 ; i < this.petIds.length; i++){
         var petId = this.petIds[i];
-        this.db.database.ref('/pets/'+petId).once('value',(snapshot)=>{
-          
-          var petData : PetInfo = snapshot.val();
-          console.log(JSON.stringify(petData));
-          petStorage.push(petData);
-          console.log("petStorage = " + petStorage);
-          tempDatas.push(petId +":"+ petData.petName);
-          console.log("petData = " + tempDatas);
-          count ++;
-          console.log(count);
-          if(count > this.petIds.length -1){
-            this.storePetNames(petStorage, tempDatas);
-          }
-        })
-    
-    //at the end store data into storage
-  }
+        this.getPetData(this.petIds[i], this.petIds.length);
+      }
 }
 
-  storePetNames(petStorage : Array<PetInfo>, petdatas : Array<String>){
-    for(var i = 0 ; i < this.petIds.length; i++){
-      var tokens = petdatas[i].split(":");
-      console.log(petdatas[i]);
-      console.log("tokens 1 = " + tokens[0]);
-      console.log("tokens 2 = " + tokens[1]);
-      this.petNames[tokens[0]]= tokens[1];
-      console.log(JSON.stringify(this.petNames)); 
-    }
-    console.log("petNames = "+ JSON.stringify(this.petNames));
-    this.storage.set("PetDatas", petStorage).then(result=>{
+async getPetData(petId: string, length: number){
+  
+  this.db.database.ref('/pets/'+petId).on('value',(snapshot)=>{
+    
+    var petData : PetInfo = snapshot.val();
+    console.log(JSON.stringify(petData));
+    this.petStorage[petId] = petData;
+    console.log("petStorage = " + JSON.stringify(this.petStorage));
+    this.storePetNames();
+  })
+
+}
+
+  storePetNames(){
+    this.storage.set("PetDatas", this.petStorage).then(result=>{
       console.log("storing pet data successful");
     }).catch(error=>{
 

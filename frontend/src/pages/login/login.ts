@@ -57,6 +57,7 @@ export class LoginPage {
                 })
               }
             }).catch(error=>{
+              
               let alert = this.alertCtrl.create({
                 title: 'Error',
                 message: error,
@@ -71,13 +72,48 @@ export class LoginPage {
           })
       })
       .catch(err =>{
-        let alert = this.alertCtrl.create({
-          title: 'Error',
-          message: err.message,
-          buttons: ['OK']
-        });
+        if(err["code"] == "auth/network-request-failed"){
+          console.log("failed to login, network connection problem");
+          let alert = this.alertCtrl.create({
+            title: 'Network Connection Problem',
+            message: "Press Offline Data to see Current Appointments offline",
+            buttons: [
+              {
+                text: 'Back',
+                role: 'back',
+                handler: () => {
+                  console.log('Back clicked');
+                  return true;
+                }
+              },
+              {
+                text: 'Offline Data',
+                handler: () => {
+                  console.log('Oflline Persistency clicked');
+                  this.getOfflineData();
+                  return true;
+                }
+              }
+            ]
+          })
           alert.present();
-        })
+          
+        }else{
+
+          let alert = this.alertCtrl.create({
+            title: 'Error',
+            message: err.message,
+            buttons: ['OK']
+          });
+            alert.present();
+            
+        
+
+        }
+      });
+        
+
+        
     console.log("here");
   }
 

@@ -1,12 +1,23 @@
 <ion-header>
     
       <ion-navbar>
-        <ion-title>Offline Data</ion-title>
       </ion-navbar>
     
+      <ion-card>
+            <ion-segment [(ngModel)]="bookings" *ngIf= "User">
+              <ion-segment-button value="currentBookings">Current Bookings</ion-segment-button>
+              <ion-segment-button value="pastBookings">Booking History</ion-segment-button>
+            </ion-segment>
+
+            <ion-segment [(ngModel)]="appointments" *ngIf= "Vet">
+                    <ion-segment-button value="currentAppointments">Current Appointments</ion-segment-button>
+                    <ion-segment-button value="pastAppointments">Appointment History</ion-segment-button>
+            </ion-segment>
+    </ion-card>
 </ion-header>
 
 <ion-content class="background" >
+
     <ion-card [ngSwitch]="bookings" *ngIf = "User">
       
         <ion-list *ngSwitchDefault>

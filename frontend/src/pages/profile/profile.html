@@ -38,7 +38,7 @@
     </span>
   
 
-<div class="whitebackground">
+<div class="whitebackground" *ngIf="User">
 
   <ion-card class="profilecard">
     <ion-card-content>
@@ -60,10 +60,4 @@
     </ion-card-content>
   </ion-card>
 </div>
-      <ion-item>
-        <ion-label>Pet-Name</ion-label>
-        <ion-select [(ngModel)]="selectedPet">
-          <ion-option *ngFor="let pet of petIds"> {{getPetName(pet)}}</ion-option>
-        </ion-select>
-      </ion-item>
 </ion-content>

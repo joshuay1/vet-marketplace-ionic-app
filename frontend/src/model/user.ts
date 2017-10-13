@@ -38,5 +38,4 @@ export interface BookingInfo{
     E: string;
     A: string;
     P: string;
-
 }
