@@ -101,5 +101,8 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
 
     return JSON.stringify(json);
   }
-
+  selectVet(vetID){
+    this.selectedVet = vetID;
+    console.log(this.selectedVet);
+  }
 }
