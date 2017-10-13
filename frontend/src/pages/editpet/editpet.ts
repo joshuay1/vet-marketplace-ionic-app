@@ -21,9 +21,9 @@ import { PetPage } from "../pet/pet";
   templateUrl: 'editpet.html',
 })
 export class EditPetPage {
-  petInfo = {};
+  petInfo = {} as PetInfo;
   petData: FirebaseObjectObservable<PetInfo>;
-  loading; 
+  loading;
   petForm: FormGroup;
   petId: string;
   private apiUrl = 'http://115.146.86.193:8080/';
@@ -45,30 +45,30 @@ export class EditPetPage {
       this.petId = navParams.get("petId");
       console.log("PetID:"+this.petId)
       this.petData = this.db.object(`pets/` + this.petId);
-      this.petData.forEach(snapshot => {       
+      this.petData.forEach(snapshot => {
         this.petForm = builder.group({
           'petName': [snapshot.petName],
           'animalType': [snapshot.animalType],
           'dob': [snapshot.dob],
           'animalBreed': [snapshot.animalBreed],
-          });   
+          });
           this.petName = snapshot.petName;
           this.dob = snapshot.dob;
           this.animalType = snapshot.animalType;
-          this.animalBreed = snapshot.animalBreed;     
+          this.animalBreed = snapshot.animalBreed;
         })
-        console.log(this.petData);        
+        console.log(this.petData);
       });
   }
 
   async update(){
-  
+
     if(this.validate()){
       this.petInfo["petId"] = this.petId;
-      console.log(this.petInfo["petId"]+"***");      
-      if(this.petInfo["petname"]==null){
-        this.petInfo["petname"] = this.petName;
-        console.log(this.petInfo["petname"]+"***");
+      console.log(this.petInfo["petId"]+"***");
+      if(this.petInfo["petName"]==null){
+        this.petInfo["petName"] = this.petName;
+        console.log(this.petInfo["petame"]+"***");
       }
       if(this.petInfo["dob"]==null){
         this.petInfo["dob"] = this.dob;
@@ -83,7 +83,7 @@ export class EditPetPage {
         console.log(this.petInfo["animalType"]+"***");
       }
         }
-        
+
          console.log(JSON.stringify(this.petInfo));
       this.httpProviders.httpPost(this.apiUrl+"petProfileUpdate",JSON.stringify(this.petInfo))
       .then(result=>{
@@ -102,9 +102,9 @@ export class EditPetPage {
         });
         alert.present();
       })
-      
+
     }
-  
+
 
   validate(): boolean {
     // figure out the error message
@@ -137,7 +137,7 @@ export class EditPetPage {
       return false;
     }
 
-    
+
     control = this.petForm.controls['animalBreed'];
     if (!control.valid) {
       if (control.errors['required']) {
@@ -156,5 +156,5 @@ export class EditPetPage {
       buttons: ['OK']
     });
     alert.present();
-  }  
+  }
 }
