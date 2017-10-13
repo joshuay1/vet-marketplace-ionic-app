@@ -6,6 +6,8 @@ import {UserInfo, BookingInfo} from '../../model/user';
 import {FindNearestVet} from "./FindNearestVet";
 import { PetInfo } from '../../model/pet';
 import { Storage } from '@ionic/storage';
+import { HeapModal } from './HeapModal';
+import { HttpServiceProvider } from '../../providers/http-service/http-service';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,13 @@ export class BookingsPage {
   public Bookings: FirebaseListObservable<any[]>;
   public currentBookings : BookingInfo[] = new Array<BookingInfo>();
   public pastBookings : BookingInfo[] = new Array <BookingInfo>();
+  private userData:{[k: string]: any} = {};
+  private petData:{[k: string]: any} = {};
+  private vetData:{[k: string]: any} = {};
   apiUrl = "http://115.146.86.193:8080/";
+  User : any = null;
+  Vet : any = null;
+  userType : any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -25,21 +33,44 @@ export class BookingsPage {
               private af: AngularFireAuth,
               private modalCtrl: ModalController,
               private storage: Storage,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private httpProviders : HttpServiceProvider) {
+    
 
 
     this.userid = this.af.auth.currentUser.uid;
-    this.Bookings = this.db.list("bookings", {
-      query: {
-        orderByChild: 'userId',
-        equalTo: this.userid
+    this.db.database.ref('/users/'+this.userid).once('value',(snapshot)=>{
+      var profileData : UserInfo = snapshot.val();
+      console.log(JSON.stringify(profileData));
+      this.userType = profileData.userType;
+      console.log(this.userType);
+      if(this.userType == "Vet"){
+        this.Vet = true;
+        this.Bookings = this.db.list("bookings", {
+          query: {
+            orderByChild: 'vetId',
+            equalTo: this.userid
+          }
+        });
+        this.Bookings.forEach(snapshot=>{
+          this.getBooking(snapshot);
+        })
+      }else if(this.userType == "User"){
+        this.User = true;
+        this.Bookings = this.db.list("bookings", {
+          query: {
+            orderByChild: 'userId',
+            equalTo: this.userid
+          }
+        });
+        this.Bookings.forEach(snapshot=>{
+          this.getBooking(snapshot);
+        })
       }
     });
-    
-    this.Bookings.forEach(snapshot=>{
-      this.getBooking(snapshot);
-    })
   }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BookingsPage');
@@ -57,14 +88,73 @@ export class BookingsPage {
       var snap = snapshot[i];
       var booking : BookingInfo = snap;
       if(booking.status == "confirmed"){
+        console.log("1 confirmed booking");
         this.currentBookings.push(snap);
       }else if (booking.status == "done"){
+        console.log("1 past bookings")
         this.pastBookings.push(snap);
       }
-        return false;
+      this.addUserData(booking.userId);
+      this.addVetData(booking.vetId);
+      this.addPetData(booking.petId);
     }
 
-      this.storeBookingData();
+      
+  }
+
+  addUserData(userid: string){
+    this.db.database.ref('/users/'+userid).on('value',(snapshot)=>{
+      var profileData : UserInfo = snapshot.val();
+      console.log(JSON.stringify(profileData));
+      this.userData[userid]= profileData;
+      console.log(JSON.stringify(this.userData));
+      this.storeUserData();
+    });
+  }
+
+  storeUserData(){
+    this.storage.set("BookingUserData", this.userData).then(result=>{
+      console.log(JSON.stringify(this.userData));
+      console.log("storing user data completed");
+    })
+  }
+
+  
+  
+
+  addVetData(vetid : string){
+    this.db.database.ref('/users/'+vetid).on('value',(snapshot)=>{
+      var profileData : UserInfo = snapshot.val();
+      console.log(JSON.stringify(profileData));
+      this.vetData[vetid]= profileData;
+      console.log(JSON.stringify(this.vetData));
+      this.storeVetData();
+    });
+  }
+
+  storeVetData(){
+    this.storage.set("VetUserData",this.vetData).then(result=>{
+      console.log(JSON.stringify(this.vetData));
+      console.log("storing vet data completed");
+    })
+  }
+
+
+  addPetData(petId: string){
+    this.db.database.ref('/pets/'+petId).on('value',(snapshot)=>{
+      var profileData : PetInfo = snapshot.val();
+      console.log(JSON.stringify(profileData));
+      this.petData[petId]= profileData;
+      console.log(JSON.stringify(this.petData));
+      this.storePetData();
+    });
+  }
+
+  storePetData(){
+    this.storage.set("PetUserData",this.petData).then(result=>{
+      console.log(JSON.stringify(this.petData));
+      console.log("storing pet data completed");
+    })
   }
 
 
@@ -74,30 +164,36 @@ export class BookingsPage {
   }
 
   generateUserData(userid: any): string {
-    var profileData: FirebaseObjectObservable<UserInfo>;
-    profileData = this.db.object(`users/` + userid);
-    var response;
-    profileData.forEach(snapshot => {
-      response = snapshot.firstname +
-        " " + snapshot.lastname
-      /*"\n Address = " +snapshot.streetnumber +" " + snapshot.streetname+
-      " , " + snapshot.suburb +" , "+ snapshot.state +" "+  snapshot.country*/;
-
-    });
-    return response;
-
+    var profileData: UserInfo;
+    profileData = this.userData[userid];
+    if(profileData!=null){
+      return profileData.firstname +
+      " " + profileData.lastname
+    }else{
+      return "";
+    }
   }
 
   generatePetData(petid: any): string{
-    var petData : FirebaseObjectObservable<PetInfo>;
-    petData = this.db.object(`pets/`+ petid);
-    var response;
-    petData.forEach(snapshot =>{
-        response = snapshot.petName;
-    });
-
-    return response;
+    var petData : PetInfo;
+    petData = this.petData[petid];
+    if(petData != null){
+      return petData.petName;
+    }else{
+      return "";
+    }
 }
+
+  generateVetData(vetid:any) : string{
+    var vetData : UserInfo;
+    vetData = this.vetData[vetid];
+    if(vetData!= null){
+      return vetData.firstname +
+      " " + vetData.lastname
+    }else{
+      return "";
+    }
+  }
 
   makeBooking() {
     let findNearestVet = this.modalCtrl.create(FindNearestVet, {userId: this.userid});
@@ -126,5 +222,40 @@ export class BookingsPage {
         alert.present();
     })
   }
+
+  goToHeap(book: BookingInfo){
+    console.log("sending to HeapModal = "+ JSON.stringify(book));
+    const modal = this.modalCtrl.create(HeapModal, { "BookingInfo": book});
+    modal.present();
+  }
+
+  confirm(bookingId: string ){
+    console.log("sending request for booking id " + bookingId);
+    var body = {"userid": this.userid, "bookingId": bookingId};
+    //HTTP REQUEST to make booking done;
+    this.httpProviders.httpPost(this.apiUrl + "completeBooking", JSON.stringify(body))
+    .then(result => {
+        console.log("get result here");
+        console.log("result = "+ JSON.stringify(result));
+        var res = result.response;
+        if (res == "success") {
+          console.log("successful change");
+          
+        }
+    }).catch(err => {
+        console.log("catching error here");
+        let alert = this.alertCtrl.create({
+            title: 'Error',
+            message: err,
+            buttons: ['OK']
+        });                
+        alert.present();
+    })
+
+
+    
+  }
+
+
 
 }

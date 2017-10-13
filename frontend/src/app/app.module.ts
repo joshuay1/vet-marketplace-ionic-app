@@ -23,7 +23,6 @@ import { HttpServiceProvider } from '../providers/http-service/http-service';
 import { AvailModal } from '../pages/calendar/availModal';
 import { MakeBookingModal } from "../pages/bookings/MakeBookingModal";
 import { FindNearestVet} from "../pages/bookings/FindNearestVet";
-import { VetBookingsPage } from '../pages/bookings/vetBookings';
 import { VetStorePage} from "../pages/store/vetStore/VetStore";
 import { Camera } from '@ionic-native/camera';
 import { PictureEditPage } from '../pages/profile/pictureEdit';
@@ -55,7 +54,6 @@ var config = {
     MakeBookingModal,
     FindNearestVet,
     EditProfilePage,
-    VetBookingsPage,
     VetStorePage,
     PictureEditPage,
     HeapModal,
@@ -85,7 +83,6 @@ var config = {
     MakeBookingModal,
     FindNearestVet,
     EditProfilePage,
-    VetBookingsPage,
     VetStorePage,
     PictureEditPage,
     HeapModal,

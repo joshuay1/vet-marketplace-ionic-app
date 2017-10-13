@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ProfilePage } from "../../profile/profile";
 import { CalendarPage } from "../../calendar/calendar";
-import { VetBookingsPage } from '../../bookings/vetBookings';
 import {VetStorePage} from "../../store/vetStore/VetStore";
+import { BookingsPage } from '../../bookings/bookings';
 
 @Component({
   templateUrl: 'vetHome.html'
@@ -10,7 +10,7 @@ import {VetStorePage} from "../../store/vetStore/VetStore";
   export class VetHomePage {
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    tab1Root = VetBookingsPage;
+    tab1Root = BookingsPage;
     tab2Root = ProfilePage;
     tab3Root = VetStorePage;
     tab4Root = CalendarPage;
