@@ -15,39 +15,38 @@
      <ion-list>
        <ion-item>
          <ion-label floating color="light">Pet Name</ion-label>
-         <ion-input type="text" formControlName="petname" [(ngModel)]="petInfo.petname"></ion-input>
+         <ion-input type="text" formControlName="petName" [(ngModel)]="petInfo.petName"></ion-input>
        </ion-item>
-  
+
        <ion-item>
         <ion-label  floating color="light">Animal</ion-label>
-        <ion-select formControlName="animalType" [(ngModel)]="petInfo.animaltype">
+        <ion-select formControlName="animalType" [(ngModel)]="petInfo.animalType">
           <ion-option value="cat">Cat</ion-option>
           <ion-option value="dog">Dog</ion-option>
         </ion-select>
       </ion-item>
-  
+
        <ion-item>
          <ion-label floating color="light">Date of Birth</ion-label>
          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dob" [(ngModel)]="petInfo.dob"></ion-datetime>
        </ion-item>
-  
+
        <ion-item>
          <ion-label floating color="light">Breed</ion-label>
-         <ion-input type="text" formControlName="breed" [(ngModel)]="petInfo.breed" ><!--formControlName="address"  [(ngModel)]="petInfo.address"--> ></ion-input>
+         <ion-input type="text" formControlName="breed" [(ngModel)]="petInfo.animalBreed" ></ion-input>
        </ion-item>
        <br>
 
         <button  color="secondary" ion-button (click)="register()">Register</button>
-  
-      </ion-list> 
+
+      </ion-list>
     </form>
-  
-  
+
+
   </ion-card-content>
-  
+
   </ion-card>
-  
-  
+
+
   </ion-content>
-  
-  
+

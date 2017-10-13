@@ -26,7 +26,7 @@ import { PictureEditPage } from './pictureEdit';
 })
 export class ProfilePage {
   profileData : FirebaseObjectObservable<UserInfo>;
-  selectedPet : any;  
+  selectedPet : any;
   petIds : FirebaseListObservable<string[]>;
   userId: any;
   petNames = {}
@@ -38,11 +38,11 @@ export class ProfilePage {
             private modalCtrl: ModalController,
             private app : FirebaseApp) {
               this.userId = this.afAuth.auth.currentUser.uid;
-              this.profileData = this.db.object(`users/`+this.userId);    
-              this.getPetIds();   
-              this.getImgUrl();            
+              this.profileData = this.db.object(`users/`+this.userId);
+              this.getPetIds();
+              this.getImgUrl();
             }
-  
+
   getImgUrl(){
     this.profileData.forEach(snapshot=>{
       console.log("picture Url = "+ snapshot.pictureURL);
@@ -74,7 +74,7 @@ export class ProfilePage {
   registerNewPet(user: User)
   {
     console.log("In registerNewPet Function");
-    this.navCtrl.push('RegisterPetPage',this.userId);
+    this.navCtrl.push('RegisterPetPage',{uid:this.userId});
   }
 
   accessPet(pet: any) {
@@ -103,7 +103,7 @@ export class ProfilePage {
       });
     }
     response = this.petNames[petId];
-    
+
     return response;
   }
 }
