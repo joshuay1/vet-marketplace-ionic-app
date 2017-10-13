@@ -28,7 +28,6 @@ import { Camera } from '@ionic-native/camera';
 import { PictureEditPage } from '../pages/profile/pictureEdit';
 import { HeapModal } from '../pages/bookings/HeapModal';
 import { IonicStorageModule } from '@ionic/storage';
-import { OfflinePage } from '../pages/login/offline';
 import { MapPage } from '../pages/bookings/map';
 import { GoogleMaps } from '@ionic-native/google-maps';
 
@@ -59,7 +58,6 @@ var config = {
     VetStorePage,
     PictureEditPage,
     HeapModal,
-    OfflinePage,
     MapPage
   ],
   imports: [
@@ -89,7 +87,6 @@ var config = {
     VetStorePage,
     PictureEditPage,
     HeapModal,
-    OfflinePage,
     MapPage
   ],
   providers: [

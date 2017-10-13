@@ -8,7 +8,7 @@ import { VetHomePage} from "../home/vetHome/vetHome";
 import { UserInfo } from "../../model/user";
 import { RedirectPage } from "../redirect/redirect";
 import { Storage } from '@ionic/storage';
-import { OfflinePage } from './offline';
+import { BookingsPage } from '../bookings/bookings';
 /**
  * Generated class for the LoginPage page.
  *
@@ -138,7 +138,7 @@ export class LoginPage {
         });
           alert.present();
       }else{
-        this.navCtrl.push(OfflinePage,{"userType": userType});
+        this.navCtrl.push(BookingsPage,{"userType": userType, "status": "offline"});
       }
     }).catch(error=>{
       let alert = this.alertCtrl.create({

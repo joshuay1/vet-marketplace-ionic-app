@@ -40,7 +40,7 @@
                   <h3>User: {{generateUserData(book.userId)}}</h3>
                   <h3>Pet: {{generatePetData(book.petId)}}</h3>
                   <h3>Status : {{book.status}}</h3>
-                  <button  color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
+                  <button *ngIf="Online" color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
                   <br>
                 </ion-item>
               </div>
@@ -54,7 +54,7 @@
                       <h3>User: {{generateUserData(book.userId)}}</h3>
                       <h3>Pet: {{generatePetData(book.petId)}}</h3>
                       <h3>Status : {{book.status}}</h3> 
-                      <button (click)= "goToHeap(book)">Heap Form</button>
+                      <button *ngIf="Online" (click)= "goToHeap(book)">Heap Form</button>
                       <br>
                     </ion-item>
                   </div>
@@ -75,7 +75,7 @@
                       <ion-slide *ngFor="let book of currentBookings">
                         <div class="bookingcard">
                           <div class = "profilePicContainer">
-                            <img class="vetProfilePicture" [src]="getImageUrl(book.vetId)">
+                            <img *ngIf="Online" class="vetProfilePicture" [src]="getImageUrl(book.vetId)">
                           </div>
                         <h3>Vet : {{generateVetData(book.vetId)}}</h3>
                         <h3>Pet: {{generatePetData(book.petId)}}</h3>
@@ -83,7 +83,7 @@
                         <h3>Time: {{book.time}}</h3>
                         <h3>Status : {{book.status}}</h3>
                         <h3>Address: {{generateVetAddress(book.vetId)}}</h3>
-                        <button (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
+                        <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
                       </div>
                       </ion-slide>
                     </ion-slides>

@@ -50,12 +50,13 @@ export class MapPage {
           var location : Array<String> = snapshot.val();
           this.lat = location[0];
           this.lng = location[1];
+          this.loading.dismiss();
           this.loadMap();
         });  
     }
    
     loadMap() {
-        
+       this.loading.present();
        this.mapElement = document.getElementById('map');
    
        let mapOptions: GoogleMapOptions = {

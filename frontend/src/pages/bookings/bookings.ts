@@ -29,6 +29,8 @@ export class BookingsPage {
   User : any
   Vet : any
   userType : any;
+  Offline: any;
+  Online : any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -40,37 +42,96 @@ export class BookingsPage {
               private httpProviders : HttpServiceProvider) {
     
 
+    var status = this.navParams.get("status");
+    if(status == "offline"){
 
-    this.userid = this.af.auth.currentUser.uid;
-    this.db.database.ref('/users/'+this.userid).once('value',(snapshot)=>{
-      var profileData : UserInfo = snapshot.val();
-      console.log(JSON.stringify(profileData));
-      this.userType = profileData.userType;
-      console.log(this.userType);
+      this.Offline = true;
+      this.userType = this.navParams.get("userType");
       if(this.userType == "Vet"){
         this.Vet = true;
-        this.Bookings = this.db.list("bookings", {
-          query: {
-            orderByChild: 'vetId',
-            equalTo: this.userid
-          }
-        });
-        this.Bookings.forEach(snapshot=>{
-          this.getBooking(snapshot);
-        })
+        this.getOfflineData();
       }else if(this.userType == "User"){
         this.User = true;
-        this.Bookings = this.db.list("bookings", {
-          query: {
-            orderByChild: 'userId',
-            equalTo: this.userid
-          }
-        });
-        this.Bookings.forEach(snapshot=>{
-          this.getBooking(snapshot);
-        })
+        this.getOfflineData();
+      }else{
+        console.log("UserType is not valid");
+        this.navCtrl.pop();
       }
+      
+
+    }else{
+      this.Online = true;
+      this.userid = this.af.auth.currentUser.uid;
+      this.db.database.ref('/users/'+this.userid).once('value',(snapshot)=>{
+        var profileData : UserInfo = snapshot.val();
+        console.log(JSON.stringify(profileData));
+        this.userType = profileData.userType;
+        console.log(this.userType);
+        if(this.userType == "Vet"){
+          this.Vet = true;
+          this.Bookings = this.db.list("bookings", {
+            query: {
+              orderByChild: 'vetId',
+              equalTo: this.userid
+            }
+          });
+          this.Bookings.forEach(snapshot=>{
+            this.getBooking(snapshot);
+          })
+        }else if(this.userType == "User"){
+          this.User = true;
+          this.Bookings = this.db.list("bookings", {
+            query: {
+              orderByChild: 'userId',
+              equalTo: this.userid
+            }
+          });
+          this.Bookings.forEach(snapshot=>{
+            this.getBooking(snapshot);
+          })
+        }
+      });
+
+    }
+    
+  }
+
+  getOfflineData(){
+    this.storage.get("CurrentBookings").then(result=>{
+      this.currentBookings = result;
+      console.log("result ="+result);
+      console.log("currentBooking = "+ this.currentBookings);
+    }).catch(error=>{
+      this.createAlert(error);
     });
+
+    this.storage.get("PastBookings").then(result=>{
+      this.pastBookings = result;
+      console.log("result ="+result);
+      console.log("currentBooking = "+ this.pastBookings);
+    }).catch(error=>{
+      this.createAlert(error);
+    });
+    
+    this.storage.get("BookingUserData").then(result=>{
+      this.userData = result;
+    }).catch(error=>{
+      this.createAlert(error);
+    });
+
+
+    this.storage.get("VetUserData").then(result=>{
+      this.vetData = result;
+    })
+    .catch(error=>{
+      this.createAlert(error);
+    });
+
+    this.storage.get("PetUserData").then(result=>{
+      this.petData = result;
+    }).catch(error=>{
+      this.createAlert(error);
+    })
   }
 
 
@@ -99,6 +160,7 @@ export class BookingsPage {
         console.log("1 past bookings")
         this.pastBookings.push(snap);
       }
+      this.storeBookingData();
       this.addUserData(booking.userId);
       this.addVetData(booking.vetId);
       this.addPetData(booking.petId);
@@ -221,12 +283,7 @@ export class BookingsPage {
           alert.present();
       })
     }).catch(error=>{
-      let alert = this.alertCtrl.create({
-        title: 'Error',
-        message: "You have not log in before. No Data Found",
-        buttons: ['OK']
-      });
-        alert.present();
+      this.createAlert(error);
     })
   }
 
@@ -251,12 +308,7 @@ export class BookingsPage {
         }
     }).catch(err => {
         console.log("catching error here");
-        let alert = this.alertCtrl.create({
-            title: 'Error',
-            message: err,
-            buttons: ['OK']
-        });                
-        alert.present();
+        this.createAlert(err);
     })
 
 
@@ -282,12 +334,7 @@ export class BookingsPage {
       this.vetData[vetid] = profileData;
     }).catch(function(error){
       console.log("catchin error here");
-      let alert = this.alertCtrl.create({
-        title: 'Error',
-        message : error,
-        buttons : ['OK']
-      });
-      alert.present();
+      this.createAlert(error);
     })
   }
 
@@ -313,6 +360,15 @@ export class BookingsPage {
     console.log("vetdatas = "+ this.vetData);
     this.navCtrl.push(MapPage, {"vetid": vetid, "vetids": this.vetIds, "vetdatas": this.vetData});
     
+  }
+
+  createAlert(msg : JSON){
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      message : JSON.stringify(msg),
+      buttons : ['OK']
+    });
+    alert.present();
   }
 
 
