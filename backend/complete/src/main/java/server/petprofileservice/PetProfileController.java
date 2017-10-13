@@ -160,7 +160,6 @@ public class PetProfileController {
     public BasicResponse petProfileUpdate(
             @RequestParam(value = "token") String tokenString,
             @RequestBody String jsonString){
-
         JSONParser parser = new JSONParser();
         JSONObject jsonProfile = null;
         try{
@@ -189,8 +188,8 @@ public class PetProfileController {
         }else{
             return new BasicResponse("error", id, "no pet id found");
         }
-        if(jsonProfile.containsKey("petname")){
-            petname = (String) jsonProfile.get("petname");
+        if(jsonProfile.containsKey("petName")){
+            petname = (String) jsonProfile.get("petName");
         }
         else {
             return new BasicResponse("error",id,"petname not provided");
@@ -217,7 +216,7 @@ public class PetProfileController {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("pets/"+id);
         HashMap<String, Object> update = new HashMap<String,Object> ();
         if(petname!= null && !petname.isEmpty()){
-            //logger.info("name of "+id+" changed to " + petname);
+            logger.info("name of "+id+" changed to " + petname);
             update.put("petName", petname);
         }
 
