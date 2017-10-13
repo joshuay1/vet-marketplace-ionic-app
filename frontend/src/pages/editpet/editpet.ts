@@ -21,7 +21,7 @@ import { PetPage } from "../pet/pet";
   templateUrl: 'editpet.html',
 })
 export class EditPetPage {
-  petInfo = {} as PetInfo;
+  petInfo = {};
   petData: FirebaseObjectObservable<PetInfo>;
   loading; 
   petForm: FormGroup;
@@ -64,23 +64,23 @@ export class EditPetPage {
   async update(){
   
     if(this.validate()){
-      this.petInfo.petId = this.petId;
-      console.log(this.petInfo.petId+"***");      
-      if(this.petInfo.petName==null){
-        this.petInfo.petName = this.petName;
-        console.log(this.petInfo.petName+"***");
+      this.petInfo["petId"] = this.petId;
+      console.log(this.petInfo["petId"]+"***");      
+      if(this.petInfo["petname"]==null){
+        this.petInfo["petname"] = this.petName;
+        console.log(this.petInfo["petname"]+"***");
       }
-      if(this.petInfo.dob==null){
-        this.petInfo.dob = this.dob;
-        console.log(this.petInfo.dob+"***");
+      if(this.petInfo["dob"]==null){
+        this.petInfo["dob"] = this.dob;
+        console.log(this.petInfo["dob"]+"***");
       }
-      if(this.petInfo.animalBreed==null){
-        this.petInfo.animalBreed = this.animalBreed;
-        console.log(this.petInfo.animalBreed+"***");
+      if(this.petInfo["breed"]==null){
+        this.petInfo["breed"] = this.animalBreed;
+        console.log(this.petInfo["breed"]+"***");
       }
-      if(this.petInfo.animalType==null){
-        this.petInfo.animalType = this.animalType;
-        console.log(this.petInfo.animalType+"***");
+      if(this.petInfo["animalType"]==null){
+        this.petInfo["animalType"] = this.animalType;
+        console.log(this.petInfo["animalType"]+"***");
       }
         }
         
