@@ -91,6 +91,22 @@ blue {
 // Fonts
 // --------------------------------------------------
 
+
+h2{
+  color: black;
+  font-weight: bold;
+  text-align:center;
+  font-size: 1em;
+
+
+}
+
+h3{
+  text-align:center;
+  color: #0b4d6b;
+  font-size: 1.2em;
+}
+
 @import "roboto";
 @import "noto-sans";
 
