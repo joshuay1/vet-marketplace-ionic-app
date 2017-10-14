@@ -33,8 +33,8 @@
       </div>
 
      <span>
-      <h2> {{profileData.userType}} </h2>
-      <h3>{{profileData.firstname}} {{profileData.lastname}}</h3>
+      <h2> {{(profile|async)?.userType}} </h2>
+      <h3>{{(profile|async)?.firstname}} {{(profile|async)?.lastname}}</h3>
     </span>
   
 

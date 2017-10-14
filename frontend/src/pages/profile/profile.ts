@@ -33,7 +33,7 @@ export class ProfilePage {
   petIds :Array<string>;
   userId: any;
   imgUrl;
-  profileData : UserInfo;
+  profile : FirebaseObjectObservable<UserInfo>;
   count = 0;
   petStorage : {[k: string]: any} = {};
 
@@ -46,10 +46,9 @@ export class ProfilePage {
             private storage: Storage,
             private alertCtrl : AlertController) {
               this.userId = this.afAuth.auth.currentUser.uid;
-              var profile : FirebaseObjectObservable<UserInfo>;
-              profile = this.db.object(`users/`+this.userId);
-              profile.forEach(snapshot=>{
-                this.storeUserData(this.userId);
+              this.profile = this.db.object(`users/`+this.userId);
+              this.profile.forEach(snapshot=>{
+                this.storeUserData(snapshot);
                 this.getImgUrl(snapshot.pictureURL);
                 this.Vet = null;
                 this.User = null;
@@ -68,11 +67,9 @@ export class ProfilePage {
             }
 
 
-  storeUserData(uid : string){
-    this.db.database.ref('/users/'+uid).once('value',(snapshot)=>{
-      this.profileData = snapshot.val();
-      console.log(JSON.stringify(this.profileData));
-      this.storage.set("userData", this.profileData).then(result=>{
+  storeUserData(snapshot : UserInfo){
+      console.log(JSON.stringify(snapshot));
+      this.storage.set("userData", snapshot).then(result=>{
         console.log("storing user data successful");
       }).catch(error=>{
         let alert = this.alertCtrl.create({
@@ -83,7 +80,6 @@ export class ProfilePage {
           alert.present();
 
       });
-    });
   }
 
   getImgUrl(pictureURL: string){
@@ -139,13 +135,15 @@ export class ProfilePage {
 
   getPetNames(){
     console.log("accessing database for petNames");
-      
-      var i = 0;
-      this.count = 0;
-      for( i = 0 ; i < this.petIds.length; i++){
-        var petId = this.petIds[i];
-        this.getPetData(this.petIds[i], this.petIds.length);
+      if(this.petIds!= null && this.petIds.length>0){
+        var i = 0;
+        this.count = 0;
+        for( i = 0 ; i < this.petIds.length; i++){
+          var petId = this.petIds[i];
+          this.getPetData(this.petIds[i], this.petIds.length);
+        }
       }
+      
 }
 
 async getPetData(petId: string, length: number){
