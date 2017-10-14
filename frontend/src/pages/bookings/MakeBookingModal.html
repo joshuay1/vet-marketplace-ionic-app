@@ -26,7 +26,14 @@
       <ion-slide *ngFor="let b of vetIds">
         <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
         <ion-card>
-        <ion-card-content>{{b.VetID}}</ion-card-content>
+        <ion-card-content>
+            <div class = "profilePicContainer">
+                <img class="vetProfilePicture" [src]="getImageUrl(b.vetId)">
+              </div>
+              {{b.VetID}}
+          
+          
+         </ion-card-content>
         </ion-card>
     </ion-slide>
     </ion-slides>

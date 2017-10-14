@@ -1,31 +1,43 @@
 page-profile {
     .background{
-        top: 0; 
-        margin-top: -5%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-image: url('../assets/img/blackBackground.jpg');
-    }
+    background-color: rgb(247, 247, 247);
+    }   
 
-    .whitebackground{
+    ion-card.card {
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.00);
+        border-radius: 5px;
+      }
+    
+    
+    .profiletop{
+        position: relative;
         background-color: white;
+        box-shadow: 1px 1px 1px rgb(196, 196, 196);
+        vertical-align: middle;
+        padding-bottom: 5px;
+        margin-left:-2px;
+        margin-right:-2px;
+        padding-top: 10px;
+        margin-top: -10px;
 
     }
-    .edit{
-        position: absolute;
-        right: 30px;
 
-        background-color: rgba(160, 160, 160, 0.27)
-    } 
 
     .button.button-block {
-        height: 12vw; 
-        border-radius: 5px;
-        margin-top:0px;
-        margin-bottom:15px;
-        
-
+            border-radius: 5px;
+            margin: 2px;
+            height: 8vw;
     }
+
+    .item{
+        
+        margin-top:-5px;
+        margin-bottom: -5px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        background-color: rgba(255, 255, 255, 0.00);
+    } 
 
     scroll-content {
         display: flex;
@@ -54,16 +66,16 @@ page-profile {
         vertical-align: middle;
         left: 0;
         right: 0;
-        height: 32%;  
-       
+        height:23%;  
+ 
     img{
-        position: absolute;
+        position: center;
         text-align:center;
         display: block;
-        margin-left: 27.5%;
+        margin-left: auto;
         margin-right: auto;
-        margin-top: -12px;
-        margin-bottom: 35px;
+        margin-top: 22px;
+
         height: 35vw; 
         width: 35vw; 
         border: 2px solid white;

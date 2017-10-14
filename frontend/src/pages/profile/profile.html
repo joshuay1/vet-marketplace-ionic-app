@@ -27,7 +27,8 @@
     </ion-header>
 
 
-<ion-content>
+<ion-content class="background">
+    <div class="profiletop">
       <div class="circle-pic">
             <img id = "profilePicture" (click) = "changePicture()">
       </div>
@@ -36,22 +37,20 @@
       <h2> {{(profile|async)?.userType}} </h2>
       <h3>{{(profile|async)?.firstname}} {{(profile|async)?.lastname}}</h3>
     </span>
-  
+  </div>
 
-<div class="whitebackground" *ngIf="User">
+<div *ngIf="User">
 
   <ion-card class="profilecard">
     <ion-card-content>
 
       <p class="a">My pets</p>
-      <ion-list>
-        <div class="bookingcard">
+ 
           <ion-item *ngFor="let pet of petIds">
             <button class="button button-block" ion-button color="secondary" 
             (click)="accessPet(pet)">{{getPetName(pet)}}</button>
           </ion-item>
-        </div>
-      </ion-list>
+
       <div class="img_container">
       <button class= "addbutton" ion-button (click)="registerNewPet(user)" ion-button icon-only>
         <ion-icon name="ios-add-circle-outline"></ion-icon>

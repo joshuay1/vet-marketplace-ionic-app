@@ -16,7 +16,9 @@
 // automatically applied to the <body> element in the app.
 
 
-
+  .globalmargin{
+    margin:10px;
+  }
   
   .button {
     align-content: center;
@@ -49,6 +51,10 @@
     text-align: center;
     box-shadow: none;
   }
+
+  .addbutton.buttonActive {
+    background:rgba(255, 255, 255, 0.00);
+}
 
   
   .img_container{
