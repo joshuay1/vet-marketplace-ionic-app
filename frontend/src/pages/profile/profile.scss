@@ -9,7 +9,20 @@ page-profile {
         border-radius: 5px;
       }
     
+      ::-webkit-scrollbar{
+        display:none;
+        }
     
+    
+    .scroll-content {
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        overflow-y: auto;
+
+    }
+
+
     .profiletop{
         position: relative;
         background-color: white;
@@ -40,7 +53,7 @@ page-profile {
     } 
 
     scroll-content {
-        display: flex;
+        display: hidden;
         flex-direction: column;
     }
 
