@@ -30,7 +30,7 @@
       <ion-option (ionSelect)="addToTotal(item.Price,4)" >4</ion-option>
       <ion-option (ionSelect)="addToTotal(item.Price,5)" >5</ion-option>
     </ion-select>
-    
+
 </div>
 </ion-slide>
 </ion-slides>
@@ -41,11 +41,11 @@
 
 <ion-footer>
     <ion-item>
-        <ion-label>Total Cost is = {{totalCost}}</ion-label>
+        <ion-label>Total Cost is = {{stringCost}}</ion-label>
       </ion-item>
     <br>
     <div class = "footerbutton">
-        <button class = "button button-block"color="secondary" ion-button>
+        <button class = "button button-block"color="secondary" ion-button (click)="proceed()">
           Proceed To Checkout</button>
-    </div>   
+    </div>
   </ion-footer>

@@ -16,21 +16,23 @@ import {AngularFireDatabase} from "angularfire2/database";
   templateUrl: 'UserStore.html',
 })
 export class UserStorePage {
-  items : any;
+  items: any;
   apiUrl = "http://115.146.86.193:8080/";
-  totalCost : any;
-  selectedItems : Array<any>;
-  selectedItemsQuan : Array<any>;
+  totalCost: number;
+  selectedItems: Array<any>;
+  selectedItemsQuan: Array<any>;
+  stringCost : string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private db: AngularFireDatabase,
-              private loadingCtrl :LoadingController) {
+              private loadingCtrl: LoadingController,
+              private alertCtrl : AlertController) {
     this.totalCost = +0;
     this.getItems();
     this.selectedItems = new Array();
     this.selectedItemsQuan = new Array();
-
+    this.stringCost = this.totalCost.toFixed(1);
   }
 
   ionViewDidLoad() {
@@ -44,29 +46,53 @@ export class UserStorePage {
 
     loading.present();
 
-    this.db.database.ref('/VetStore').once('value',(snapshot)=>{
+    this.db.database.ref('/UserStore').once('value', (snapshot) => {
       this.items = snapshot.val();
       console.log(this.items);
       loading.dismissAll();
     });
   }
-  addToTotal(price,quantity){
+
+  addToTotal(price, quantity) {
     console.log("I am in adding to total");
     let pr = +price;
-    let index =  this.selectedItems.findIndex(x=> x ==price);
-    if(index != -1){
+    let index = this.selectedItems.findIndex(x => x == price);
+    if (index != -1) {
       console.log("hello");
       let quan = this.selectedItemsQuan[index];
-      this .totalCost = this.totalCost - (pr*quan);
+      this.totalCost = this.totalCost - (pr * (+quan));
+      this.totalCost.toFixed(1);
       this.selectedItemsQuan[index] = quantity;
     }
-    else{
+    else {
       this.selectedItems.push(price);
       this.selectedItemsQuan.push(quantity);
     }
 
-    this.totalCost = this.totalCost+(pr*quantity);
-    console.log(this.totalCost);
-    console.log(this.selectedItems.toString());
+    this.totalCost = this.totalCost + (pr * (+quantity));
+    if(this.totalCost < 0){
+      this.totalCost =0;
+    }
+    this.stringCost = this.totalCost.toFixed(1);
+  }
+  proceed() {
+    if(this.totalCost >0) {
+      let alert = this.alertCtrl.create({
+        title: 'Success',
+        message: "Successfully Bought items worth " + this.stringCost,
+        buttons: ['OK']
+      });
+      alert.present();
+      this.navCtrl.push(UserStorePage);
+    }
+    else {
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        message: "Please choose items to purchase",
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
   }
 }
