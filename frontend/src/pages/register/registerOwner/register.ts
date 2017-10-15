@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, NavParams, AlertController, Alert } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase} from 'angularfire2/database';
 import { User, UserInfo } from "../../../model/user";
@@ -30,6 +30,7 @@ export class RegisterOwnerPage {
 
   constructor(private afAuth: AngularFireAuth,
     public navCtrl: NavController, 
+    public viewCtrl: ViewController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private db :AngularFireDatabase,

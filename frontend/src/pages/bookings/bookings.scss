@@ -1,28 +1,52 @@
 page-bookings {
 
   .background{
-    background: #F0F0F0;
+    background: rgb(247, 247, 247);;
   }
+
+
   
   .img_container{
     text-align: center;
     position: center;
   }
 
+  .bookingheader{
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0);
+  }
+
   .bookingcard{
     background: white;
-    box-shadow: 2px 2px 2px #A7A7A7;
+    box-shadow: 1px 1px 1px #A7A7A7;
     border-radius: 5px;
-
+    padding:20px;
+    margin:10px;
+    border: 0.5px solid  rgb(194, 194, 194);
   }
+
+  
 
   .item {
     background: rgba(255, 255, 255, 0.00);
+  }
 
+  
+  h2{
+    color: #0b4d6b;
+    font-weight: bold;
   }
 
   h3{
     color: #717171;
+    text-align: left;
+    font-size: 10px;
+  }
+
+  p{
+    color: #717171;
+    text-align: left;
+    font-size: 10px;
   }
   
   .toolbar-background {
@@ -45,5 +69,21 @@ page-bookings {
     flex-direction: column;
     text-align: center;
   }
+
+  .vetProfilePicture{
+    width: auto;
+    height: 100%;
+    display: block;
+    margin: auto;
+    align-items: center;
+  }
+  
+  .profilePicContainer{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin:auto;
+  }
+  
 }
 

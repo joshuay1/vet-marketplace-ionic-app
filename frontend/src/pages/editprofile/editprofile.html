@@ -5,81 +5,85 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  
-    <ion-navbar>
-      
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-  
-      <ion-title>
-          <span text-color="light">Edit Profile</span>
-      </ion-title>
-  
-      <ion-buttons end>
-        <button ion-button color="light"icon-only (click)="openModal()">
-          <ion-icon name="options"></ion-icon>
-        </button>
-      </ion-buttons>
-    </ion-navbar>
-  
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button color="white" ion-button (click)="dismiss()">Close</button>
+    </ion-buttons>
+
+
+    <ion-title>
+      <span text-color="light">Edit Profile</span>
+    </ion-title>
+
+
+  </ion-navbar>
+
 </ion-header>
 
-<ion-content>
-<form [formGroup]= "editForm">
- <ion-list>
-   <ion-item>
-     <ion-label floating color="primary">First Name</ion-label>
-     <ion-input type="text" formControlName="first-name" [(ngModel)]="userInfo.firstname"></ion-input>
-   </ion-item>
+<ion-content class="globalmargin">
+  <form [formGroup]="editForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating color="primary">First Name</ion-label>
+        <ion-input type="text" formControlName="first-name" [(ngModel)]="userInfo.firstname"></ion-input>
+      </ion-item>
 
-   <ion-item>
-     <ion-label floating color="primary">Surname</ion-label>
-     <ion-input type="text" formControlName="last-name" [(ngModel)]="userInfo.lastname"></ion-input>
-   </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Surname</ion-label>
+        <ion-input type="text" formControlName="last-name" [(ngModel)]="userInfo.lastname"></ion-input>
+      </ion-item>
 
-   <ion-item>
-     <ion-label floating color="primary">Date of Birth</ion-label>
-     <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dob" [(ngModel)]="userInfo.dob"></ion-datetime>
-   </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Date of Birth</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dob" [(ngModel)]="userInfo.dob"></ion-datetime>
+      </ion-item>
 
-   <ion-item>
-     <ion-label floating color="primary">Street Number</ion-label>
-     <ion-input type="text" formControlName="streetnumber" [(ngModel)]="userInfo.streetnumber" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
-   </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Street Number</ion-label>
+        <ion-input type="text" formControlName="streetnumber" [(ngModel)]="userInfo.streetnumber">
+          <!--formControlName="address"  [(ngModel)]="userInfo.address"--> >
+        </ion-input>
+      </ion-item>
 
-   <ion-item>
-    <ion-label floating color="primary">Street Name</ion-label>
-    <ion-input type="text" formControlName="streetname" [(ngModel)]="userInfo.streetname" ><!--formControlName="address"  [(ngModel)]="userInfo.address"--> ></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Street Name</ion-label>
+        <ion-input type="text" formControlName="streetname" [(ngModel)]="userInfo.streetname">
+          <!--formControlName="address"  [(ngModel)]="userInfo.address"--> >
+        </ion-input>
+      </ion-item>
 
-   <ion-item>
-     <ion-label floating color="primary">Suburb</ion-label>
-     <ion-input type="text" formControlName="suburb" [(ngModel)]="userInfo.suburb" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
-   </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Suburb</ion-label>
+        <ion-input type="text" formControlName="suburb" [(ngModel)]="userInfo.suburb">
+          <!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+      </ion-item>
 
-   <ion-item>
-    <ion-label floating color="primary">State</ion-label>
-    <ion-input type="text" formControlName="state" [(ngModel)]="userInfo.state" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">State</ion-label>
+        <ion-input type="text" formControlName="state" [(ngModel)]="userInfo.state">
+          <!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+      </ion-item>
 
-  <ion-item>
-    <ion-label floating color="primary">Postcode</ion-label>
-    <ion-input type="text"formControlName="postcode" [(ngModel)]="userInfo.postcode" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Postcode</ion-label>
+        <ion-input type="text" formControlName="postcode" [(ngModel)]="userInfo.postcode">
+          <!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+      </ion-item>
 
 
-  <ion-item>
-    <ion-label floating color="primary">Country</ion-label>
-    <ion-input type="text" formControlName="country" [(ngModel)]="userInfo.country" ><!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
-  </ion-item>
-
-  
-
-   <br>
-
-    <button  color="secondary" ion-button (click)="update()">Change</button>
-
-  </ion-list> 
-</form>
+      <ion-item>
+        <ion-label floating color="primary">Country</ion-label>
+        <ion-input type="text" formControlName="country" [(ngModel)]="userInfo.country">
+          <!--formControlName="suburb"  [(ngModel)]="userInfo.suburb">--></ion-input>
+      </ion-item>
+      <br>
+    </ion-list>
+  </form>
 </ion-content>
+
+<ion-footer>
+  <div class="footerbutton">
+    <button class="button button-block" color="secondary" ion-button (click)="update()">Change</button>
+  </div>
+</ion-footer>

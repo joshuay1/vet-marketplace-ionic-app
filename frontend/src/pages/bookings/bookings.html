@@ -5,58 +5,123 @@
   Ionic pages and navigation.
 -->
 
-<ion-header>
+<ion-header class = "bookingheader"  >
 
-  <ion-navbar>
-    <button ion-button icon-only menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+      <ion-navbar>
 
-    <ion-title>
-      <span text-color="light"> Bookings </span>
-    </ion-title>
+        <ion-title>
+          <span text-color="light"> Appointments </span>
+        </ion-title>
 
-    <ion-buttons end>
-      <button ion-button color="light" icon-only (click)="openModal()">
-            <ion-icon name="options"></ion-icon>
-          </button>
-    </ion-buttons>
-  </ion-navbar>
+      </ion-navbar>
 
-  <br>
-  <ion-card>
-    <ion-segment [(ngModel)]="bookings">
-      <ion-segment-button value="currentBookings">Current Bookings</ion-segment-button>
-      <ion-segment-button value="pastBookings">Booking History</ion-segment-button>
-    </ion-segment>
-  </ion-card>
-  <br>
+      <br>
+      <ion-card>
+        <ion-segment [(ngModel)]="appointments">
+          <ion-segment-button value="currentAppointments">Upcoming</ion-segment-button>
+          <ion-segment-button value="pastAppointments">Past</ion-segment-button>
+        </ion-segment>
+      </ion-card>
+      <br>
+
 </ion-header>
 
 
 <ion-content class="background">
-  <ion-card [ngSwitch]="bookings">
-    <ion-list *ngSwitchCase="'currentBookings'">
 
-      <ion-list>
-        <div class="bookingcard">
-          <ion-item *ngFor='let book of currentBookings | async'>
-            <h2>Dr. {{generateUserData(book.vetId)}}</h2>
-            <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2><br>
-            <h3>User: {{generateUserData(book.userId)}}</h3>
-            <h3>Pet:</h3>
-            <h3>BookingID: {{stringfy(book)}}</h3>
-          </ion-item>
-        </div>
-      </ion-list>
-    </ion-list>
-    <ion-list *ngSwitchCase="'pastBookings'">
+    <div *ngIf = "Vet">
+        <ion-card [ngSwitch]="appointments">
+          <ion-list *ngSwitchDefault>
 
-    </ion-list>
-    <div class="img_container">
-      <button class="addbutton" ion-button icon-only (click)="makeBooking()">
-          <ion-icon name="ios-add-circle-outline"></ion-icon>
-        </button>
+            <ion-list>
+              <div class="bookingcard">
+                <ion-item *ngFor='let book of currentBookings'  >
+                  <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
+                  <h3>User: {{generateUserData(book.userId)}}</h3>
+                  <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                  <h3>Status : {{book.status}}</h3>
+                  <button  class="button button-block" *ngIf="Online" 
+                  color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
+
+                </ion-item>
+              </div>
+            </ion-list>
+          </ion-list>
+          <ion-list *ngSwitchCase="'pastAppointments'">
+              <ion-list>
+                  <div class="bookingcard">
+                    <ion-item *ngFor='let book of pastBookings'  >
+                      <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
+                      <h3>User: {{generateUserData(book.userId)}}</h3>
+                      <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                      <h5>Status : {{book.status}}</h5>
+                      <button *ngIf="Online" (click)= "goToHeap(book)">Heap Form</button>
+                    </ion-item>
+                  </div>
+                </ion-list>
+
+
+          </ion-list>
+        </ion-card>
+      </div>
+  <div *ngIf = "User">
+        <ion-card [ngSwitch]="appointments">
+
+            <ion-list *ngSwitchDefault>
+
+
+
+                    <ion-slides loop="false">
+                      <ion-slide *ngFor="let book of currentBookings">
+                        <div class="bookingcard">
+                          <div class = "profilePicContainer">
+                            <img *ngIf="Online" class="vetProfilePicture" [src]="getImageUrl(book.vetId)">
+                          </div>
+                        <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
+                        <h2>{{book.time}}</h2>
+                        <p>{{book.status}}</p>
+                        <p>Vet : {{generateVetData(book.vetId)}}</p>
+                        <p>Pet: {{generatePetData(book.petId)}}</p>
+
+                        <h3>Address: {{generateVetAddress(book.vetId)}}</h3>
+                        <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
+                      </div>
+                      </ion-slide>
+                    </ion-slides>
+
+
+
+                <div class="img_container">
+                  <button class="addbutton" ion-button icon-only (click)="makeBooking()">
+                      <ion-icon name="ios-add-circle-outline"></ion-icon>
+                    </button>
+              </div>
+          </ion-list>
+
+        <ion-list *ngSwitchCase="'pastAppointments'">
+            <ion-list>
+                <div class="bookingcard">
+                  <ion-item *ngFor='let book of pastBookings'  >
+                      <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
+                      <h2>{{book.time}}</h2>
+                      <p>{{book.status}}</p>
+                      <p>Vet : {{generateVetData(book.vetId)}}</p>
+                      <p>Pet: {{generatePetData(book.petId)}}</p>
+                      <p>{{generateVetAddress(book.vetId)}}</p>
+
+                    <br>
+                  </ion-item>
+                </div>
+              </ion-list>
+
+        </ion-list>
+
+      </ion-card>
     </div>
-  </ion-card>
+
+
 </ion-content>
+
+
+
+

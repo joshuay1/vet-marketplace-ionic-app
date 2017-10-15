@@ -197,9 +197,11 @@ platforms/
 www/
 orleans.codegen.cs
 FireBase/plugins/
+frontend/plugins/
 target/
 .classpath
 .settings/
+frontend/.sourcemaps/
 
 # RIA/Silverlight projects
 Generated_Code/

@@ -14,19 +14,17 @@
 
 
 <ion-content padding>
-  <p> Current Availabilites</p>>
+  <h6> Current Availabilites</h6>
   <ion-list>
     <ion-item *ngFor= 'let avail of availData | async'>
-      <h2>Availabilites : {{stringfy(avail)}}</h2>
-      <h2>Date :{{avail.key}}</h2>
-      <h2>Time Range: {{avail.value}}</h2>
+      <p>{{stringfy(avail)}}</p>
     </ion-item>
   </ion-list>
 
-  <h1>Adding Availabilites</h1>
-
-  <button class= "addbutton" ion-button (click)="presentAvailPrompt()" ion-button icon-only>
-    <ion-icon name="ios-add-circle-outline"></ion-icon>
-  </button>
 
 </ion-content>
+<ion-footer>
+    <div class = "footerbutton">
+        <button class = "button button-block"color="secondary" ion-button (click)="presentAvailPrompt()">Add Availabilites</button>
+    </div>
+  </ion-footer>

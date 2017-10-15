@@ -34,11 +34,13 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
+white:      #ffffff,
   primary:    #0b4d6b,
   secondary:  #00C9A1,
   text:       #7e7e7e,
   light:      #f4f4f4,
-  dark:       #282828
+  dark:       #282828,
+  background: #F0F0F0
 );
 
 
@@ -88,6 +90,35 @@ blue {
 
 // Fonts
 // --------------------------------------------------
+
+
+h2{
+  color: black;
+  font-weight: bold;
+  text-align:center;
+  font-size: 1em;
+
+
+}
+
+h3{
+  text-align:center;
+  color: #0b4d6b;
+  font-size: 1.2em;
+}
+
+h5{
+  text-align:center;
+  color: #7e7e7e;
+  font-size: 10px;
+}
+
+
+p{
+  text-align:center;
+  color: #7e7e7e;
+  font-size: 10px;
+}
 
 @import "roboto";
 @import "noto-sans";

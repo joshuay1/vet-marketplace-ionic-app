@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
 import { UserInfo } from "../../model/user";
 import { PetPage} from "../pet/pet";
 import { EditProfilePage} from "../editprofile/editprofile";
 import { RegisterPetPage} from "../registerPet/registerPet"
 import { User} from "../../model/user";
+import {PetInfo} from "../../model/pet";
+import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
+import { PictureEditPage } from './pictureEdit';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the ProfilePage page.
@@ -21,34 +26,96 @@ import { User} from "../../model/user";
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  profileData : FirebaseObjectObservable<UserInfo>;
+
+  selectedPet : any;
+  Vet:any;
+  User:any;
+  petIds :Array<string>;
+  userId: any;
+  imgUrl;
+  profile : FirebaseObjectObservable<UserInfo>;
+  count = 0;
+  petStorage : {[k: string]: any} = {};
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
             private afAuth: AngularFireAuth,
             private db : AngularFireDatabase,
-            private modalCtrl: ModalController) {
+            private modalCtrl: ModalController,
+            private app : FirebaseApp,
+            private storage: Storage,
+            private alertCtrl : AlertController) {
+              this.userId = this.afAuth.auth.currentUser.uid;
+              this.profile = this.db.object(`users/`+this.userId);
+              this.profile.forEach(snapshot=>{
+                this.storeUserData(snapshot);
+                this.getImgUrl(snapshot.pictureURL);
+                this.Vet = null;
+                this.User = null;
+                if(snapshot.userType == "User"){
+                  this.User = true;
+                  this.petIds = snapshot.petIds;
+                  this.getPetNames();
+                }else if(snapshot.userType == "Vet"){
+                  this.Vet = true;
+                }
+                
+                
+              });
+              
+              
+            }
+
+
+  storeUserData(snapshot : UserInfo){
+      console.log(JSON.stringify(snapshot));
+      this.storage.set("userData", snapshot).then(result=>{
+        console.log("storing user data successful");
+      }).catch(error=>{
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          message: error,
+          buttons: ['OK']
+        });
+          alert.present();
+
+      });
   }
-  private userData = {
-    uid:""
-  };
+
+  getImgUrl(pictureURL: string){
+      console.log("picture Url = "+ pictureURL);
+      var gsReference = firebase.storage().refFromURL(pictureURL);
+      gsReference.getDownloadURL().then(url =>{
+        console.log("img url = "+ url);
+        this.imgUrl = url;
+        document.getElementById("profilePicture").setAttribute("src",url);
+      }).catch(function(error){
+        console.log("catchin error here");
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          message : error,
+          buttons : ['OK']
+        });
+        alert.present();
+      })
+  }
+
+  changePicture(){
+    this.navCtrl.push(PictureEditPage,{userId: this.userId, imgUrl : this.imgUrl});
+  }
 
   ionViewDidLoad() {
-    console.log("hello");
-    this.afAuth.authState.subscribe(data=>{
-      this.profileData = this.db.object(`users/${data.uid}`);
-      this.userData.uid = `${data.uid}`;
-      console.log(this.userData.uid);
-    });
+    console.log("profile page loaded");
   }
 
   registerNewPet(user: User)
   {
     console.log("In registerNewPet Function");
-    this.navCtrl.push('RegisterPetPage',this.userData);
+    this.navCtrl.push('RegisterPetPage',{uid:this.userId});
   }
 
-  accessPet() {
-    this.navCtrl.push('PetPage');
+  accessPet(petid: any) {
+    this.navCtrl.push('PetPage',{petId: petid});
   }
 
   editProfile() {
@@ -56,5 +123,55 @@ export class ProfilePage {
     edit.present();
   }
 
+
+  getPetName(petId:any):string {
+    var petdata : PetInfo = this.petStorage[petId];
+    if(petdata!= null){
+      return petdata["petName"];
+    }else{
+      return "";
+    } 
+  }
+
+  getPetNames(){
+    console.log("accessing database for petNames");
+      if(this.petIds!= null && this.petIds.length>0){
+        var i = 0;
+        this.count = 0;
+        for( i = 0 ; i < this.petIds.length; i++){
+          var petId = this.petIds[i];
+          this.getPetData(this.petIds[i], this.petIds.length);
+        }
+      }
+      
+}
+
+async getPetData(petId: string, length: number){
+  
+  this.db.database.ref('/pets/'+petId).on('value',(snapshot)=>{
+    
+    var petData : PetInfo = snapshot.val();
+    console.log(JSON.stringify(petData));
+    this.petStorage[petId] = petData;
+    console.log("petStorage = " + JSON.stringify(this.petStorage));
+    this.storePetNames();
+  })
+
+}
+
+  storePetNames(){
+    this.storage.set("PetDatas", this.petStorage).then(result=>{
+      console.log("storing pet data successful");
+    }).catch(error=>{
+
+      console.log("catchin error here");
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        message : error,
+        buttons : ['OK']
+      });
+      alert.present();
+    })
+  }
 
 }

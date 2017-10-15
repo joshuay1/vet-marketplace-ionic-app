@@ -72,4 +72,8 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
         alert.present();
       })
     }
+    dismiss(){
+      this.viewCtrl.dismiss();
+    }
+
   }

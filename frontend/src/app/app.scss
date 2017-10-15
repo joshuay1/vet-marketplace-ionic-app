@@ -16,17 +16,39 @@
 // automatically applied to the <body> element in the app.
 
 
-ion-card.card {
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.00);
-    border-radius: 5px;
+  .globalmargin{
+    margin:10px;
   }
   
   .button {
     align-content: center;
-    position: relative
+    position: relative;
   }
   
+  .footerbutton{
+    margin: 10px;
+    position: center;
+  }
+
+  ion-card.card {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.00);
+    border-radius: 5px;
+  }
+
+    
+  ::-webkit-scrollbar{
+    display:none;
+    }
+
+
+  .scroll-content {
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+
+  }
+
   .addbutton{
     background-color: rgba(255, 255, 255, 0.00);
     color: gray;
@@ -39,6 +61,27 @@ ion-card.card {
     text-align: center;
     box-shadow: none;
   }
+
+  .addbutton.buttonActive {
+    background:rgba(255, 255, 255, 0.00);
+}
+
+.itemcard{
+  background: white;
+  box-shadow: 1px 1px 1px #A7A7A7;
+  border-radius: 5px;
+  padding:10px;
+  margin:5px;
+  border: 0.5px solid  rgb(185, 185, 185);
+  text-align: center;
+  vertical-align: middle;
+  height: 300px;
+}
+
+ion-select{
+  display: inline-block;
+  font-size: 1em;
+}
 
   
   .img_container{
@@ -55,7 +98,19 @@ ion-card.card {
     font-family: roboto;
 }
 
+.toolbar-ios-title-text{
+  color:white;
+}
+
 .toolbar-title-ios{
     color: white;
     font-family: roboto;
 }  
+
+.toolbar-ios-button{
+ color: white;
+}
+
+.back-button {
+  color:white !important;
+}

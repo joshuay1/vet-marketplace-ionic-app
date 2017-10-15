@@ -18,8 +18,8 @@
         </ion-title>
     
         <ion-buttons end>
-          <button ion-button color="light"icon-only (click)="openModal()">
-            <ion-icon name="options"></ion-icon>
+          <button ion-button color="light"icon-only (click)="editProfile()">
+            <ion-icon name="more"></ion-icon>
           </button>
         </ion-buttons>
       </ion-navbar>
@@ -27,40 +27,29 @@
     </ion-header>
 
 
-<ion-content  scroll="false" >
-
-    <div style="height: 40%" class="background">
-
-    <ion-grid>
-      <ion-row>
-        <ion-col>
+<ion-content class="background">
+    <div class="profiletop">
       <div class="circle-pic">
-        <img src="assets/img/owner.jpg" />
+            <img id = "profilePicture" (click) = "changePicture()">
       </div>
-    </ion-col>
-    <ion-col>
-      <br><br><br>      
-      <p class="a"> {{(profileData|async)?.userType}} </p>
-      <p class="p">{{(profileData|async)?.firstname}} {{(profileData|async)?.lastname}} </p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <button ion-button class="edit" 
-  (click)="editProfile()">Edit Profile</button>
-    
-   
-</div>
 
-<div class="whitebackground">
+     <span>
+      <h2> {{(profile|async)?.userType}} </h2>
+      <h3>{{(profile|async)?.firstname}} {{(profile|async)?.lastname}}</h3>
+    </span>
+  </div>
+
+<div *ngIf="User">
 
   <ion-card class="profilecard">
     <ion-card-content>
 
       <p class="a">My pets</p>
-      <button class="button button-block" ion-button color="secondary" 
-      (click)="accessPet()">Snuffle</button>
-      <button class="button button-block" ion-button color="secondary"
-      (click)="accessPet()">Snowball</button>
+ 
+          <ion-item *ngFor="let pet of petIds">
+            <button class="button button-block" ion-button color="secondary" 
+            (click)="accessPet(pet)">{{getPetName(pet)}}</button>
+          </ion-item>
 
       <div class="img_container">
       <button class= "addbutton" ion-button (click)="registerNewPet(user)" ion-button icon-only>
@@ -70,4 +59,20 @@
     </ion-card-content>
   </ion-card>
 </div>
+
+
+
+<div *ngIf="Vet">
+
+    <ion-card class="profilecard">
+        <ion-card-content>
+    <h3>{{(profile|async)?.streetnumber}}
+      {{(profile|async)?.streetname}}
+      {{(profile|async)?.suburb}}
+      {{(profile|async)?.state}}
+      {{(profile|async)?.postcode}}</h3>
+    </ion-card-content>
+  </ion-card>
+</div>
+
 </ion-content>

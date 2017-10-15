@@ -20,5 +20,22 @@ export interface UserInfo{
     country : string;
     userid: string;
     isVerifiedVet: boolean;
+    petIds : Array<string>;
     //TO-DO CAllum update this lista against the firebase db
+}
+
+export interface BookingInfo{
+    userId : string;
+    petId : string;
+    vetId : string;
+    bookingId: string;
+    year: any;
+    month : any;
+    day : any;
+    time: string;
+    status : string;
+    H: string;
+    E: string;
+    A: string;
+    P: string;
 }

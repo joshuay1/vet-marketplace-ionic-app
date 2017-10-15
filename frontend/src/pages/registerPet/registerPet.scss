@@ -1,61 +1,6 @@
 page-registerPet {
-    .background{
-           background-image: url('../assets/img/blueBackground2.jpg');
-    } 
 
-    .TitleFont{
-        font-size: 20px;
-    }
-    .scroll-content {
-        align-content: center;
-        justify-content: center;
-        text-align: center;
-        overflow-y: auto;
-
-    }
-
-    .logo img {
-    position: relative;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin:0 auto;
-    padding: 0
-}
-
-    $toolbar-ios-title-text-color:white;
-
-    ::-webkit-scrollbar{
-        display:none;
-        }
-
-    ion-card {
-        position: relative; 
-    }
     
-
-    ion-card.card {
-        box-shadow: none;
-        background: rgba(255, 255, 255, 0.00);
-        border-radius: 5px;
-        position: absolute;
-        padding: none;
-        margin: none;
-        
-    }
-    .item {
-    margin-bottom: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    border: medium none;
-    
- 
-
-    .text-input, {
-        color: "primary";
-    }
-}
-
-
 
 }
 

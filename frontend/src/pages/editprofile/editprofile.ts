@@ -23,7 +23,7 @@ import { HttpServiceProvider } from "../../providers/http-service/http-service";
 export class EditProfilePage {
   userInfo = {} as UserInfo;
   profileData: FirebaseObjectObservable<UserInfo>;
-  loading; 
+  loading;
   editForm: FormGroup;
   uid: string;
   private apiUrl = 'http://115.146.86.193:8080/';
@@ -36,6 +36,7 @@ export class EditProfilePage {
   country: string;
 
   constructor(public viewCtrl: ViewController,
+    public navCtrl: NavController,
     public navParams: NavParams,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
@@ -84,7 +85,7 @@ export class EditProfilePage {
           snapshots.forEach(snapshot=>{
             console.log("snapshot = "+snapshot.key+", values =" + snapshot.val()) ;
           });*/
-        });        
+        });
         this.streetname = snapshot.streetname;
         this.streetnumber = snapshot.streetnumber;
         this.suburb = snapshot.suburb;
@@ -98,10 +99,10 @@ export class EditProfilePage {
   }
 
   async update(){
-  
+
     if(this.validate()){
       this.userInfo.userid = this.uid;
-        if(this.userInfo.streetname!= null || this.userInfo.streetnumber!= null|| 
+        if(this.userInfo.streetname!= null || this.userInfo.streetnumber!= null||
           this.userInfo.suburb!= null|| this.userInfo.state!= null
           || this.userInfo.postcode!= null || this.userInfo.country!= null){
             console.log(this.userInfo.streetname)
@@ -122,12 +123,12 @@ export class EditProfilePage {
           }
           if(this.userInfo.postcode == null){
             this.userInfo.postcode = this.postcode;
-          }          
+          }
           if(this.userInfo.country == null){
             this.userInfo.country = this.country;
           }
         }
-         
+
       this.httpProviders.httpPost(this.apiUrl+"profileUpdate",JSON.stringify(this.userInfo))
       .then(result=>{
         console.log("get result here");
@@ -145,10 +146,10 @@ export class EditProfilePage {
         });
         alert.present();
       })
-      
+
     }
   }
-  
+
 
   validate(): boolean {
     // figure out the error message
@@ -227,5 +228,10 @@ export class EditProfilePage {
     alert.present();
   }
 
-  
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
+
+
+
 }
