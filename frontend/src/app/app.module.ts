@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { MyApp } from './app.component';
+import { EZVets} from './app.component';
 import { OwnerHomePage } from '../pages/home/ownerHome/ownerHome';
 import { VetHomePage } from '../pages/home/vetHome/vetHome';
 import { LoginPage } from "../pages/login/login";
@@ -43,7 +43,7 @@ var config = {
 
 @NgModule({
   declarations: [
-    MyApp,
+    EZVets,
     LoginPage,
     OwnerHomePage,
     VetHomePage,
@@ -62,7 +62,7 @@ var config = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(EZVets),
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
@@ -72,7 +72,7 @@ var config = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    EZVets,
     LoginPage,
     OwnerHomePage,
     VetHomePage,
