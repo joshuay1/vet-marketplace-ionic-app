@@ -36,7 +36,7 @@
             <ion-list>
               <div class="bookingcard">
                 <ion-item *ngFor='let book of currentBookings'  >
-                  <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                  <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                   <h3>User: {{generateUserData(book.userId)}}</h3>
                   <h3>Pet: {{generatePetData(book.petId)}}</h3>
                   <h3>Status : {{book.status}}</h3>
@@ -50,7 +50,7 @@
               <ion-list>
                   <div class="bookingcard">
                     <ion-item *ngFor='let book of pastBookings'  >
-                      <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                      <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                       <h3>User: {{generateUserData(book.userId)}}</h3>
                       <h3>Pet: {{generatePetData(book.petId)}}</h3>
                       <h3>Status : {{book.status}}</h3> 
@@ -77,7 +77,7 @@
                           <div class = "profilePicContainer">
                             <img *ngIf="Online" class="vetProfilePicture" [src]="getImageUrl(book.vetId)">
                           </div>
-                        <h2>{{book.year}}/{{book.month}}/{{book.day}} </h2>
+                        <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
                         <h2>{{book.time}}</h2>
                         <h2>{{book.status}}</h2>
                         <h3>Vet : {{generateVetData(book.vetId)}}</h3>
@@ -102,7 +102,7 @@
             <ion-list>
                 <div class="bookingcard">
                   <ion-item *ngFor='let book of pastBookings'  >
-                      <h2>{{book.year}}/{{book.month}}/{{book.day}} </h2>
+                      <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
                       <h2>{{book.time}}</h2>
                       <h2>{{book.status}}</h2>
                       <h3>Vet : {{generateVetData(book.vetId)}}</h3>
