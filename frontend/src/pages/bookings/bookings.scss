@@ -20,11 +20,9 @@ page-bookings {
     background: white;
     box-shadow: 1px 1px 1px #A7A7A7;
     border-radius: 5px;
-    padding:10px;
-    margin:2px;
-    border: 0.5px solid  rgb(243, 243, 243);
-    top:0px;
-    margin-top: 0px;
+    padding:20px;
+    margin:10px;
+    border: 0.5px solid  rgb(194, 194, 194);
   }
 
   
@@ -42,6 +40,13 @@ page-bookings {
   h3{
     color: #717171;
     text-align: left;
+    font-size: 10px;
+  }
+
+  p{
+    color: #717171;
+    text-align: left;
+    font-size: 10px;
   }
   
   .toolbar-background {
