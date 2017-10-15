@@ -40,8 +40,9 @@
                   <h3>User: {{generateUserData(book.userId)}}</h3>
                   <h3>Pet: {{generatePetData(book.petId)}}</h3>
                   <h3>Status : {{book.status}}</h3>
-                  <button *ngIf="Online" color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
-                  <br>
+                  <button  class="button button-block" *ngIf="Online" 
+                  color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
+
                 </ion-item>
               </div>
             </ion-list>
@@ -53,9 +54,8 @@
                       <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                       <h3>User: {{generateUserData(book.userId)}}</h3>
                       <h3>Pet: {{generatePetData(book.petId)}}</h3>
-                      <h3>Status : {{book.status}}</h3>
+                      <h5>Status : {{book.status}}</h5>
                       <button *ngIf="Online" (click)= "goToHeap(book)">Heap Form</button>
-                      <br>
                     </ion-item>
                   </div>
                 </ion-list>
@@ -79,9 +79,9 @@
                           </div>
                         <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
                         <h2>{{book.time}}</h2>
-                        <h2>{{book.status}}</h2>
-                        <h3>Vet : {{generateVetData(book.vetId)}}</h3>
-                        <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                        <p>{{book.status}}</p>
+                        <p>Vet : {{generateVetData(book.vetId)}}</p>
+                        <p>Pet: {{generatePetData(book.petId)}}</p>
 
                         <h3>{{generateVetAddress(book.vetId)}}</h3>
                         <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
@@ -104,10 +104,10 @@
                   <ion-item *ngFor='let book of pastBookings'  >
                       <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
                       <h2>{{book.time}}</h2>
-                      <h2>{{book.status}}</h2>
-                      <h3>Vet : {{generateVetData(book.vetId)}}</h3>
-                      <h3>Pet: {{generatePetData(book.petId)}}</h3>
-                      <h3>{{generateVetAddress(book.vetId)}}</h3>
+                      <p>{{book.status}}</p>
+                      <p>Vet : {{generateVetData(book.vetId)}}</p>
+                      <p>Pet: {{generatePetData(book.petId)}}</p>
+                      <p>{{generateVetAddress(book.vetId)}}</p>
 
                     <br>
                   </ion-item>
