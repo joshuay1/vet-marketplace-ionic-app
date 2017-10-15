@@ -24,9 +24,14 @@
   <ion-label>Select Vet</ion-label>
     <ion-slides >
       <ion-slide *ngFor="let b of vetIds">
-        <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
+
         <ion-card>
-        <ion-card-content>{{b.VetID}}</ion-card-content>
+        <ion-card-content>
+              {{b.VetID}}<br>
+              <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
+        
+          
+         </ion-card-content>
         </ion-card>
     </ion-slide>
     </ion-slides>

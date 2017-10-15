@@ -1,37 +1,46 @@
-<!--
-  Generated template for the Store page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-  <ion-navbar>
-    <ion-title>Store</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding >
-  <p> this is Online Vet Store page </p>
-
-  <ion-item *ngFor="let item of items">
-    <ion-label>{{item.Name}}</ion-label>
-    <ion-select>
-      <ion-option (ionSelect)="addToTotal(item.Price,1)">1</ion-option>
-      <ion-option (ionSelect)="addToTotal(item.Price,2)" >2</ion-option>
-      <ion-option (ionSelect)="addToTotal(item.Price,3)" >3</ion-option>
-      <ion-option (ionSelect)="addToTotal(item.Price,4)" >4</ion-option>
-      <ion-option (ionSelect)="addToTotal(item.Price,5)" >5</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>Total Cost is = {{totalCost}}</ion-label>
-  </ion-item>
-
-  <ion-item>
-    <button ion-button color="light">Proceed To Checkout</button>
-  </ion-item>
-
-</ion-content>
+    
+      <ion-navbar>
+        <ion-title>Store</ion-title>
+      </ion-navbar>
+    
+    </ion-header>
+    
+    
+    <ion-content padding>
+    
+        <ion-slides loop="false">
+            <ion-slide *ngFor="let item of items">
+              <div class="itemcard">
+        <ion-label>{{item.Name}}</ion-label>
+        <img src="../assets/img/logo.png" style="width:190px;height:130px" align="center">
+        <p>${{item.Price}}</p>
+        <p>Select Quantity</p><ion-select>
+          <ion-option (ionSelect)="addToTotal(item.Price,0)">0</ion-option>
+          <ion-option (ionSelect)="addToTotal(item.Price,1)">1</ion-option>
+          <ion-option (ionSelect)="addToTotal(item.Price,2)" >2</ion-option>
+          <ion-option (ionSelect)="addToTotal(item.Price,3)" >3</ion-option>
+          <ion-option (ionSelect)="addToTotal(item.Price,4)" >4</ion-option>
+          <ion-option (ionSelect)="addToTotal(item.Price,5)" >5</ion-option>
+        </ion-select>
+    
+    </div>
+    </ion-slide>
+    </ion-slides>
+    
+    
+    
+    </ion-content>
+    
+    <ion-footer>
+        <ion-item>
+            <ion-label>Total Cost is = {{totalCost}}</ion-label>
+          </ion-item>
+        <br>
+        <div class = "footerbutton">
+            <button class = "button button-block"color="secondary" ion-button>
+              Proceed To Checkout</button>
+        </div>   
+      </ion-footer>
+    

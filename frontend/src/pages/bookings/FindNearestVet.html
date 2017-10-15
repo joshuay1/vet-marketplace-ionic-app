@@ -2,7 +2,7 @@
 
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">Close</button>
+      <button color="white" ion-button (click)="dismiss()">Close</button>
     </ion-buttons>
     <ion-title>Find Nearest Vet</ion-title>
   </ion-navbar>
@@ -10,6 +10,7 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="globalmargin">
   <ion-item>
     <ion-label>Pet-Name</ion-label>
     <ion-select [(ngModel)]="selectedPet">
@@ -17,7 +18,7 @@
     </ion-select>
   </ion-item>
   <form [formGroup]="findVet">
-    <ion-list>
+    
       <ion-item>
         <ion-label floating color="dark">Date</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
@@ -36,10 +37,10 @@
       <br>
 
       
-    </ion-list>
+   
   </form>
 
-
+  </div>
 </ion-content>
 <ion-footer>
   <div class = "footerbutton">

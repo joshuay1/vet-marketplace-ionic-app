@@ -36,7 +36,7 @@
             <ion-list>
               <div class="bookingcard">
                 <ion-item *ngFor='let book of currentBookings'  >
-                  <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                  <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                   <h3>User: {{generateUserData(book.userId)}}</h3>
                   <h3>Pet: {{generatePetData(book.petId)}}</h3>
                   <h3>Status : {{book.status}}</h3>
@@ -50,7 +50,7 @@
               <ion-list>
                   <div class="bookingcard">
                     <ion-item *ngFor='let book of pastBookings'  >
-                      <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
+                      <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                       <h3>User: {{generateUserData(book.userId)}}</h3>
                       <h3>Pet: {{generatePetData(book.petId)}}</h3>
                       <h3>Status : {{book.status}}</h3> 
@@ -71,18 +71,19 @@
               
                  
 
-                    <ion-slides loop="false" style="background-color: black">
+                    <ion-slides loop="false">
                       <ion-slide *ngFor="let book of currentBookings">
                         <div class="bookingcard">
                           <div class = "profilePicContainer">
                             <img *ngIf="Online" class="vetProfilePicture" [src]="getImageUrl(book.vetId)">
                           </div>
+                        <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
+                        <h2>{{book.time}}</h2>
+                        <h2>{{book.status}}</h2>
                         <h3>Vet : {{generateVetData(book.vetId)}}</h3>
                         <h3>Pet: {{generatePetData(book.petId)}}</h3>
-                        <h3>Date :{{book.year}}/{{book.month}}/{{book.day}} </h3>
-                        <h3>Time: {{book.time}}</h3>
-                        <h3>Status : {{book.status}}</h3>
-                        <h3>Address: {{generateVetAddress(book.vetId)}}</h3>
+
+                        <h3>{{generateVetAddress(book.vetId)}}</h3>
                         <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
                       </div>
                       </ion-slide>
@@ -101,12 +102,12 @@
             <ion-list>
                 <div class="bookingcard">
                   <ion-item *ngFor='let book of pastBookings'  >
-                    <h2>{{book.year}}/{{book.month}}/{{book.day}}</h2>
-                    <h3>User: {{generateUserData(book.userId)}}</h3>
-                    <h3>Pet: {{generatePetData(book.petId)}}</h3>
-                    <h3>Vet : {{generateVetData(book.vetId)}}</h3>
-                    <h3>Time: {{book.time}}</h3>
-                    <h3>Status : {{book.status}}</h3> 
+                      <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
+                      <h2>{{book.time}}</h2>
+                      <h2>{{book.status}}</h2>
+                      <h3>Vet : {{generateVetData(book.vetId)}}</h3>
+                      <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                      <h3>{{generateVetAddress(book.vetId)}}</h3>
                     
                     <br>
                   </ion-item>

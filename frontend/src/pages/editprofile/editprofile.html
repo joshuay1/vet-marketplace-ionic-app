@@ -7,25 +7,21 @@
 <ion-header>
   
     <ion-navbar>
-      
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+        <ion-buttons color="white" start>
+            <button ion-button (click)="dismiss()"></button>
+          </ion-buttons>
+
   
       <ion-title>
           <span text-color="light">Edit Profile</span>
       </ion-title>
   
-      <ion-buttons end>
-        <button ion-button color="light"icon-only (click)="openModal()">
-          <ion-icon name="options"></ion-icon>
-        </button>
-      </ion-buttons>
+
     </ion-navbar>
   
 </ion-header>
 
-<ion-content>
+<ion-content class="globalmargin">
 <form [formGroup]= "editForm">
  <ion-list>
    <ion-item>
@@ -80,6 +76,6 @@
 
 <ion-footer>
     <div class = "footerbutton">
-        <button class = "button button-block"color="secondary" ion-button (click)="update()">Change</button>>
+        <button class = "button button-block"color="secondary" ion-button (click)="update()">Change</button>
     </div>   
   </ion-footer>
