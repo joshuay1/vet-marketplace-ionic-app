@@ -13,12 +13,12 @@
   <div class="globalmargin">
   <ion-item>
     <ion-label>Pet-Name</ion-label>
-    <ion-select [(ngModel)]="selectedPet">
-      <ion-option *ngFor="let pet of petIds">{{getPetName(pet.$value)}}</ion-option>
+    <ion-select>
+      <ion-option *ngFor="let pet of petIds" (ionSelect)="selectPet(pet.$value)">{{getPetName(pet.$value)}}</ion-option>
     </ion-select>
   </ion-item>
   <form [formGroup]="findVet">
-    
+
       <ion-item>
         <ion-label floating color="dark">Date</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
@@ -36,8 +36,8 @@
       </ion-item>
       <br>
 
-      
-   
+
+
   </form>
 
   </div>
@@ -45,5 +45,5 @@
 <ion-footer>
   <div class = "footerbutton">
       <button class = "button button-block"color="secondary" ion-button (click)="search()">Search</button>
-  </div>   
+  </div>
 </ion-footer>

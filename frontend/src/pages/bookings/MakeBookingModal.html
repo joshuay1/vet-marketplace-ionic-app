@@ -22,24 +22,25 @@
 
 
   <ion-label>Select Vet</ion-label>
-    <ion-slides >
-      <ion-slide *ngFor="let b of vetIds">
-
-        <ion-card>
+  <ion-slides>
+    <ion-slide *ngFor="let b of vetIds">
+      <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
+      <ion-card>
         <ion-card-content>
-              {{b.VetID}}<br>
-              <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
-        
-          
-         </ion-card-content>
-        </ion-card>
+          <div class="profilePicContainer">
+            {{getVetName(b.VetID)}}
+            <img class="vetProfilePicture" [src]="getVetImage(b.VetID)">
+          </div>
+          <br>
+        </ion-card-content>
+      </ion-card>
     </ion-slide>
-    </ion-slides>
+  </ion-slides>
 
 
 </ion-content>
 <ion-footer>
   <div class="footerbutton">
-      <button class = "button button-block"color="secondary" ion-button (click)="add()">Book</button>
+    <button class="button button-block" color="secondary" ion-button (click)="add()">Book</button>
   </div>
 </ion-footer>

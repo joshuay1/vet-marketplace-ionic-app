@@ -32,7 +32,6 @@ export class FindNearestVet {
               public db : AngularFireDatabase,
               private modalCtrl: ModalController) {
     this.userId = params.get("userId");
-    console.log("user id in find nearest vet = " + this.userId);
     this.findVet = builder.group({
       'date': ['', Validators.required],
       //'radius': ['', Validators.required],
@@ -50,7 +49,6 @@ export class FindNearestVet {
 
     loading.present();
 
-    console.log(param);
     this.httpProviders.httpGet(this.apiUrl + "nearestVet", param, JSON.stringify({}))
       .then(result => {
         console.log("result=" + JSON.stringify(result));
@@ -59,7 +57,6 @@ export class FindNearestVet {
           console.log("success + " + result.hasOwnProperty("vetID"));
           for (var key in result) {
             if (key === "vetID") {
-              console.log(result[key]);
               this.vetIds = result[key];
             }
           }
@@ -107,7 +104,6 @@ export class FindNearestVet {
   }
 
   finalizeBooking() {
-    console.log(this.consultation);
     let finalBooking = this.modalCtrl.create(MakeBookingModal, {
       vetIds: this.vetIds,
       userId: this.userId,
@@ -125,17 +121,20 @@ export class FindNearestVet {
     pets.forEach(snapshot=>{
       this.petIds = snapshot;
     });
+
   }
 
   getPetName(petId:any):string {
-    console.log(petId);
     var petData: FirebaseObjectObservable<PetInfo>;
     petData = this.db.object(`pets/` + petId);
     var response = '';
     petData.forEach(snapshot => {
-      console.log("snaphot is " + snapshot);      
       response = snapshot.petName;
     });
     return response;
+  }
+
+  selectPet(petId:any){
+    this.selectedPet = petId;
   }
 }
