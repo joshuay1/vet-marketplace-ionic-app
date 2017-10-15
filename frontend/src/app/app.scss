@@ -66,6 +66,21 @@
     background:rgba(255, 255, 255, 0.00);
 }
 
+.itemcard{
+  background: white;
+  box-shadow: 1px 1px 1px #A7A7A7;
+  border-radius: 5px;
+  padding:10px;
+  margin:5px;
+  border: 0.5px solid  rgb(185, 185, 185);
+  text-align: center;
+  vertical-align: middle;
+}
+
+ion-select{
+  display: inline-block;
+}
+
   
   .img_container{
     text-align: center;

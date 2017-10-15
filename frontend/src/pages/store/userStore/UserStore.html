@@ -19,16 +19,17 @@
         <ion-slide *ngFor="let item of items">
           <div class="itemcard">
     <ion-label>{{item.Name}}</ion-label>
-    <img src="../assets/img/logo.png" style="width:235px;height:166px">
+    <img src="../assets/img/logo.png" style="width:190px;height:130px">
     <p>${{item.Price}}</p>
-    <p>Select Quantity</p><ion-select>
+    <p>Select Quantity</p>
+    <ion-select>
       <ion-option (ionSelect)="addToTotal(item.Price,1)">1</ion-option>
       <ion-option (ionSelect)="addToTotal(item.Price,2)" >2</ion-option>
       <ion-option (ionSelect)="addToTotal(item.Price,3)" >3</ion-option>
       <ion-option (ionSelect)="addToTotal(item.Price,4)" >4</ion-option>
       <ion-option (ionSelect)="addToTotal(item.Price,5)" >5</ion-option>
     </ion-select>
-
+    
 </div>
 </ion-slide>
 </ion-slides>
