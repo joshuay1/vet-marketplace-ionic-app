@@ -59,4 +59,20 @@
     </ion-card-content>
   </ion-card>
 </div>
+
+
+
+<div *ngIf="Vet">
+
+    <ion-card class="profilecard">
+        <ion-card-content>
+    <h3>{{(profile|async)?.streetnumber}}
+      {{(profile|async)?.streetname}}
+      {{(profile|async)?.suburb}}
+      {{(profile|async)?.state}}
+      {{(profile|async)?.postcode}}</h3>
+    </ion-card-content>
+  </ion-card>
+</div>
+
 </ion-content>

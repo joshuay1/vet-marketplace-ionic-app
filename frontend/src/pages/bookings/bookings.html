@@ -83,7 +83,7 @@
                         <p>Vet : {{generateVetData(book.vetId)}}</p>
                         <p>Pet: {{generatePetData(book.petId)}}</p>
 
-                        <h3>{{generateVetAddress(book.vetId)}}</h3>
+                        <h3>Address: {{generateVetAddress(book.vetId)}}</h3>
                         <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
                       </div>
                       </ion-slide>
