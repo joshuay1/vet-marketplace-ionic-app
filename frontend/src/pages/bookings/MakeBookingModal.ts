@@ -236,6 +236,10 @@ export class MakeBookingModal {
   }
 
   numberFormat(distance : string){
-    return parseFloat(distance).toFixed(2);
+    console.log(distance);
+    distance = distance.replace('\"', '');
+    var newdistance = parseFloat(distance).toFixed(2);
+    console.log("new distance = "+ newdistance);
+    return newdistance;
   }
 }

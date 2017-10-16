@@ -27,7 +27,8 @@
       <ion-card>
         <ion-card-content>
           <div class="profilePicContainer">
-            {{getVetName(b.VetID)}}   {{numberFormat(b.Distance)}} km
+            {{getVetName(b.VetID)}}  <br>
+            {{numberFormat(b.Distance)}} km
             <img class="vetProfilePicture" [src]="getVetImage(b.VetID)">
             <h3>Address: {{generateVetAddress(b.VetID)}}</h3>
             <button (click)="goMap(b.VetID)"><ion-icon name="locate"></ion-icon></button>
