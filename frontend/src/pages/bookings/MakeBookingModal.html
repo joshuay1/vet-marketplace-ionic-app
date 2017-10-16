@@ -22,13 +22,16 @@
 
 
   <h5>Select Vet</h5>
-  <ion-slides>
+  <ion-slides loop="false">
     <ion-slide *ngFor="let b of vetIds">
       <ion-card>
         <ion-card-content>
           <div class="profilePicContainer">
-            {{getVetName(b.VetID)}}
+            {{getVetName(b.VetID)}}   {{numberFormat(b.Distance)}} km
             <img class="vetProfilePicture" [src]="getVetImage(b.VetID)">
+            <h3>Address: {{generateVetAddress(b.VetID)}}</h3>
+            <button (click)="goMap(b.VetID)"><ion-icon name="locate"></ion-icon></button>
+            <br>
             <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
           </div>
           <br>
@@ -40,6 +43,7 @@
 
 
 </ion-content>
+
 <ion-footer>
   <div class="footerbutton">
     <button class="button button-block" color="secondary" ion-button (click)="add()">Book</button>

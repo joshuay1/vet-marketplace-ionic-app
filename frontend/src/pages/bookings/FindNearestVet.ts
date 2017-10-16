@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {ViewController, NavParams, AlertController, LoadingController, ModalController} from "ionic-angular";
+import {ViewController, NavParams, AlertController, LoadingController, ModalController, NavController} from "ionic-angular";
 import {HttpServiceProvider} from "../../providers/http-service/http-service";
 import {MakeBookingModal} from "./MakeBookingModal";
 import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
@@ -25,14 +25,13 @@ export class FindNearestVet {
   private petData:{[k: string]: PetInfo} = {};
 
 
-  constructor(public viewCtrl: ViewController,
+  constructor(public navCtrl: NavController,
               public params: NavParams,
               private builder: FormBuilder,
               private alertCtrl: AlertController,
               private httpProviders: HttpServiceProvider,
               public loadingCtrl: LoadingController,
-              public db : AngularFireDatabase,
-              private modalCtrl: ModalController) {
+              public db : AngularFireDatabase) {
     this.userId = params.get("userId");
     this.findVet = builder.group({
       'date': ['', Validators.required],
@@ -65,18 +64,8 @@ export class FindNearestVet {
           for (var key in result) {
             if (key === "vetID") {
               this.vetIds = result[key];
-              if(this.vetIds== null || this.vetIds.length == 0){
-                let alert = this.alertCtrl.create({
-                  title: 'There are no vets available at the specified time and date',
-                  message: result.errorMessage,
-                  buttons: ['OK']
-                });
-                alert.present();
-                this.viewCtrl.dismiss();
-              }
             }
-          }
-          ;
+          };
           loading.dismiss();
 
           if (result["vetID"] == null) {
@@ -87,9 +76,9 @@ export class FindNearestVet {
               buttons: ['OK']
             });
             alert.present();
-            this.viewCtrl.dismiss();
+            this.navCtrl.pop();
           } else {
-            this.viewCtrl.dismiss();
+            this.navCtrl.pop();
             this.finalizeBooking();
           }
         } else {
@@ -116,18 +105,17 @@ export class FindNearestVet {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.navCtrl.pop();
   }
 
   finalizeBooking() {
-    let finalBooking = this.modalCtrl.create(MakeBookingModal, {
+     this.navCtrl.push(MakeBookingModal, {
       vetIds: this.vetIds,
       userId: this.userId,
       petId : this.selectedPet,
       date: this.date,
       time: this.time
     });
-    finalBooking.present();
   }
 
 

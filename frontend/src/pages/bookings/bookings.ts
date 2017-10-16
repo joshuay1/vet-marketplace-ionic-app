@@ -265,8 +265,7 @@ export class BookingsPage {
   }
 
   makeBooking() {
-    let findNearestVet = this.modalCtrl.create(FindNearestVet, {userId: this.userid});
-    findNearestVet.present();
+    let findNearestVet = this.navCtrl.push(FindNearestVet, {userId: this.userid});
   }
 
   storeBookingData(){

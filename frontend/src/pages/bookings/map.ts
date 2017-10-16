@@ -26,6 +26,7 @@ export class MapPage {
     private vetid;
     private loading;
     private vetDatas;
+    private nearestVet: boolean;
     constructor(private googleMaps: GoogleMaps,
                 public navCtrl: NavController,
                 public navParams: NavParams,
@@ -43,6 +44,10 @@ export class MapPage {
           this.loading.present();
         console.log("load map page");
         this.vetid = this.navParams.get("vetid");
+        var near = this.navParams.get("status");
+        if(near == "nearestVet"){
+            this.nearestVet = true;
+        }
         var refurl ="/geofire/Vet/"+this.vetid+"/l";
         console.log(refurl);
     
@@ -84,13 +89,27 @@ export class MapPage {
                var icon;
                
                if(vetIds[i]== this.vetid ){
-                   title = "Selected Appointment";
-                   icon = 'red';
-                   this.addMarkers(title,icon, vetIds[i]);
+                   if(this.nearestVet){
+                       title = "Current Vet",
+                       icon = 'red';
+                       this.addMarkers(title,icon, vetIds[i]);
+                   }else{
+                        title = "Selected Appointment";
+                        icon = 'red';
+                        this.addMarkers(title,icon, vetIds[i]);
+                   }
+                   
                }else{
-                   title = "Other Appointments"
-                   icon = 'blue';
-                   this.addMarkers(title,icon, vetIds[i]);
+                   if(this.nearestVet){
+                    title = "Other Vet",
+                    icon = 'blue';
+                    this.addMarkers(title,icon, vetIds[i]);
+                   }else{
+                    title = "Other Appointments"
+                    icon = 'blue';
+                    this.addMarkers(title,icon, vetIds[i]);
+                   }
+                   
                }
 
                 
@@ -111,9 +130,10 @@ export class MapPage {
            lat = location[0];
            lng = location[1];
            var vet :UserInfo = this.vetDatas[vetid];
+           var address = vet.streetnumber + " " + vet.streetname +" , "+ vet.suburb+" , "+vet.state+" "+vet.postcode;
            this.map.addMarker({
-                title: title,
-                snippet:"Dr. "+ vet.firstname+ " "+ vet.lastname,
+                title: "Dr. "+ vet.firstname+ " "+ vet.lastname,
+                snippet: address,
                 icon: icon,
                 animation: 'DROP',
                 position: {
