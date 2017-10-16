@@ -244,8 +244,14 @@ public class MakeBookingController{
                 }
                 
             }
-            logger.info("//////////////////NEAREST VET ENDS/////////////");
-            return new VetResponse(item, "success",null);
+            if(item.size() > 0 ){
+                logger.info("//////////////////NEAREST VET ENDS/////////////");
+                return new VetResponse(item, "success",null);
+            }else{
+                logger.info("//////////////////NEAREST VET ENDS/////////////");
+                return new VetResponse(null, "success", "no vet near you that is available at that time");
+            }
+            
         }
     }
 
