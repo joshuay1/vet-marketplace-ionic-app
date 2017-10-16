@@ -16,8 +16,8 @@
 <ion-content padding>
   <h6> Current Availabilites</h6>
   <ion-list>
-    <ion-item *ngFor= 'let avail of availData | async'>
-      <p>{{stringfy(avail)}}</p>
+    <ion-item *ngFor= 'let avail of cleanData'>
+      <p>{{avail}} : {{generateTime(avail)}}</p>
     </ion-item>
   </ion-list>
 
