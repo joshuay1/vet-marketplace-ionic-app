@@ -327,6 +327,7 @@ export class BookingsPage {
 
   changeImageUrl(profileData: UserInfo, vetid: string){
     var pictureURL = profileData.pictureURL;
+    console.log(pictureURL);
     var gsReference = firebase.storage().refFromURL(pictureURL);
     gsReference.getDownloadURL().then(url =>{
       console.log("img url = "+ url);

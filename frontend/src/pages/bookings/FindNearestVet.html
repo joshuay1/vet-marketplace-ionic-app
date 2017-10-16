@@ -12,16 +12,16 @@
 <ion-content padding>
   <div class="globalmargin">
   <ion-item>
-    <ion-label>Pet-Name</ion-label>
+    <ion-label>Available Pets</ion-label>
     <ion-select>
-      <ion-option *ngFor="let pet of petIds" (ionSelect)="selectPet(pet.$value)">{{getPetName(pet.$value)}}</ion-option>
+      <ion-option *ngFor="let pet of petIds" (ionSelect)="selectPet(pet)">{{getPetName(pet)}}</ion-option>
     </ion-select>
   </ion-item>
   <form [formGroup]="findVet">
 
       <ion-item>
         <ion-label floating color="dark">Date</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" min="2016" max="2019" formControlName="date" [(ngModel)]="date"></ion-datetime>
       </ion-item>
 
       <!--ion-item>
@@ -32,7 +32,7 @@
 
       <ion-item>
         <ion-label floating color="dark">Time</ion-label>
-        <ion-datetime displayFormat="HH" formControlName="time" [(ngModel)]="time"></ion-datetime>
+        <ion-datetime displayFormat="HH" formControlName="time"  [(ngModel)]="time"></ion-datetime>
       </ion-item>
       <br>
 
