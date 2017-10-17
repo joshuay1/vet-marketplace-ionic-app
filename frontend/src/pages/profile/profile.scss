@@ -7,9 +7,12 @@ page-profile {
         box-shadow: none;
         background: rgba(255, 255, 255, 0.00);
         border-radius: 5px;
+        overflow-y: scroll;
       }
 
-
+    ion-scroll{
+        height: 230px;
+    }
 
     .profiletop{
         position: relative;
