@@ -79,7 +79,6 @@ export class VetStorePage {
         buttons: ['OK']
       });
       alert.present();
-      this.navCtrl.push(VetStorePage);
     }
     else {
       let alert = this.alertCtrl.create({
