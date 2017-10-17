@@ -9,6 +9,24 @@ page-pet {
         border-radius: 5px;
       }
 
+      h2{
+        color: #0b4d6b;
+        font-weight: bold;
+        text-align:center;
+        font-size: 1em;
+
+
+    }
+
+    h3{
+        text-align:center;
+        color: grey;
+        font-size: 0.8em;
+    }
+
+    ion-scoll{
+        height: 200px;
+    }
 
 
     .profiletop{
@@ -24,22 +42,28 @@ page-pet {
 
     }
 
-    .circle-pic img{
-        position: relative;
-        left: 5vw;
+    .circle-pic{
+        text-align:center;
+        vertical-align: middle;
+        left: 0;
         right: 0;
-        bottom: 5;
-        margin: 10 auto;
-        padding: 0;
-        top:10vw;
-        
+        height:23%;  
+ 
+    img{
+        position: center;
+        text-align:center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 22px;
+
         height: 35vw; 
         width: 35vw; 
-       border: 2px solid white;
-       border-radius: 50%;
-       box-shadow: 0 0 5px gray;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 5px gray;
     }
-
+    }
 }
 
 
