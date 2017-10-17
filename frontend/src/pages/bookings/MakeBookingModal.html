@@ -27,7 +27,6 @@
             {{getVetName(b.VetID)}}  <br>
             {{numberFormat(b.Distance)}} km
             <img class="vetProfilePicture" [src]="getVetImage(b.VetID)">
-            <h3>Address: {{generateVetAddress(b.VetID)}}</h3>
             <button (click)="goMap(b.VetID)"><ion-icon name="locate"></ion-icon></button>
             <br>
             <ion-checkbox (ionChange)="selectVet(b.VetID)"></ion-checkbox>
