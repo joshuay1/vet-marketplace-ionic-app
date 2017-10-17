@@ -53,7 +53,8 @@ export class LoginPage {
               if(userType == "User"|| userType == "Vet"){
                 
                 this.navCtrl.push(RedirectPage, {
-                  userType: userType
+                  userType: userType,
+                  isVerifiedVet : this.profileData.isVerifiedVet
                 })
               }
             }).catch(error=>{

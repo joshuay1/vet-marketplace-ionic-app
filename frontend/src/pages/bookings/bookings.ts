@@ -265,8 +265,7 @@ export class BookingsPage {
   }
 
   makeBooking() {
-    let findNearestVet = this.modalCtrl.create(FindNearestVet, {userId: this.userid});
-    findNearestVet.present();
+    let findNearestVet = this.navCtrl.push(FindNearestVet, {userId: this.userid});
   }
 
   storeBookingData(){
@@ -327,6 +326,7 @@ export class BookingsPage {
 
   changeImageUrl(profileData: UserInfo, vetid: string){
     var pictureURL = profileData.pictureURL;
+    console.log(pictureURL);
     var gsReference = firebase.storage().refFromURL(pictureURL);
     gsReference.getDownloadURL().then(url =>{
       console.log("img url = "+ url);

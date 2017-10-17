@@ -20,9 +20,11 @@ import { AvailModal } from './availModal';
 })
 export class CalendarPage {
 
-  availData : FirebaseListObservable<any[]>
 
-  vetId: string;
+  private cleanData: Array<string>;
+
+  private vetId: string;
+  private avail : {[k: string]: string} = {};
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -30,9 +32,44 @@ export class CalendarPage {
               private auth : AngularFireAuth,
               private modalCtrl: ModalController) {
       this.vetId = auth.auth.currentUser.uid;          
-      this.availData = db.list("users/"+this.vetId+"/availabilities");
+      var avail = db.list("users/"+this.vetId+"/availabilities");
+      this.db.database.ref('/users/'+this.vetId+"/availabilities").on('value',(snapshot)=>{
+        var availData = snapshot.val();
+        console.log(availData);
+        this.sort_and_handle(availData);
+      });
   }
 
+  sort_and_handle(availData: Array<any>){
+    this.cleanData = new Array<string>();
+    for(var i = 0 ; i < availData.length; i++){
+      console.log(JSON.stringify(availData[i]));
+      var date = Object.keys(availData[i])[0];
+      console.log("date = "+ date);
+      var time = availData[i][date];
+      console.log("time = "+ time);
+      this.avail[date] = time;
+      this.cleanData.push(date);
+    }
+    if(this.cleanData.length>0 && this.cleanData != null){
+      this.cleanData.sort();
+    }
+    
+  }
+
+
+  compareDate(dateString1 : string, dateString2 : string):number{
+
+    var date1 : Date = new Date(dateString1);
+    var date2 : Date = new Date(dateString2);
+    if(date1 < date2){
+      return -1;
+    }else if(date1 == date2){
+      return 0;
+    }else{
+      return 1;
+    }
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Calendar Page');
@@ -49,6 +86,12 @@ export class CalendarPage {
   presentAvailPrompt() {
     let availModal = this.modalCtrl.create(AvailModal,{vetId: this.vetId});
     availModal.present();
+  }
+
+  generateTime(date: string):string{
+    var time = this.avail[date];
+
+    return time;
   }
 
   

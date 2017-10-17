@@ -1,43 +1,49 @@
 import {Component} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {ViewController, NavParams, AlertController, LoadingController, ModalController} from "ionic-angular";
+import {ViewController, NavParams, AlertController, LoadingController, ModalController, NavController} from "ionic-angular";
 import {HttpServiceProvider} from "../../providers/http-service/http-service";
 import {MakeBookingModal} from "./MakeBookingModal";
 import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
 import {PetInfo} from "../../model/pet";
+import { UserInfo } from "../../model/user";
 
 @Component({
   templateUrl: "FindNearestVet.html"
 })
 
 export class FindNearestVet {
-  userId: string;
-  findVet: FormGroup;
-  radius: any;
-  time: any;
-  date: any;
-  vetIds: any;
-  consultation: any;
-  petIds : Array<any>;
-  selectedPet : any;
-  apiUrl = "http://115.146.86.193:8080/";
+  private userId: string;
+  private findVet: FormGroup;
+  private radius: any;
+  private time: any;
+  private date: any;
+  private vetIds: Array<string>;
+  private consultation: any;
+  private petIds : Array<string>;
+  private selectedPet : any;
+  private apiUrl = "http://115.146.86.193:8080/";
+  private petData:{[k: string]: PetInfo} = {};
 
 
-  constructor(public viewCtrl: ViewController,
+  constructor(public navCtrl: NavController,
               public params: NavParams,
               private builder: FormBuilder,
               private alertCtrl: AlertController,
               private httpProviders: HttpServiceProvider,
               public loadingCtrl: LoadingController,
-              public db : AngularFireDatabase,
-              private modalCtrl: ModalController) {
+              public db : AngularFireDatabase) {
     this.userId = params.get("userId");
     this.findVet = builder.group({
       'date': ['', Validators.required],
       //'radius': ['', Validators.required],
       'time': ['', Validators.required]
     })
-    this.getPetIds();
+    this.db.database.ref('/users/'+this.userId+"/petIds").on('value',(snapshot)=>{
+      this.petIds = snapshot.val();
+      console.log(this.petIds);
+    });
+      
+    this.generatePetData();
   }
 
   async search() {
@@ -59,8 +65,7 @@ export class FindNearestVet {
             if (key === "vetID") {
               this.vetIds = result[key];
             }
-          }
-          ;
+          };
           loading.dismiss();
 
           if (result["vetID"] == null) {
@@ -71,9 +76,9 @@ export class FindNearestVet {
               buttons: ['OK']
             });
             alert.present();
-            this.viewCtrl.dismiss();
+            this.navCtrl.pop();
           } else {
-            this.viewCtrl.dismiss();
+            this.navCtrl.pop();
             this.finalizeBooking();
           }
         } else {
@@ -100,41 +105,49 @@ export class FindNearestVet {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.navCtrl.pop();
   }
 
   finalizeBooking() {
-    let finalBooking = this.modalCtrl.create(MakeBookingModal, {
+     this.navCtrl.push(MakeBookingModal, {
       vetIds: this.vetIds,
       userId: this.userId,
       petId : this.selectedPet,
       date: this.date,
       time: this.time
     });
-    finalBooking.present();
   }
 
-  getPetIds(){
-    console.log("get called");
-    var pets = this.db.list("users/"+this.userId+"/petIds",{
-    });
-    pets.forEach(snapshot=>{
-      this.petIds = snapshot;
-    });
 
+  generatePetData(){
+    for(var i = 0 ; i < this.petIds.length; i++){
+      this.addPetData(this.petIds[i]);
+    }
   }
 
-  getPetName(petId:any):string {
-    var petData: FirebaseObjectObservable<PetInfo>;
-    petData = this.db.object(`pets/` + petId);
-    var response = '';
-    petData.forEach(snapshot => {
-      response = snapshot.petName;
-    });
-    return response;
+
+  getPetName(petid:any):string {
+    var petData : PetInfo;
+    petData = this.petData[petid];
+    if(petData != null){
+      return petData.petName;
+    }else{
+      return "";
+    }
   }
 
   selectPet(petId:any){
     this.selectedPet = petId;
   }
+
+
+  addPetData(petId: string){
+    this.db.database.ref('/pets/'+petId).once('value',(snapshot)=>{
+      var profileData : PetInfo = snapshot.val();
+      console.log(JSON.stringify(profileData));
+      this.petData[petId]= profileData;
+      console.log(JSON.stringify(this.petData));
+    });
+  }
+
 }

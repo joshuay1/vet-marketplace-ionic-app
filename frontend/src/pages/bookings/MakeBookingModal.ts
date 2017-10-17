@@ -1,10 +1,11 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ViewController, NavParams, AlertController, LoadingController} from "ionic-angular";
+import { NavParams, AlertController, LoadingController, NavController} from "ionic-angular";
 import {HttpServiceProvider} from "../../providers/http-service/http-service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {UserInfo} from "../../model/user";
 import * as firebase from 'firebase';
+import { MapPage } from "./map";
 
 
 @Component({
@@ -21,15 +22,17 @@ export class MakeBookingModal {
   selectedVet: any;
   petId: any;
   private vetData: { [k: string]: UserInfo } = {};
+  private VetIdArray : Array<string>  = new Array<string>();
 
   apiUrl = "http://115.146.86.193:8080/";
 
-  constructor(public viewCtrl: ViewController,
+  constructor(
               public params: NavParams,
               private db: AngularFireDatabase,
               private alertCtrl: AlertController,
               private httpProviders: HttpServiceProvider,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,
+              public navCtrl: NavController) {
 
     this.userId = params.get("userId");
     this.vetIds = new Array();
@@ -55,8 +58,13 @@ export class MakeBookingModal {
       data = data.replace('\"', '');
       data = data.replace('\"', '');
       console.log("The value is " + data);
+      this.VetIdArray.push(data);
       this.addVetData(data);
-    })
+    });
+
+    console.log("vet ids = "+ JSON.stringify(this.vetIds));
+    console.log("vet id arrays = "+ this.VetIdArray);
+    
   }
 
   addVetData(vetid: string) {
@@ -123,7 +131,7 @@ export class MakeBookingModal {
         if (res == "success") {
           console.log("success");
           loading.dismiss();
-          this.viewCtrl.dismiss();
+          this.navCtrl.pop();
         } else {
           loading.dismiss();
           let alert = this.alertCtrl.create({
@@ -148,7 +156,7 @@ export class MakeBookingModal {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.navCtrl.pop();
   }
 
   stringfy(json: any): string {
@@ -182,7 +190,7 @@ export class MakeBookingModal {
 
     var vet = this.vetData[data];
     if (vet != null) {
-      var name = vet.firstname + " " + vet.lastname;
+      var name = "Dr." + vet.firstname + " " + vet.lastname;
       return name;
     } else {
       return null;
@@ -194,5 +202,44 @@ export class MakeBookingModal {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  generateVetAddress(vetId: string){
+    let data = vetId;
+    data = data.replace('\"', '');
+    data = data.replace('\"', '');
+
+    var vet = this.vetData[data];
+    if (vet != null) {
+      var streetNum = vet.streetnumber;
+      var streetNam = vet.streetname;
+      var state = vet.state;
+      var postcode = vet.postcode;
+      var suburb = vet.suburb;
+      var country = vet.country;
+      return streetNum + " " + streetNam +" , "+ suburb+" , "+state+" "+postcode+" , "+ country;
+    } else {
+      return null;
+    }
+  }
+
+  goMap(vetId: string){
+    let data = vetId;
+    data = data.replace('\"', '');
+    data = data.replace('\"', '');
+    console.log("map button pushed");
+    console.log("vet id = " + data);
+    console.log("vetids =" + this.VetIdArray);
+    console.log("vetdatas = "+ this.vetData);
+    this.navCtrl.push
+    (MapPage, {"vetid": data, "vetids": this.VetIdArray, "vetdatas": this.vetData, "status": "nearestVet"});
+  }
+
+  numberFormat(distance : string){
+    console.log(distance);
+    distance = distance.replace('\"', '');
+    var newdistance = parseFloat(distance).toFixed(2);
+    console.log("new distance = "+ newdistance);
+    return newdistance;
   }
 }

@@ -5,7 +5,7 @@
         <ion-buttons start>
           <button ion-button (click)="dismiss()" color = "light">Close</button>
         </ion-buttons>
-        <ion-title>Availability Modal</ion-title>
+        <ion-title>Availability</ion-title>
       </ion-navbar>
     
 </ion-header>
@@ -15,7 +15,7 @@
         <ion-list>
             <ion-item>
                 <ion-label floating color="light">Date</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [(ngModel)]="date"></ion-datetime>
+                <ion-datetime displayFormat="DD/MM/YYYY" min="2017-10-16" max="2019" formControlName="date" [(ngModel)]="date"></ion-datetime>
             </ion-item>
     
             <ion-item>
