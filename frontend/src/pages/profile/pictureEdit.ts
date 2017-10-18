@@ -16,7 +16,7 @@ export class PictureEditPage {
 
   public base64Image: string;
   private apiUrl = 'http://115.146.86.193:8080/';
-
+  private Uploaded;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,7 +42,7 @@ export class PictureEditPage {
     }).then((imageData) => {
       // imageData is a base64 encoded string
         this.base64Image = "data:image/jpeg;base64," + imageData;
-        document.getElementById("Uploadbutton").style.visibility= "visible";
+        this.Uploaded = true;
     }, (err) => {
         console.log(err);
     });
@@ -118,7 +118,7 @@ export class PictureEditPage {
   }).then((imageData) => {
     // imageData is a base64 encoded string
       this.base64Image = "data:image/jpeg;base64," + imageData;
-      document.getElementById("Uploadbutton").style.visibility= "visible";
+      this.Uploaded = true;
   }, (err) => {
       console.log(err);
   });

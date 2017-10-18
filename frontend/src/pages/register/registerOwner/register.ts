@@ -26,6 +26,7 @@ export class RegisterOwnerPage {
   user = {} as User;
   userInfo = {} as UserInfo;
   loading; registerForm: FormGroup;
+  userType: string;
 
 
   constructor(private afAuth: AngularFireAuth,
@@ -52,6 +53,7 @@ export class RegisterOwnerPage {
         'postcode':['',Validators.required],
         'country': ['',Validators.required]
       })
+      this.userType = navParams.get('UserType');
       this.userInfo.userType = navParams.get('UserType');
   }
 

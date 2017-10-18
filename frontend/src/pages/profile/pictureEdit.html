@@ -20,7 +20,7 @@
         <img [src]="base64Image" />
 
         <button (click) = "back()">Back</button>
-        <button id= "UploadButton" (click) = "upload()">Upload</button>
+        <button *ngIf="Uploaded" (click) = "upload()">Upload</button>
       </ion-card-content>
     </ion-card>
   </ion-content>
