@@ -4,23 +4,32 @@
     </ion-title>
   </ion-navbar>
   
-  <ion-content class="home">
-    <ion-card>
-      <ion-card-content>
+  <ion-content class="globalmargin">
+
   
-        <button (click)="takePicture()">
+        <button class="addbutton" (click)="takePicture()">
             <ion-icon id= "cameraButton" name = "camera"></ion-icon>
         </button>
 
-        <button (click) = "getFromGallery()">
+        <button color="addbutton" (click) = "getFromGallery()">
             <h2>Get From Gallery</h2>
         </button><br>
   
         
         <img [src]="base64Image" />
 
-        <button (click) = "back()">Back</button>
-        <button *ngIf="Uploaded" (click) = "upload()">Upload</button>
-      </ion-card-content>
-    </ion-card>
   </ion-content>
+
+  <ion-footer>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+          <button class = "button button-block" ion-button color="secondary" *ngIf="Uploaded" (click) = "upload()">Upload</button>
+      </ion-col>
+      <ion-col>
+          <button class = "button button-block" ion-button color="text" (click) = "back()">Back</button>
+      </ion-col>
+</ion-row>
+
+</ion-grid>
+</ion-footer>

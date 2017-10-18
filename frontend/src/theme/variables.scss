@@ -125,8 +125,8 @@ p{
 
 
 @font-face{
-  font-family: Montserrat-Light, sans-serif;
-  src: url('../assets/fonts/Montserrat/Montserrat-Light.ttf') format('ttf');
+  font-family: 'AppFont';
+  src: url('../assets/fonts/Montserrat/Montserrat-Light.ttf');
   }
 
 @font-face{
@@ -135,7 +135,7 @@ p{
   }
    
 * {
-  font-family: 'Montserrat';
+  font-family: 'AppFont';
   }
 
 os {
