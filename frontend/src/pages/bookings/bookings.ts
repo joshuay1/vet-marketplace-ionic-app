@@ -338,7 +338,7 @@ export class BookingsPage {
     })
   }
 
-  generateVetAddress(vetId: string): string{
+  generateAddress(vetId: string): string{
     var vet = this.vetData[vetId];
     if(vet!= null){
       var streetNum = vet.streetnumber;

@@ -39,6 +39,7 @@
                   <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                   <h3>User: {{generateUserData(book.userId)}}</h3>
                   <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                  <h3>Address : {{generateAddress(book.userId)}}</h3>
                   <h3>Status : {{book.status}}</h3>
                   <button  class="button button-block" *ngIf="Online" 
                   color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
@@ -54,6 +55,7 @@
                       <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                       <h3>User: {{generateUserData(book.userId)}}</h3>
                       <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                      <h3>Address : {{generateAddress(book.userId)}}</h3>
                       <h5>Status : {{book.status}}</h5>
                       <button *ngIf="Online" (click)= "goToHeap(book)">Heap Form</button>
                     </ion-item>
@@ -111,7 +113,6 @@
                       <p>{{book.status}}</p>
                       <p>Vet : {{generateVetData(book.vetId)}}</p>
                       <p>Pet: {{generatePetData(book.petId)}}</p>
-                      <p>{{generateVetAddress(book.vetId)}}</p>
 
                     <br>
                   </ion-item>
