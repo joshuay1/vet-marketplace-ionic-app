@@ -339,7 +339,7 @@ export class BookingsPage {
   }
 
   generateAddress(vetId: string): string{
-    var vet = this.vetData[vetId];
+    var vet = this.userData[vetId];
     if(vet!= null){
       var streetNum = vet.streetnumber;
       var streetNam = vet.streetname;
