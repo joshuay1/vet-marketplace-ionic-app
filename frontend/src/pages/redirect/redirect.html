@@ -14,13 +14,13 @@
 
 
 <ion-content class="background">
-  <ion-item visibility="hidden" id="authKey">
+  <ion-item *ngIf="notAuthorised" id="authKey">
     <ion-label floating color="text">Vet Authorization Key</ion-label>
     <ion-input type="text" [(ngModel)]="vetKey"></ion-input>
   </ion-item>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="notAuthorised">
   <div class="footerbutton">
     <button class="button button-block"  ion-button color="secondary" (click)="verifyVet()">Verify</button>
   </div>

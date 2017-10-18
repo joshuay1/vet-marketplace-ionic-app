@@ -26,6 +26,7 @@ export class RedirectPage {
   private isVerifiedVet: any;
   private userid: string;
   private apiUrl = 'http://115.146.86.193:8080/';
+  private notAuthorised = null;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams, private afAuth: AngularFireAuth,
@@ -68,7 +69,7 @@ export class RedirectPage {
       }
       else {
         var show = document.getElementById("authKey");
-        show.style.visibility = "visible";
+        this.notAuthorised = true;
         this.loading.dismiss();
           //make things seen!! ------------------- TODO
       }
