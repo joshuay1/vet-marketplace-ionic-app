@@ -49,8 +49,10 @@
             </ion-list>
           </ion-list>
           <ion-list *ngSwitchCase="'pastAppointments'">
-              <ion-list>
-                  <div class="bookingcard">
+              <div class="bookingcard">
+
+                    <ion-scroll scrollY="true">
+                        <ion-list>
                     <ion-item *ngFor='let book of pastBookings'  >
                       <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                       <h3>User: {{generateUserData(book.userId)}}</h3>
@@ -59,8 +61,11 @@
                       <h5>Status : {{book.status}}</h5>
                       <button *ngIf="Online" (click)= "goToHeap(book)">Heap Form</button>
                     </ion-item>
+                    </ion-list>
+                    </ion-scroll>
                   </div>
-                </ion-list>
+
+
 
 
           </ion-list>
@@ -105,8 +110,9 @@
           </ion-list>
 
         <ion-list *ngSwitchCase="'pastAppointments'">
-            <ion-list>
-                <div class="bookingcard">
+            <div class="bookingcard">
+                    <ion-scroll scrollY="true">
+                      <ion-list>
                   <ion-item *ngFor='let book of pastBookings'  >
                       <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
                       <h2>{{book.time}}</h2>
@@ -114,10 +120,11 @@
                       <p>Vet : {{generateVetData(book.vetId)}}</p>
                       <p>Pet: {{generatePetData(book.petId)}}</p>
 
-                    <br>
+
                   </ion-item>
+                </ion-list>
+                  </ion-scroll>
                 </div>
-              </ion-list>
 
         </ion-list>
 
