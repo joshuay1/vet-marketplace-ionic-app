@@ -26,39 +26,30 @@
 </ion-header>
 
 
-<ion-content scroll="false">
-
-  <div style="height: 40%" class="background">
-
-    <ion-grid>
-      <ion-row>
-        <ion-col>
+<ion-content class="background">
+  <div class="profiletop">
           <div class="circle-pic">
-            <img src='/assets/img/dog.jpg'/>
+            <img src='./assets/img/dog.jpg'/>
           </div>
-        </ion-col>
-        <ion-col>
-          <br><br><br>
-          <p class="a"> {{(petData|async)?.animalType}}:{{(petData|async)?.animalBreed}} </p>
-          <p class="p">Name :{{(petData|async)?.petName}} </p>
-          <p class="a">DoB:{{(petData|async)?.dob}} </p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          <h2>{{(petData|async)?.petName}} </h2>
+          <h3> {{(petData|async)?.animalType}}: {{(petData|async)?.animalBreed}}</h3>
+          <h3>DoB: {{(petData|async)?.dob}} </h3>
+        </div>
+  
+    <ion-card >
+      <ion-card-content>
 
+        <h2>My Bookings</h2>
+   
+            <ion-item *ngFor="let book of currentBookings">
+              <h3>{{book.day}}/{{book.month}}/{{book.year}}</h3>
+              <h3>Status : {{book.status}}</h3>
+            </ion-item>
 
-  </div>
+  
+     
+    </ion-card-content>
+  </ion-card>
 
-  <div class="whitebackground">
-    <ion-card-title>Bookings</ion-card-title>
-    <ion-list>
-      <div class="bookingcard">
-        <ion-item *ngFor='let book of currentBookings'>
-          <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
-          <h3>Status : {{book.status}}</h3>
-          <br>
-        </ion-item>
-      </div>
-    </ion-list>
-  </div>
+  
 </ion-content>

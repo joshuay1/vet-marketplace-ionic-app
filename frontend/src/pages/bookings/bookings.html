@@ -39,6 +39,7 @@
                   <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                   <h3>User: {{generateUserData(book.userId)}}</h3>
                   <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                  <h3>Address : {{generateAddress(book.userId)}}</h3>
                   <h3>Status : {{book.status}}</h3>
                   <button  class="button button-block" *ngIf="Online" 
                   color="secondary" ion-button (click)="confirm(book.bookingId)">Complete</button>
@@ -48,17 +49,23 @@
             </ion-list>
           </ion-list>
           <ion-list *ngSwitchCase="'pastAppointments'">
-              <ion-list>
-                  <div class="bookingcard">
+              <div class="bookingcard">
+
+                    <ion-scroll scrollY="true">
+                        <ion-list>
                     <ion-item *ngFor='let book of pastBookings'  >
                       <h2>{{book.day}}/{{book.month}}/{{book.year}}</h2>
                       <h3>User: {{generateUserData(book.userId)}}</h3>
                       <h3>Pet: {{generatePetData(book.petId)}}</h3>
+                      <h3>Address : {{generateAddress(book.userId)}}</h3>
                       <h5>Status : {{book.status}}</h5>
                       <button *ngIf="Online" (click)= "goToHeap(book)">Heap Form</button>
                     </ion-item>
+                    </ion-list>
+                    </ion-scroll>
                   </div>
-                </ion-list>
+
+
 
 
           </ion-list>
@@ -77,14 +84,18 @@
                           <div class = "profilePicContainer">
                             <img *ngIf="Online" class="vetProfilePicture" [src]="getImageUrl(book.vetId)">
                           </div>
-                        <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
-                        <h2>{{book.time}}</h2>
-                        <p>{{book.status}}</p>
-                        <p>Vet : {{generateVetData(book.vetId)}}</p>
-                        <p>Pet: {{generatePetData(book.petId)}}</p>
-
-                        <h3>Address: {{generateVetAddress(book.vetId)}}</h3>
-                        <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
+                          <br>
+                          <button *ngIf="Online" (click)="goMap(book.vetId)"><ion-icon name="locate"></ion-icon></button>
+                          <br>
+                          <div class="info">
+                          <br>
+                          <h2>Booking Information</h2>
+                          <h3>Your pet: {{generatePetData(book.petId)}}</h3>
+                          <h3>Vet: {{generateVetData(book.vetId)}}</h3>
+                          <h3>Date: {{book.day}}/{{book.month}}/{{book.year}}</h3>
+                          <h3>Time : {{book.time}}</h3>
+                          <h3>This booking is {{book.status}}</h3>
+                          </div>
                       </div>
                       </ion-slide>
                     </ion-slides>
@@ -99,20 +110,21 @@
           </ion-list>
 
         <ion-list *ngSwitchCase="'pastAppointments'">
-            <ion-list>
-                <div class="bookingcard">
+            <div class="bookingcard">
+                    <ion-scroll scrollY="true">
+                      <ion-list>
                   <ion-item *ngFor='let book of pastBookings'  >
                       <h2>{{book.day}}/{{book.month}}/{{book.year}} </h2>
                       <h2>{{book.time}}</h2>
                       <p>{{book.status}}</p>
                       <p>Vet : {{generateVetData(book.vetId)}}</p>
                       <p>Pet: {{generatePetData(book.petId)}}</p>
-                      <p>{{generateVetAddress(book.vetId)}}</p>
 
-                    <br>
+
                   </ion-item>
+                </ion-list>
+                  </ion-scroll>
                 </div>
-              </ion-list>
 
         </ion-list>
 

@@ -155,4 +155,14 @@ export class MapPage {
 
 
      }
+
+     dismiss(){
+         
+         this.navCtrl.pop();
+         this.destroyMap();
+     }
+
+     destroyMap(){
+         this.map.destroy();
+     }
    }

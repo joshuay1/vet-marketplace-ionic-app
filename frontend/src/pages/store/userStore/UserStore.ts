@@ -83,7 +83,6 @@ export class UserStorePage {
         buttons: ['OK']
       });
       alert.present();
-      this.navCtrl.push(UserStorePage);
     }
     else {
       let alert = this.alertCtrl.create({
