@@ -11,10 +11,12 @@ public class BookingData{
     private String day;
     private String status;
     private String time;
+    private String bookingid;
     
     //ADD PAYMENT
 
-    public BookingData(String uid, String vetid,String petid, String year, String month, String day, String time, String status){
+    public BookingData(String uid, String vetid,String petid, String year, String month, String day, String time, String status,
+    String bookingid){
         this.uid = uid;
         this.vetid = vetid;
         this.year = year;
@@ -23,6 +25,7 @@ public class BookingData{
         this.time = time;
         this.status = status;
         this.petid = petid;
+        this.bookingid = bookingid;
     }
 
     public String getUserId(){
@@ -55,5 +58,9 @@ public class BookingData{
 
     public String getPetId(){
         return this.petid;
+    }
+
+    public String getBookingId(){
+        return this.bookingid;
     }
 }

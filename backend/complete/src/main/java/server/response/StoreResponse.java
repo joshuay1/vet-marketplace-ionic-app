@@ -1,6 +1,7 @@
 package server.response;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class StoreResponse {
     private JSONArray storeItems;

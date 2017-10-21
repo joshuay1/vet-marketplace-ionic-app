@@ -32,7 +32,11 @@ public class StoreController {
             logger.info("cant find storeItems");
             return new StoreResponse(null, "success", "no available items");
         }
+<<<<<<< HEAD
         return new StoreResponse(storeItems, null,null);
+=======
+        return new StoreResponse(storeItems,"success",null);
+>>>>>>> backend
     }
 
     @CrossOrigin
@@ -54,7 +58,11 @@ public class StoreController {
             logger.info("cant find storeItems");
             return new StoreResponse(null, "success", "no available items");
         }
+<<<<<<< HEAD
         return new StoreResponse(storeItems, "success",null);
+=======
+        return new StoreResponse(storeItems,"success",null);
+>>>>>>> backend
     }
 
 }

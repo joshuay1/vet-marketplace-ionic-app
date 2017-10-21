@@ -244,8 +244,14 @@ public class MakeBookingController{
                 }
                 
             }
-            logger.info("//////////////////NEAREST VET ENDS/////////////");
-            return new VetResponse(item, "success",null);
+            if(item.size() > 0 ){
+                logger.info("//////////////////NEAREST VET ENDS/////////////");
+                return new VetResponse(item, "success",null);
+            }else{
+                logger.info("//////////////////NEAREST VET ENDS/////////////");
+                return new VetResponse(null, "success", "no vet near you that is available at that time");
+            }
+            
         }
     }
 
@@ -288,6 +294,7 @@ public class MakeBookingController{
             }else{
                 logger.info("decoded token id does not match provided uid");
                 logger.info("/////////////MAKEBOOKING ENDS////////////////");
+                return new BasicResponse("error",null, "decoded token does not match user id");
             }
 
         }else{
@@ -402,7 +409,7 @@ public class MakeBookingController{
         //create new booking field
         DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("bookings");
         String key = bookingRef.push().getKey();
-        BookingData data = new BookingData(muid,mvetid,mpetid,myear,mmonth,mday,mtime,"confirmed");
+        BookingData data = new BookingData(muid,mvetid,mpetid,myear,mmonth,mday,mtime,"confirmed",key);
         bookingRef.child(key).setValue(data);
 
         //passBookingField into user (NOT NEEDED)
@@ -429,6 +436,140 @@ public class MakeBookingController{
         
 
     }
+
+    @CrossOrigin
+    @RequestMapping(value="/completeBooking", method= RequestMethod.POST)
+    public BasicResponse completeBooking(
+        @RequestParam(value= "token") String tokenString,
+        @RequestBody String jsonString){
+        
+
+        logger.info("///////////completeBOOKING START///////////////");
+        JSONParser parser = new JSONParser();
+        JSONObject jsonBody = null;
+        try{
+            jsonBody = (JSONObject) parser.parse(jsonString);
+        }catch(ParseException e){
+            logger.info("parse json object failed");
+            logger.info("/////////////completeBOOKING ENDS////////////////");
+            return new BasicResponse("error", null, "body not jsonObject");
+            
+        }
+
+        String mbookingid = null;
+        String muid = null;
+
+        if(jsonBody.containsKey("userid")){
+            muid = (String) jsonBody.get("userid");
+            if(HelperFunction.matchToken(muid, tokenString, logger)){
+                logger.info("decoded token id match provided uid, continue");
+            }else{
+                logger.info("decoded token id does not match provided uid");
+                logger.info("/////////////completeBOOKING ENDS////////////////");
+                return new BasicResponse("error",null, "decoded token does not match user id");
+            }
+        }
+
+        if(jsonBody.containsKey("bookingId")){
+            mbookingid = (String) jsonBody.get("bookingId");
+        }else{
+            logger.info("no Booking id provided");
+            logger.info("/////////////completeBOOKING ENDS////////////////");
+            return new BasicResponse("error",null, "decoded token does not match user id");
+        }
+
+        DatabaseReference ref =  FirebaseDatabase.getInstance().getReference("bookings");
+        ref.child(mbookingid).child("status").setValue("done");
+        return new BasicResponse("success", muid, "null");
+
+    }
+
+
+    
+    @CrossOrigin
+    @RequestMapping(value="/postHeap", method= RequestMethod.POST)
+    public BasicResponse postHeap(
+        @RequestParam(value= "token") String tokenString,
+        @RequestBody String jsonString){
+            
+
+        JSONParser parser = new JSONParser();
+        JSONObject jsonBody = null;
+        try{
+            jsonBody = (JSONObject) parser.parse(jsonString);
+        }catch(ParseException e){
+            logger.info("parse json object failed");
+            return new BasicResponse("error", null, "body not jsonObject");
+        }
+
+        String muid = null;
+        String mbookingId = null;
+        String mH = null;
+        String mE = null;
+        String mA = null;
+        String mP = null;
+
+        if(jsonBody.containsKey("userid")){
+            muid = (String) jsonBody.get("userid");
+            if(HelperFunction.matchToken(muid, tokenString, logger)){
+                logger.info("decoded token id match provided uid, continue");
+            }else{
+                logger.info("decoded token id does not match provided uid");
+                return new BasicResponse("error",null, "decoded token does not match user id");
+            }
+        }
+
+        if(jsonBody.containsKey("bookingid")){
+            mbookingId = (String) jsonBody.get("bookingid");
+        }else{
+            logger.info("no booking id proided");
+            return new BasicResponse("error",null, "no booking id provided");
+        }
+
+        if(jsonBody.containsKey("H")){
+            mH = (String) jsonBody.get("H");
+        }else{
+            logger.info("no H provide");
+            return new BasicResponse("error",null, "no H provided");
+        }
+
+        if(jsonBody.containsKey("E")){
+            mE = (String) jsonBody.get("E");
+        }else{
+            logger.info("no H provide");
+            return new BasicResponse("error",null, "no E provided");
+        }
+
+        if(jsonBody.containsKey("A")){
+            mA = (String) jsonBody.get("A");
+        }else{
+            logger.info("no H provide");
+            return new BasicResponse("error",null, "no A provided");
+        }
+
+        if(jsonBody.containsKey("P")){
+            mP = (String) jsonBody.get("P");
+        }else{
+            logger.info("no H provide");
+            return new BasicResponse("error",null, "no P provided");
+        }
+
+        //dochecking
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("bookings/"+mbookingId);
+        ref.child("H").setValue(mH);
+        ref.child("E").setValue(mE);
+        ref.child("A").setValue(mA);
+        ref.child("P").setValue(mP);
+        return new BasicResponse("success", muid, "null");
+        
+    }
+
+
+
+
+
+
     
 
 }
