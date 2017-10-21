@@ -5,9 +5,18 @@ page-bookings {
   }
 
   ion-scroll{
-    height: 300px;
     overflow-y: scroll;
+    height: 200vh;
+    .scroll-view{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      }
 }
+
+
 
 
   
@@ -29,6 +38,17 @@ page-bookings {
     padding:30px;
     margin:10px;
     border: 0.5px solid  rgb(194, 194, 194);
+  }
+
+  .bookingcardPast{
+    background: white;
+    box-shadow: 1px 1px 1px #A7A7A7;
+    border-radius: 5px;
+    height:200px;
+    padding:30px;
+    margin:10px;
+    border: 0.5px solid  rgb(194, 194, 194);
+
   }
 
   
@@ -69,8 +89,6 @@ page-bookings {
   }  
 
   .scroll-content {
-    overflow: hidden;
-    align-content: center;
     display: flex;
     flex-direction: column;
     text-align: center;
