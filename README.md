@@ -1,4 +1,4 @@
-![alt tag](architecture.png)
+![alt tag](Architecture (2).png)
 
 Frontend <br /> 
 	Command = ionic serve -lcs <br /> 
