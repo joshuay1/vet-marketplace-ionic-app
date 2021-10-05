@@ -1,5 +1,3 @@
-![alt tag](Architecture (2).png)
-
 Frontend <br /> 
 	Command = ionic serve -lcs <br /> 
 	to run an emulated application <br /> 
